@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="site_name">Tokyo Serviced Apartments</string>
+
+<string name="tab_name_home">ホーム</string>
+<string name="tab_name_search">検索</string>
+<string name="tab_name_save">保存リスト</string>
+<string name="tab_name_contact">お問い合わせ</string>
+<string name="tab_name_info">info</string>
+
+<string name="campaign_spring">春のキャンペーン</string>
+<string name="campaign_summer">夏のキャンペーン</string>
+<string name="campaign_autumn">秋のキャンペーン</string>
+<string name="campaign_winter">冬のキャンペーン</string>
+<string name="campaign_end_string">実施中！</string>
+<string name="property_detail_title">物件詳細</string>
+<string name="property_monthly_rent_title">Monthly Rent</string>
+</resources>
