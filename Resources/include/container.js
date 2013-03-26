@@ -1,5 +1,6 @@
 // container.js
 Titanium.include('createUI.js');
+Titanium.include('database.js');
 
 var con = {};
 var tsa_url = 'http://tsa.hades.corp.813.co.jp';
@@ -304,7 +305,7 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
                 var row = Ti.UI.createTableViewRow({
                     className:L('property_detail_title'),
                     height:60,
-                    hasChild:true,
+                    hasDetail:true,
                     url: 'detail.js',
                     // Extended
                     ext : {
@@ -337,16 +338,73 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         });
     };
 
+    //保存リストの物件一覧
+    con.loadSave = function() {
+        var isEn = false;
+        if(Ti.Platform.locale == 'en'){
+            isEn = true;
+        }
+        
+        //save
+        var db = Ti.Database.open(db_setting.table_save);
+        db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
+        
+        var rows = db.execute('select rowid,* from ' + db_setting.table_save);
+        //Ti.API.info('row count' + rows.getRowCount());
+        
+        if( rows.getRowCount() == 0){
+            var save_text = L('save_list_not_message');
+        }else{
+            //パラメータ生成
+            var tids = '';
+            var encode_url = '';
+            var toPutComma = false;
+            while(rows.isValidRow()){
+                if ( toPutComma ) {
+                    tids = tids + ',';
+                } else {
+                    toPutComma = true;
+                }
+                tids = tids + rows.fieldByName('tid');
+                //Ti.API.info('id:' + rows.fieldByName('rowid')+'tid:'+rows.fieldByName('tid'));
+                rows.next();
+            }
+            if(tids != '') encode_url = encode_url + encodeURIComponent(tids);
+            
+            //Ti.API.info(tids);
+            //Ti.API.info(encode_url);
+            
+            var save_text = L('save_list_message');
+            var url = tsa_url + '/json/save?tids=' + encode_url;
+            con.callAPI('GET', url, null, function(status, responseText) {
+                // 受け取ったJSONデータをパース
+                var json = JSON.parse(responseText);
+                var loadSave = require("include/loadSave");
+                loadSave.exec(json);
+            });
+        }
+    };
+
     //物件詳細
     con.loadProperty = function(tid) {
         var url = tsa_url + '/json/detail/tid/' + tid;
-        //Ti.API.info(url);
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
             var loadProperty = require("include/loadProperty");
-            //loadProperty.exec(con,cu,json);
             loadProperty.exec(json,tid);
+        });
+    };
+
+    //slideshow
+    con.loadSlideshow = function(tid) {
+        var url = tsa_url + '/json/images/tid/' + tid;
+        con.callAPI('GET', url, null, function(status, responseText) {
+            // 受け取ったJSONデータをパース
+            var json = JSON.parse(responseText);
+            var loadSlideshow = require("include/loadSlideshow");
+            //loadProperty.exec(con,cu,json);
+            loadSlideshow.exec(json,tid);
         });
     };
 })();

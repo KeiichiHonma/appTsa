@@ -14,7 +14,7 @@
 <string name="campaign_winter">冬のキャンペーン</string>
 <string name="campaign_end_string">実施中！</string>
 
-<string name="property_detail_title">物件詳細</string>
+<string name="property_window_title">Property Details</string>
 <string name="property_monthly_rent_title">Monthly Rent</string>
 <string name="property_other_expenses_title">Other Expenses</string>
 <string name="property_size_title">Size</string>
@@ -25,6 +25,16 @@
 <string name="property_facility_title">Other Facilities</string>
 
 <string name="property_detail_title">Detail</string>
+<string name="property_feature_title">Specific</string>
+<string name="property_station_title">Access</string>
+<string name="property_address_title">Address</string>
+<string name="property_slideshow_title">Images</string>
 
+<string name="save_alert_not_add">この物件は保存リストに登録されています。</string>
+<string name="save_alert_add">保存リストに登録されました。</string>
+<string name="save_alert_add_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
+
+<string name="save_list_not_message">保存リストに物件がありません。</string>
+<string name="save_list_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
 
 </resources>

@@ -4,22 +4,26 @@ exports.exec = function(json,tid){
     //テキスト
     if(setting.isEn){
         //building
-        var about_property = "About " + json['building'].col_building_e;
-        var property_title = json['building'].col_building_e + ' / ' + json['type'].col_type_e;
+        var property_name = json['building'].col_building_e;
+        
+        var about_property = "About " + property_name;
+        var property_title = property_name + ' / ' + json['type'].col_type_e;
         var detail = json['building'].col_building_detail_e;
         var catch_phrase = json['building'].col_catch_phrase_e;
-        
-        
+        var feature = json['feature'].en;
+        var station = json['building'].col_station_e;
+        var address = json['building'].col_address_e;
         
         var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg_e.gif',setting.row_title_width,setting.row_title_height + 10);
         
+        //type
+        var type_name = json['type'].col_type_e;
         var campaign_title = json['type'].col_campaign_title_e;
         var campaign_title = json['type'].col_campaign_title_e;
         var monthly_rent = json['type'].col_rent_cost_e;
         var other_expenses = json['type'].col_cost_e;
         var size = json['type'].col_size;
         if(json['type'].col_remarks_e != "") var remarks = json['type'].col_remarks_e;
-        
         if(json['type'].col_service_e != "") var service = json['type'].col_service_e;
         if(json['type'].col_furniture_e != "") var furniture = json['type'].col_furniture_e;
         if(json['type'].col_kitchen_e != "") var kitchen = json['type'].col_kitchen_e;
@@ -27,12 +31,19 @@ exports.exec = function(json,tid){
         
     }else{
         //building
-        var about_property = json['building'].col_building_e + "について";
-        var property_title = json['building'].col_building + ' / ' + json['type'].col_type;
+        var property_name = json['building'].col_building;
+        var about_property = property_name + "について";
+        var property_title = property_name + ' / ' + json['type'].col_type;
         var detail = json['building'].col_building_detail;
         var catch_phrase = json['building'].col_catch_phrase;
+        var feature = json['feature'].ja;
+        var station = json['building'].col_station;
+        var address = json['building'].col_address;
         
         var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg.gif',setting.row_title_width,setting.row_title_height);
+
+        //type
+        var type_name = json['type'].col_type;
         var campaign_title = json['type'].col_campaign_title;
         var monthly_rent = json['type'].col_rent_cost;
         var other_expenses = json['type'].col_cost;
@@ -64,16 +75,30 @@ exports.exec = function(json,tid){
         height:'auto',
         hasChild:true,
         color:'#6f5b37',
-        url: 'slideshow.js',
-        // Extended
-        ext : {
-            tid : tid
-        }
+        height:150
     });
+
+    photoRow.addEventListener('click', function(e) {
+        var slideshowWindow = Titanium.UI.createWindow({
+            backgroundColor:'#ffffff',
+            url: 'slideshow.js',
+            navBarHidden: false,
+            // Extended
+            ext : {
+                tid : tid
+            }
+        });
+        Titanium.UI.currentTab.open(slideshowWindow);
+    });
+
+
+
     //物件外観
-    var face = cu.createWrapImageView(tsa_url + json['building'].face.path,140,140,21,15);
+    var face = cu.createWrapImageView(tsa_url + json['building'].face.path,140,140,5,15);
+    
     //部屋画像
-    var roombig = cu.createWrapImageView(tsa_url + json['type'].roombig.path,140,140,21,155);
+    var roombig = cu.createWrapImageView(tsa_url + json['type'].roombig.path,140,140,5,155);
+    //var roombig = cu.createWrapImageView(tsa_url + json['type'].layout.path,140,140,21,155);
     photoRow.add(face);
     photoRow.add(roombig);
     con.UI.tableView.appendRow(photoRow);
@@ -123,8 +148,13 @@ exports.exec = function(json,tid){
     con.UI.tableView.appendRow(cu.makePropertySectionRow(about_property));
     //detail
     cu.makePropertyRow('property_detail_title',detail);
+    //feature
+    cu.makePropertyRow('property_feature_title',feature);
 
-
-
-
+    //address
+    cu.makeMapPropertyRow('property_address_title',address,property_name);
+    //station
+    cu.makePropertyRow('property_station_title',station);
+    //save
+    cu.makeSavePropertyRow(tid,property_name,type_name,size,monthly_rent);
 };

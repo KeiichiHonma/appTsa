@@ -1,12 +1,10 @@
 // win1.jsのwindowを変数にセット
 var win = Titanium.UI.currentWindow;
-//Ti.API.info(win.ext.tid);
+win.title = L('property_window_title');
 
 // ライブラリの読み込み
 Titanium.include('include/container.js');
 
-// TableViewの追加
-//win.add(con.UI.View);
 win.add(con.UI.tableView);
 
 // 再読込の設定
