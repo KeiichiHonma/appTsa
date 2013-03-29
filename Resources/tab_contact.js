@@ -1,28 +1,35 @@
-// tab2.js
 var win = Titanium.UI.currentWindow;
-// 公式アカウントの一覧
-var tableView = Titanium.UI.createTableView({
-	data : [{
-		title: '#titanium',
-		url: 'win3.js',
-		hasChild: true
-	},{
-		title: '#titaniumJP',
-		url: 'win4.js',
-		hasChild: true
-	}
-	]
-});
-win.add(tableView);
 
-// TableView選択時のイベント
-tableView.addEventListener('click', function(e) {
-	// TableViewRowの各データにアクセスするにはe.rowDataを介する
-	var newWindowUrl = e.rowData.url;
-	var newWindow = Titanium.UI.createWindow({
-		title: e.row.title,
-		backgroundColor: '#fff',
-		url: newWindowUrl
-	});
-	Titanium.UI.currentTab.open(newWindow);
+// ライブラリの読み込み
+Titanium.include('include/container.js');
+
+//con.UI.tableView.separatorColor = '#ffffff';
+//win.add(con.UI.tableView);
+
+
+var url = con.loadContact();
+var webview = Ti.UI.createWebView({
+    url:url,
+    //url:'http://tsa.hades.corp.813.co.jp/en/webview/result?tids=236%2C266',
+    loading:true
 });
+
+webview.addEventListener('load',function(e) {
+    var save = webview.evalJS("appendInquiry()");
+    if(save){
+        var json = JSON.parse(save);
+        
+        // データの削除処理
+        var db = Ti.Database.open(db_setting.table_save);
+        db.execute('begin transaction');
+        
+        for(var i = 0; i< json.length; i++) {
+            //Ti.API.info( json[i] );
+            db.execute("delete from " + db_setting.table_save + " where tid = '" + json[i] + "' ");
+        }
+        db.execute('commit');
+        db.close();
+    }
+});
+
+win.add(webview);

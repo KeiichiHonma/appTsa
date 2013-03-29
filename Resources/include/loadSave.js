@@ -1,9 +1,43 @@
 exports.exec = function(json){
     // データをクリア
     con.UI.tableView.data = [];
-    
+
+    //編集//////////////////////////////////////////////////////////////
+    var btnEdit = Ti.UI.createButton({
+        title : L('btn_edit_title'),
+    });
+
+    var btnDone = Ti.UI.createButton({
+        title : L('btn_done_title'),
+    });
+
+    // Event
+    btnEdit.addEventListener('click', function(e){
+        Ti.UI.currentWindow.rightNavButton = btnDone;
+        //table.moving = true;  // これを入れると削除アイコンが同時に描画されない
+        con.UI.tableView.editing = true;
+    });
+
+    btnDone.addEventListener('click', function(e){
+        Ti.UI.currentWindow.rightNavButton = btnEdit;
+        //table.moving = false;  // これを入れると削除アイコンが同時に描画されない
+        con.UI.tableView.editing = false;
+    });
+
+    Ti.UI.currentWindow.rightNavButton = btnEdit;
+
+    // 行削除処理
+    con.UI.tableView.addEventListener('delete', function(e){
+        // データの削除処理
+        var db = Ti.Database.open(db_setting.table_save);
+        db.execute('begin transaction');
+        db.execute("delete from " + db_setting.table_save + " where tid = '" + e.rowData.ext.tid + "' ");
+        db.execute('commit');
+        db.close();
+    });
+
+    //table//////////////////////////////////////////////////////////////
     for(var i = 0; i< json.length; i++) {
-        Ti.API.info(json[i].path);
         var row = Ti.UI.createTableViewRow({
             className:L('property_detail_title'),
             height:60,
@@ -36,8 +70,6 @@ exports.exec = function(json){
                 var summary_text = json[i].col_rent_cost + ' / ' + json[i].col_rent_size;
             }
         }
-        
-        Ti.API.info(main_text);
         var property_title = cu.createTitleLabel(main_text,'#6f5b37','auto',30,0,70);
         row.add(property_title);
 

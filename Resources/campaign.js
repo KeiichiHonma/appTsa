@@ -2,14 +2,14 @@
 var win = Titanium.UI.currentWindow;
 
 // ライブラリの読み込み
-Titanium.include('container.js');
+Titanium.include('include/container.js');
 
 // TableViewの追加
 win.add(con.UI.tableView);
 
 // 再読込の設定
 con.UI.setRefreshButton(function(){
-    con.loadIndexCampaign(con.UI.tableView);
+    con.loadCampaign(false,true);
 });
 // 初回読み込み
-con.loadIndexCampaign(con.UI.tableView);
+con.loadCampaign(false,true);
