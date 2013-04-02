@@ -1,9 +1,19 @@
 var win = Titanium.UI.currentWindow;
 
 // ライブラリの読み込み
-Titanium.include('include/container.js');
+Titanium.include('include/fw/container.js');
 win.add(con.UI.tableView);
-con.loadSave();
+
+win.addEventListener('focus', function(e){
+    con.loadSave();
+    // e.index
+    // e.tab
+    // e.previousIndex
+    // e.previousTab
+});
+
+
+
 
 // TableView選択時のイベント
 con.UI.tableView.addEventListener('click', function(e) {

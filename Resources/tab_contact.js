@@ -1,7 +1,7 @@
 var win = Titanium.UI.currentWindow;
 
 // ライブラリの読み込み
-Titanium.include('include/container.js');
+Titanium.include('include/fw/container.js');
 
 //con.UI.tableView.separatorColor = '#ffffff';
 //win.add(con.UI.tableView);

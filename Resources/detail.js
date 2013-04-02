@@ -3,7 +3,7 @@ var win = Titanium.UI.currentWindow;
 win.title = L('property_window_title');
 
 // ライブラリの読み込み
-Titanium.include('include/container.js');
+Titanium.include('include/fw/container.js');
 
 win.add(con.UI.tableView);
 

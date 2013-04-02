@@ -1,12 +1,9 @@
 var win = Titanium.UI.currentWindow;
 
 // ライブラリの読み込み
-Titanium.include('include/container.js');
+Titanium.include('include/fw/container.js');
 
 win.add(con.UI.tableView);
-
-var campaign_title = L('campaign_spring');
-var campaign_header = L('campaign_spring') + L('campaign_end_string');
 
 //ヘッダ画像////////////////////////////////////////
 var row = Ti.UI.createTableViewRow({
@@ -23,12 +20,12 @@ var row = Ti.UI.createTableViewRow({
     hasChild:true,
     // Extended
     ext : {
-        rowTitle : campaign_title,
+        rowTitle : L('campaign_spring'),
         //"rule-name" : ["hoge", "piyo"]
     }
 });
 row.add(cu.createWrapImageView('img/campaign.jpg',320,30));
-row.add( cu.createTitleLabel(campaign_header,'#990000','auto','auto',5,80) );
+row.add( cu.createTitleLabel(L('campaign_spring') + L('campaign_end_string'),'#990000','auto','auto',10,null) );
 con.UI.tableView.appendRow(row);
 
 con.loadList(true,true,true,null);

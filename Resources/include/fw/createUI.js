@@ -178,7 +178,7 @@ var setting = {
         map_button.addEventListener('click', function(e){
             Ti.UI.currentTab.open(
                 Ti.UI.createWindow({
-                    url: "include/loadMap.js",
+                    url: "include/ui/makeMap.js",
                     navBarHidden: false,
                     // Extended
                     ext : {
@@ -288,6 +288,7 @@ var setting = {
         });
 
         row.addEventListener('click', function(e) {
+            //Ti.API.info(e.rowData.ext.checkbox.value);
             if (e.source == this) {
                 if(false == e.rowData.ext.checkbox.value) {
                     checkbox.title='\u2713';

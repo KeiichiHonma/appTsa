@@ -3,7 +3,7 @@ win.title = "Map";
 //win.backgroundColor = "#000000";
 
 //map
-geocoding = require('include/geocoding').Geocoding();
+geocoding = require('include/fw/geocoding').Geocoding();
 geocoding.forward({
     address: win.ext.address,
     language: Ti.Platform.locale,

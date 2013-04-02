@@ -1,7 +1,7 @@
 var win = Titanium.UI.currentWindow;
 
 // ライブラリの読み込み
-Titanium.include('include/container.js');
+Titanium.include('include/fw/container.js');
 privacy_url = 'http://www.serviced-apartments-tokyo.com/' + Ti.Platform.locale + '/privacypolicy';
 company_url = 'http://www.serviced-apartments-tokyo.com/' + Ti.Platform.locale + '/corp';
 

@@ -1,6 +1,6 @@
 // container.js
 Titanium.include('createUI.js');
-Titanium.include('database.js');
+Titanium.include('define.js');
 
 var con = {};
 var tsa_url = 'http://tsa.hades.corp.813.co.jp';
@@ -16,7 +16,7 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
-            var loadIndex = require("include/loadIndex");
+            var loadIndex = require("include/ui/makeIndex");
             loadIndex.exec(json,isHeader);
         });
     };*/
@@ -26,7 +26,7 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
-            var loadCampaign = require("include/loadCampaign");
+            var loadCampaign = require("include/ui/makeCampaign");
             loadCampaign.exec(json,isIndex,isFirst);
         });
     };*/
@@ -36,13 +36,13 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
-            var loadlist = require("include/loadlist");
+            var loadlist = require("include/ui/makelist");
             loadlist.exec(json,isIndex,isCampaign,isFirst,conditions);
         });
     };
 
     con.loadCondition = function() {
-        var loadCondition = require("include/loadCondition");
+        var loadCondition = require("include/ui/makeCondition");
         loadCondition.exec();
     };
     con.getCondition = function(conditions) {
@@ -59,7 +59,7 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
-            var loadlist = require("include/loadlist");
+            var loadlist = require("include/ui/makelist");
             loadlist.exec(json,isIndex,isCampaign,isFirst,conditions);
         });
     };
@@ -100,7 +100,7 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
             con.callAPI('GET', url, null, function(status, responseText) {
                 // 受け取ったJSONデータをパース
                 var json = JSON.parse(responseText);
-                var loadSave = require("include/loadSave");
+                var loadSave = require("include/ui/makeSave");
                 loadSave.exec(json);
             });
         }
@@ -165,7 +165,7 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
-            var loadProperty = require("include/loadProperty");
+            var loadProperty = require("include/ui/makeProperty");
             loadProperty.exec(json,tid);
         });
     };
@@ -176,7 +176,7 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
-            var loadSlideshow = require("include/loadSlideshow");
+            var loadSlideshow = require("include/ui/makeSlideshow");
             //loadProperty.exec(con,cu,json);
             loadSlideshow.exec(json,tid);
         });
