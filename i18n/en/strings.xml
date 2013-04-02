@@ -9,17 +9,41 @@
 <string name="tab_name_info">Info</string>
 
 <string name="loading_title">Loading...</string>
-
 <string name="btn_edit_title">Edit</string>
 <string name="btn_done_title">Done</string>
-
-
 
 <string name="campaign_spring">春のキャンペーン</string>
 <string name="campaign_summer">夏のキャンペーン</string>
 <string name="campaign_autumn">秋のキャンペーン</string>
 <string name="campaign_winter">冬のキャンペーン</string>
 <string name="campaign_end_string">実施中！</string>
+
+<string name="search_region_title">Region</string>
+<string name="search_region_shinjuku">Shinjuku/Ikebukuro</string>
+<string name="search_region_akihabara">Akihabara/Ueno</string>
+<string name="search_region_shibuya">Shibuya/Aoyama</string>
+<string name="search_region_roppongi">Roppongi/Akasaka</string>
+<string name="search_region_ginza">Ginza/Nihonbashi</string>
+<string name="search_region_shinagawa">Shinagawa/Shirokane Takanawa</string>
+<string name="search_region_yokohama">Yokohama</string>
+<string name="search_region_odaiba">Odaiba/Bay</string>
+
+<string name="search_dimension_title">Layout</string>
+<string name="search_dimension_studio">Studio</string>
+<string name="search_dimension_1ldk">1LDK</string>
+<string name="search_dimension_2ldk">2LDK</string>
+<string name="search_dimension_3ldk">3LDK</string>
+
+<string name="search_feature_title">Feature</string>
+<string name="search_feature_24">24h Front Desk</string>
+<string name="search_feature_swimming">Swimming Pool</string>
+<string name="search_feature_pets">Pets</string>
+<string name="search_feature_market">Near super market/grocery store</string>
+<string name="search_feature_parking">Parking Space</string>
+<string name="search_feature_haneda">Within 30min to Haneda by Train</string>
+<string name="search_feature_smoking">Non Smoking Rooms</string>
+<string name="search_feature_breakfast">Free Breakfast</string>
+<string name="search_feature_gym">Sports Gym</string>
 
 <string name="property_window_title">Property Details</string>
 <string name="property_monthly_rent_title">Monthly Rent</string>
@@ -68,5 +92,16 @@
 <string name="form_span_name_5">undecided</string>
 
 <string name="form_requests_questions_title">Requests | Questions</string>
+
+
+<string name="open_browser_title">Open in the browser?</string>
+
+<string name="yes">Yes</string>
+<string name="no">No</string>
+
+<string name="info_request_title">Requests | Questions</string>
+<string name="info_privacy_policy_title">Privacy policy</string>
+<string name="info_company_title">Company</string>
+<string name="info_version_title">Version </string>
 
 </resources>

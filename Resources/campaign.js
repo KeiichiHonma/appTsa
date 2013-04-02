@@ -9,7 +9,9 @@ win.add(con.UI.tableView);
 
 // 再読込の設定
 con.UI.setRefreshButton(function(){
-    con.loadCampaign(false,true);
+    // データをクリア
+    con.UI.tableView.data = [];
+    con.loadList(false,true,true,null);
 });
 // 初回読み込み
-con.loadCampaign(false,true);
+con.loadList(false,true,true,null);

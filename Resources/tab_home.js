@@ -31,8 +31,7 @@ row.add(cu.createWrapImageView('img/campaign.jpg',320,30));
 row.add( cu.createTitleLabel(campaign_header,'#990000','auto','auto',5,80) );
 con.UI.tableView.appendRow(row);
 
-//con.loadIndex(true);
-con.loadCampaign(true,true);
+con.loadList(true,true,true,null);
 
 con.UI.tableView.addEventListener('click', function(e) {
     var newWindow = Titanium.UI.createWindow({

@@ -80,7 +80,7 @@ var setting = {
             height:height,
             top:top,
             left:left,
-            font:{fontSize:11,fontWeight:'bold', fontFamily:'Arial'},
+            font:{fontSize:11,fontWeight:'bold', fontFamily:'Arial'}
         });
         return label;
     };
@@ -187,35 +187,125 @@ var setting = {
                     }
                 })
             );
-/*
-        // クリック時に開くwindow
-        var w = Titanium.UI.createWindow({
-                backgroundColor:'#336699'
-        });
-
-        // クリック時に開くwindowに置く閉じるボタン
-        var b = Titanium.UI.createButton({
-                title:'Close',
-                height:30,
-                width:150
-        });
-        // 閉じるボタン追加
-        w.add(b);
-        // 閉じるボタンを押したときの動作設定
-        b.addEventListener('click', function()
-        {
-                w.close();
-        });
-
-        // 開く
-        w.open();
-*/
         });
 
         row.add(row_title);
         row.add(rowWrap);
         con.UI.tableView.appendRow(row);
     };
+
+
+    cu.createCheckboxTitleRow = function(text) {
+        var row = Ti.UI.createTableViewRow({
+            height:20,
+            backgroundColor:setting.row_title_background_color,
+            hasChild:false
+        });
+        var label = cu.createTitleLabel(text,setting.row_title_color,'auto','auto',0,5);
+        label.font = {fontSize:14,fontWeight:'bold', fontFamily:'Arial'};
+        row.add(label);
+        return row;
+    };
+
+    cu.createCheckboxTitleLabel = function(text,top,left) {
+        var label = Ti.UI.createLabel({
+            text:text,
+            color:'#000000',
+            //width:width,
+            //height:height,
+            top:top,
+            left:left,
+            font:{fontSize:14,fontWeight:'bold', fontFamily:'Arial'},
+        });
+        return label;
+    };
+
+    cu.makeCheckboxRow = function(title,array,value) {
+        var checkbox = Ti.UI.createButton({
+            title: '',
+            top: 5,
+            left: 5,
+            width: 20,
+            height: 20,
+            borderColor: '#666666',
+            borderWidth: 1,
+            borderRadius: 5,
+            backgroundColor: '#CCCCCC',
+            backgroundImage: 'none',
+            //color: '#fff',
+            color: '#000000',
+            font:{fontSize: 14, fontWeight: 'bold'},
+            value: false //value is a custom property in this casehere.
+        });
+        
+        checkbox.on = function() {
+            //Ti.API.info('on_s : ' + array);
+            
+            this.title='\u2713';
+            this.value = true;
+            
+            if(array.indexOf(value) == -1 ){
+                array.push(value);
+            }
+            
+            //Ti.API.info('on_e : ' + array);
+        };
+         
+        checkbox.off = function() {
+            //Ti.API.info('off_s : ' + array);
+            
+            this.title='';
+            this.value = false;
+            
+            var index = array.indexOf(value);
+            if(index != -1 ){
+                if(array.length > 1){
+                    for(i = 0; i < array.length; i++){
+                        if(array[i] == value){
+                            array.splice(i,index);
+                        }
+                    }
+                }else{
+                    array.length = 0;
+                }
+            }
+            //Ti.API.info('off_e : ' + array);
+        };
+         
+        checkbox.addEventListener('click', function(e) {
+            if(false == e.source.value) {
+                e.source.on();
+            } else {
+                e.source.off();
+            }
+        });
+        
+        var row = Ti.UI.createTableViewRow({
+            height:30,
+            ext : {
+                checkbox : checkbox
+            }
+        });
+
+        row.addEventListener('click', function(e) {
+            if (e.source == this) {
+                if(false == e.rowData.ext.checkbox.value) {
+                    checkbox.title='\u2713';
+                    checkbox.value = true;
+                } else {
+                    checkbox.title='';
+                    checkbox.value = false;
+                }
+            }
+        });
+
+        row.add(checkbox);
+        
+        var checkbox_title = cu.createCheckboxTitleLabel(title,5,30);
+        row.add(checkbox_title);
+
+        return row;
+    }
 
     //save
     cu.makeSavePropertyRow = function(tid,property_name,type_name,size,monthly_rent) {

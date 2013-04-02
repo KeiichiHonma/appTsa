@@ -1,28 +1,38 @@
-// tab2.js
 var win = Titanium.UI.currentWindow;
-// 公式アカウントの一覧
-var tableView = Titanium.UI.createTableView({
-	data : [{
-		title: '#titanium',
-		url: 'win3.js',
-		hasChild: true
-	},{
-		title: '#titaniumJP',
-		url: 'win4.js',
-		hasChild: true
-	}
-	]
-});
-win.add(tableView);
 
-// TableView選択時のイベント
-tableView.addEventListener('click', function(e) {
-	// TableViewRowの各データにアクセスするにはe.rowDataを介する
-	var newWindowUrl = e.rowData.url;
-	var newWindow = Titanium.UI.createWindow({
-		title: e.row.title,
-		backgroundColor: '#fff',
-		url: newWindowUrl
-	});
-	Titanium.UI.currentTab.open(newWindow);
+// ライブラリの読み込み
+Titanium.include('include/container.js');
+privacy_url = 'http://www.serviced-apartments-tokyo.com/' + Ti.Platform.locale + '/privacypolicy';
+company_url = 'http://www.serviced-apartments-tokyo.com/' + Ti.Platform.locale + '/corp';
+
+var inputData = [
+    {title:L('info_request_title'),hasChild:true},
+    //{title:'row 1', header:'Header 1'},
+    {title:L('info_privacy_policy_title'),url:privacy_url,hasChild:true, header:' '},
+    {title:L('info_company_title'),url:company_url,hasChild:true},
+    {title:L('info_version_title')}
+];
+con.UI.tableView = Titanium.UI.createTableView();
+if (Ti.Platform.osname !== 'mobileweb') {
+    con.UI.tableView.style = Titanium.UI.iPhone.TableViewStyle.GROUPED;
+}
+con.UI.tableView.data = inputData;
+
+win.add(con.UI.tableView);
+
+con.UI.tableView.addEventListener('click', function(e) {
+    var confirm = Titanium.UI.createAlertDialog({
+        title: e.rowData.url,
+        message: L('open_browser_title'),
+        buttonNames: [L('yes'), L('no')]
+    });
+
+    confirm.addEventListener('click', function(conEvt) {
+        Ti.API.info(conEvt.index);
+        if(conEvt.index === 0){
+            //open our uploaded image in safari
+            Ti.Platform.openURL(e.rowData.url);
+        }
+    });
+    confirm.show();
 });
