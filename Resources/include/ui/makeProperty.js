@@ -14,12 +14,12 @@ exports.exec = function(json,tid){
         var station = json['building'].col_station_e;
         var address = json['building'].col_address_e;
         
-        var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg_e.gif',setting.row_title_width,setting.row_title_height + 10);
-        
         //type
+        if(json['type'].col_campaign == 0){
+            var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg_en.gif',setting.row_title_width,setting.row_title_height + 10);
+            var campaign_title = json['type'].col_campaign_title_e;
+        }
         var type_name = json['type'].col_type_e;
-        var campaign_title = json['type'].col_campaign_title_e;
-        var campaign_title = json['type'].col_campaign_title_e;
         var monthly_rent = json['type'].col_rent_cost_e;
         var other_expenses = json['type'].col_cost_e;
         var size = json['type'].col_size;
@@ -40,11 +40,12 @@ exports.exec = function(json,tid){
         var station = json['building'].col_station;
         var address = json['building'].col_address;
         
-        var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg.gif',setting.row_title_width,setting.row_title_height);
-
         //type
+        if(json['type'].col_campaign == 0){
+            var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg_ja.gif',setting.row_title_width,setting.row_title_height);
+            var campaign_title = json['type'].col_campaign_title;
+        }
         var type_name = json['type'].col_type;
-        var campaign_title = json['type'].col_campaign_title;
         var monthly_rent = json['type'].col_rent_cost;
         var other_expenses = json['type'].col_cost;
         var size = json['type'].col_size;
@@ -59,13 +60,17 @@ exports.exec = function(json,tid){
     //title////////////////////////////////////////////////////////////////////////////
     var titleRow = Ti.UI.createTableViewRow({
         height:20,
+        touchEnabled : false,
+        selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
         hasChild:false
     });
 
     var label = Ti.UI.createLabel({
         text:property_title,
-        color:'#6f5b37',
-        font:{fontSize:14,fontWeight:'bold', fontFamily:'Arial'},
+        color:setting.row_title_color,
+        font:{fontSize:14,fontWeight:'bold'},
+        top:5,
+        bottom:5
     });
     titleRow.add(label);
     con.UI.tableView.appendRow(titleRow);
@@ -74,7 +79,7 @@ exports.exec = function(json,tid){
     var photoRow = Ti.UI.createTableViewRow({
         height:'auto',
         hasChild:true,
-        color:'#6f5b37',
+        color:setting.row_title_color,
         height:150
     });
 
@@ -106,33 +111,39 @@ exports.exec = function(json,tid){
     //catch////////////////////////////////////////////////////////////////////////////
     var catchRow = Ti.UI.createTableViewRow({
         backgroundColor:'#F5F2EC',
+        touchEnabled : false,
+        selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
         hasChild:false
     });
 
     var label = Ti.UI.createLabel({
         text:catch_phrase,
         color:setting.row_title_color,
-        font:{fontSize:14, fontFamily:'Arial'},
+        font:{fontSize:14},
     });
     catchRow.add(label);
     con.UI.tableView.appendRow(catchRow);
 
     //campaign//////////////////////////////////////////////////////////////////////////////
-    var campaignRow = Ti.UI.createTableViewRow({
-        height:setting.row_title_height + 10,
-        hasChild:false
-    });
-    campaignRow.add(row_campaign_bg);
-    var campaign_summary = cu.createTitleLabel(campaign_title,setting.row_title_color,'auto',setting.row_title_height + 10,0,setting.row_title_width + 10);
-    campaignRow.add(campaign_summary);
-    con.UI.tableView.appendRow(campaignRow);
+    if(json['type'].col_campaign == 0){
+        var campaignRow = Ti.UI.createTableViewRow({
+            height:setting.row_title_height + 10,
+            touchEnabled : false,
+            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
+            hasChild:false
+        });
+        campaignRow.add(row_campaign_bg);
+        var campaign_summary = cu.createTitleLabel(campaign_title,setting.row_title_color,'auto',setting.row_title_height + 10,0,setting.row_title_width + 10);
+        campaignRow.add(campaign_summary);
+        con.UI.tableView.appendRow(campaignRow);
+    }
 
     //Monthly Rent
     cu.makePropertyRow('property_monthly_rent_title',monthly_rent);
     //Other Expenses
-    cu.makePropertyRow('property_other_expenses_title',other_expenses);
+    if(other_expenses) cu.makePropertyRow('property_other_expenses_title',other_expenses);
     //size
-    cu.makePropertyRow('property_size_title',size);
+    cu.makePropertyRow('property_size_title',size + '㎡');
     //remarks
     if(remarks) cu.makePropertyRow('property_remarks_title',remarks);
     //service

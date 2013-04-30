@@ -1,9 +1,9 @@
-#appname: appTsa
-#appid: com.app.tsa
-#type: mobile
-#guid: b603da27-b05f-428c-9542-9de517ad95d1
-#version: 1.0
-#publisher: not specified
-#url: not specified
-#image: appicon.png
-#desc: not specified
+#appname:appTsa
+#appid:com.app.tsa
+#type:mobile
+#guid:b603da27-b05f-428c-9542-9de517ad95d1
+#version:1.0
+#publisher:k-honma
+#url:http://
+#image:appicon.png
+#desc:not specified

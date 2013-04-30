@@ -59,7 +59,7 @@ exports.exec = function(json){
             if(json[i].col_campaign_title_e != ''){
                 var summary_text = json[i].col_campaign_title_e;
             }else{
-                var summary_text = json[i].col_rent_cost_e + ' / ' + json[i].col_rent_size;
+                var summary_text = json[i].col_rent_cost_e + ' / ' + json[i].col_size + '㎡';
             }
             
         }else{
@@ -67,7 +67,7 @@ exports.exec = function(json){
             if(json[i].col_campaign_title != ''){
                 var summary_text = json[i].col_campaign_title;
             }else{
-                var summary_text = json[i].col_rent_cost + ' / ' + json[i].col_rent_size;
+                var summary_text = json[i].col_rent_cost + ' / ' + json[i].col_size + '㎡';
             }
         }
         var property_title = cu.createTitleLabel(main_text,'#6f5b37','auto',30,0,70);

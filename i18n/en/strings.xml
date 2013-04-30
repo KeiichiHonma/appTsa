@@ -5,35 +5,46 @@
 <string name="tab_name_home">Home</string>
 <string name="tab_name_search">Search</string>
 <string name="tab_name_save">Save</string>
-<string name="tab_name_contact">Contact</string>
+<string name="tab_name_inquiry">Inquiry</string>
 <string name="tab_name_info">Info</string>
 
 <string name="loading_title">Loading...</string>
 <string name="btn_edit_title">Edit</string>
 <string name="btn_done_title">Done</string>
 
-<string name="campaign_spring">春のキャンペーン</string>
-<string name="campaign_summer">夏のキャンペーン</string>
-<string name="campaign_autumn">秋のキャンペーン</string>
-<string name="campaign_winter">冬のキャンペーン</string>
-<string name="campaign_end_string">実施中！</string>
+<string name="campaign_spring">Spring Campaign</string>
+<string name="campaign_summer">Summer Campaign</string>
+<string name="campaign_autumn">Autumn Campaign</string>
+<string name="campaign_winter">Winter Campaign</string>
+<string name="campaign_end_string"> Now</string>
 <string name="campaign_more_title">more...</string>
 
-<string name="search_region_title">Region</string>
-<string name="search_region_shinjuku">Shinjuku/Ikebukuro</string>
-<string name="search_region_akihabara">Akihabara/Ueno</string>
-<string name="search_region_shibuya">Shibuya/Aoyama</string>
-<string name="search_region_roppongi">Roppongi/Akasaka</string>
-<string name="search_region_ginza">Ginza/Nihonbashi</string>
-<string name="search_region_shinagawa">Shinagawa/Shirokane Takanawa</string>
-<string name="search_region_yokohama">Yokohama</string>
-<string name="search_region_odaiba">Odaiba/Bay</string>
+<string name="property_search_window_title">Search results of your request</string>
 
-<string name="search_dimension_title">Layout</string>
+<string name="search_budget_title">Budget</string>
+<string name="search_budget_action">Select a Budget</string>
+<string name="search_budget_0"><250,000JPY</string>
+<string name="search_budget_1">250,000JPY~350,000JPY</string>
+<string name="search_budget_2">350,000JPY~450,000JPY</string>
+<string name="search_budget_3">450,000JPY~550,000JPY</string>
+<string name="search_budget_4">>550,000JPY</string>
+
+<string name="search_map_title">Region</string>
+<string name="search_map_shinjuku">Shinjuku/Ikebukuro</string>
+<string name="search_map_akihabara">Akihabara/Ueno</string>
+<string name="search_map_shibuya">Shibuya/Aoyama</string>
+<string name="search_map_roppongi">Roppongi/Akasaka</string>
+<string name="search_map_ginza">Ginza/Nihonbashi</string>
+<string name="search_map_shinagawa">Shinagawa/Shirokane Takanawa</string>
+<string name="search_map_yokohama">Yokohama</string>
+<string name="search_map_odaiba">Odaiba/Bay</string>
+
+<string name="search_dimension_title">Room Type</string>
 <string name="search_dimension_studio">Studio</string>
-<string name="search_dimension_1ldk">1LDK</string>
-<string name="search_dimension_2ldk">2LDK</string>
-<string name="search_dimension_3ldk">3LDK</string>
+<string name="search_dimension_1br">1BR</string>
+<string name="search_dimension_2br">2BR</string>
+<string name="search_dimension_3br">3BR</string>
+<string name="search_dimension_4br">4BR</string>
 
 <string name="search_feature_title">Feature</string>
 <string name="search_feature_24">24h Front Desk</string>
@@ -45,6 +56,8 @@
 <string name="search_feature_smoking">Non Smoking Rooms</string>
 <string name="search_feature_breakfast">Free Breakfast</string>
 <string name="search_feature_gym">Sports Gym</string>
+
+<string name="property_list_window_title">Properties</string>
 
 <string name="property_window_title">Property Details</string>
 <string name="property_monthly_rent_title">Monthly Rent</string>
@@ -66,15 +79,23 @@
 <string name="save_alert_add">保存リストに登録されました。</string>
 <string name="save_alert_add_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
 
-<string name="save_list_not_message">保存リストに物件がありません。</string>
 <string name="save_list_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
 
-<string name="form_name_title">Name</string>
-<string name="form_gender_title">Gender</string>
+<string name="inquiry_window_title">Inquiry</string>
+<string name="confirm_window_title">Confirm</string>
+<string name="confirm_message_title">この内容で送信しますか？</string>
+
+<string name="form_name_title">Full Name</string>
+<string name="form_kana_title">Kana</string>
 <string name="form_company_name_title">Company Name</string>
-<string name="form_mail_title">Email</string>
-<string name="form_tel_title">Telephone number</string>
+<string name="form_mail_title">Email Address</string>
+<string name="form_tel_title">Telephone Number</string>
+<string name="form_post_code_title">Post Code</string>
 <string name="form_address_title">Address</string>
+
+<string name="form_gender_title">Gender</string>
+<string name="form_gender_name_0">Mr.</string>
+<string name="form_gender_name_1">Ms.</string>
 
 <string name="form_stay_title">Approximate move-in date</string>
 <string name="form_stay_name_0">whithin 2 weeks</string>
@@ -91,9 +112,15 @@
 <string name="form_span_name_3">6-12 months</string>
 <string name="form_span_name_4">1 year or more</string>
 <string name="form_span_name_5">undecided</string>
-
 <string name="form_requests_questions_title">Requests | Questions</string>
+<string name="form_result_message">The representative from the properties will comtact you later. Sincerely.</string>
 
+<string name="help_inquiry_title">You have to select properties to inquire.</string>
+<string name="help_press_message">Press "Add to My List" and it will be automatically added to the Basket.</string>
+
+<string name="help_about_title">About serviced apartments</string>
+<string name="help_about_message">serviced apartment is a type of furnished, self-contained apartment designed for short-term stays, which provides amenities for daily use.
+ Serviced apartments can be less expensive than equivalent hotel rooms. Since the beginning of the boom in cheap international travel and the corresponding increase in the level of sophistication of international travelers, interest in serviced apartments has risen at the expense of the use of hotels for short stays.</string>
 
 <string name="open_browser_title">Open in the browser?</string>
 

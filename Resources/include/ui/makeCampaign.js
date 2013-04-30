@@ -65,7 +65,7 @@ exports.exec = function(json,isIndex,isFirst){
           backgroundColor:'#000',
           borderRadius:5,
           borderColor:'#000',
-          font:{fontFamily:'Helvetica Neue', fontSize:13},
+          font:{sfontSize:13},
           message:L('loading_title'),
           style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN
         });

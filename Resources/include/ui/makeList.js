@@ -33,32 +33,44 @@ exports.exec = function(json,isIndex,isCampaign,isFirst,conditions){
 
             //メインタイトル
             if(setting.isEn){
+                var main_text = json.type[i].col_building_e + ' / ' + json.type[i].col_type_e + ' / ' + json.type[i].col_area_e;
                 if(isCampaign){
-                    var main_text = json.type[i].col_building_e + ' / ' + json.type[i].col_type_e + ' / ' + json.type[i].col_area_e;
                     var summary_text = json.type[i].col_campaign_title_e;
                 }else{
-                    var main_text = json.type[i].col_building_e + ' / ' + json.type[i].col_type_e;
-                    var summary_text = json.type[i].col_area_e + ' / ' + json.type[i].col_cost_e + ' / ' + json.type[i].col_size;
+                    var summary_text = json.type[i].col_rent_cost_e + ' / ' + json.type[i].col_size + '㎡';
                 }
                 
             }else{
+                var main_text = json.type[i].col_building + ' / ' + json.type[i].col_type + ' / ' + json.type[i].col_area;
                 if(isCampaign){
-                    var main_text = json.type[i].col_building + ' / ' + json.type[i].col_type + ' / ' + json.type[i].col_area;
                     var summary_text = json.type[i].col_campaign_title;
                 }else{
-                    var main_text = json.type[i].col_building + ' / ' + json.type[i].col_type;
-                    var summary_text = json.type[i].col_area + ' / ' + json.type[i].col_cost + ' / ' + json.type[i].col_size;
+                    var summary_text = json.type[i].col_rent_cost + ' / ' + json.type[i].col_size + '㎡';
                 }
 
             }
             
-            var property_title = cu.createTitleLabel(main_text,'#6f5b37','auto',30,0,70);
+            var property_title = cu.createTitleLabel(main_text,setting.row_title_color,'auto',30,0,70);
             row.add(property_title);
 
             //説明文
-            var property_summary = cu.createSummaryLabel(summary_text,'#222222','auto',30,30,70);
+            var property_summary = cu.createSummaryLabel(summary_text,setting.row_summary_color,'auto',30,30,70);
             row.add(property_summary);
             con.UI.tableView.appendRow(row);
+            row.addEventListener('click', function(e) {
+                var newWindow = Titanium.UI.createWindow({
+                    title: e.rowData.ext.rowTitle,
+                    backgroundColor: '#fff',
+                    url: e.rowData.url,
+                    navBarHidden: false,
+                    // Extended
+                    ext : {
+                        tid : e.rowData.ext.tid,
+                        //"rule-name" : ["hoge", "piyo"]
+                    }
+                });
+                Titanium.UI.currentTab.open(newWindow);
+            });
         }
         if(isIndex){
             //もっと見る////////////////////////////////////////
@@ -73,6 +85,15 @@ exports.exec = function(json,isIndex,isCampaign,isFirst,conditions){
                 }
             });
             con.UI.tableView.appendRow(row);
+            row.addEventListener('click', function(e) {
+                var newWindow = Titanium.UI.createWindow({
+                    title: e.rowData.ext.rowTitle,
+                    backgroundColor: '#fff',
+                    url: e.rowData.url,
+                    navBarHidden: false
+                });
+                Titanium.UI.currentTab.open(newWindow);
+            });
         }
     }
 
@@ -89,7 +110,7 @@ exports.exec = function(json,isIndex,isCampaign,isFirst,conditions){
           backgroundColor:'#000',
           borderRadius:5,
           borderColor:'#000',
-          font:{fontFamily:'Helvetica Neue', fontSize:13},
+          font:{fontSize:13},
           message:L('loading_title'),
           style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN
         });

@@ -2,20 +2,30 @@
 var cu = {};
 var setting = {
     "section_title_background_color":'#F5F2EC',
-    "row_margin_left":10,
-    "row_title_width":96,
+    "terminal_width":320,
+    "row_margin":5,
+    "row_title_width":106,
     "row_title_height":30,
     "row_title_color":'#2f0103',
     "row_title_background_color":'#DCD1BA',
     "row_summary_color":'#222222',
     "row_bg":'img/row_bg.gif',
     "isEn":false,
+    "isDebug":true,
+    "isResult":false,
     "lang_string":"",
     };
     
     if(Ti.Platform.locale == 'en'){
         setting.isEn = true;
-        setting.lang_string = "_eng";
+        setting.lang_string = "en";
+        //setting.lang_string = "ja";
+    }else{
+        ///debug//////////////////////////////////////////////////
+        setting.isEn = true;
+        setting.lang_string = "en";
+        //////////////////////////////////////////////////////////
+        //setting.lang_string = "ja";
     }
 
 (function() {
@@ -80,7 +90,7 @@ var setting = {
             height:height,
             top:top,
             left:left,
-            font:{fontSize:11,fontWeight:'bold', fontFamily:'Arial'}
+            font:{fontSize:12,fontWeight:'normal'}
         });
         return label;
     };
@@ -94,7 +104,8 @@ var setting = {
             height:height,
             top:top,
             left:left,
-            font:{fontSize:11,fontWeight:'normal', fontFamily:'Arial'},
+            bottom:top,
+            font:{fontSize:12,fontWeight:'normal'},
         });
         return label;
     };
@@ -104,6 +115,8 @@ var setting = {
         var row = Ti.UI.createTableViewRow({
             height:20,
             backgroundColor:setting.section_title_background_color,
+            touchEnabled : false,
+            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
         });
 
@@ -111,7 +124,7 @@ var setting = {
             text:about_property,
             color:'#000000',
             
-            font:{fontSize:14,fontWeight:'bold', fontFamily:'Arial'},
+            font:{fontSize:14,fontWeight:'bold'},
         });
         row.add(label);
         return row;
@@ -122,19 +135,23 @@ var setting = {
         var row = Ti.UI.createTableViewRow({
             height:'auto',
             backgroundColor:setting.row_title_background_color,
+            touchEnabled : false,
+            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
         });
-        var col_width = setting.row_title_width - setting.row_margin_left;
-        var row_title = cu.createTitleLabel(L(row_title_define),setting.row_title_color,col_width,'auto',0,setting.row_margin_left);
+        var col_width = setting.row_title_width - setting.row_margin;
+        var row_title = cu.createTitleLabel(L(row_title_define),setting.row_title_color,col_width,'auto',setting.row_margin,setting.row_margin);
 
         var rowWrap = Ti.UI.createView({
-            width: 320 - col_width - 10,
+            width: setting.terminal_width - col_width - setting.row_margin,
             backgroundColor:'#ffffff',
             height: Ti.UI.SIZE,
             top:0,
-            left:setting.row_title_width + 10
+            left:setting.row_title_width + setting.row_margin,
+            //bottom:10,
         });
-        var row_detail = cu.createSummaryLabel(row_data,setting.row_summary_color,320 - col_width - 30,'auto',0,10);
+        //var row_detail = cu.createSummaryLabel(row_data,setting.row_summary_color,setting.terminal_width - col_width - 40,'auto',setting.row_margin,setting.row_margin);
+        var row_detail = cu.createSummaryLabel(row_data,setting.row_summary_color,setting.terminal_width - col_width - 30,'auto',setting.row_margin,setting.row_margin);
         
         rowWrap.add(row_detail)
         
@@ -149,24 +166,26 @@ var setting = {
         var row = Ti.UI.createTableViewRow({
             height:'auto',
             backgroundColor:setting.row_title_background_color,
+            touchEnabled : false,
+            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
         });
-        var col_width = setting.row_title_width - setting.row_margin_left;
-        var row_title = cu.createTitleLabel(L(row_title_define),setting.row_title_color,col_width,'auto',0,setting.row_margin_left);
+        var col_width = setting.row_title_width - setting.row_margin;
+        var row_title = cu.createTitleLabel(L(row_title_define),setting.row_title_color,col_width,'auto',setting.row_margin,setting.row_margin);
 
         var rowWrap = Ti.UI.createView({
-            width: 320 - col_width - 10,
+            width: 320 - col_width - setting.row_margin,
             backgroundColor:'#ffffff',
             height: Ti.UI.SIZE,
             top:0,
-            left:setting.row_title_width + 10
+            left:setting.row_title_width + setting.row_margin
         });
-        var row_detail = cu.createSummaryLabel(address,setting.row_summary_color,320 - col_width - 30 - 50,'auto',0,10);
+        var row_detail = cu.createSummaryLabel(address,setting.row_summary_color,320 - col_width - 30 - 50,'auto',setting.row_margin,setting.row_margin);
 
         rowWrap.add(row_detail);
 
         var map_button = Ti.UI.createButton({
-          backgroundImage:'img/map_btn.png',
+          backgroundImage:'img/map_btn_' + setting.lang_string + '.png',
           color:'#ffffff',
           width:50,
           height:35,
@@ -195,14 +214,14 @@ var setting = {
     };
 
 
-    cu.createCheckboxTitleRow = function(text) {
+    cu.createSearchTitleRow = function(text) {
         var row = Ti.UI.createTableViewRow({
             height:20,
             backgroundColor:setting.row_title_background_color,
             hasChild:false
         });
         var label = cu.createTitleLabel(text,setting.row_title_color,'auto','auto',0,5);
-        label.font = {fontSize:14,fontWeight:'bold', fontFamily:'Arial'};
+        label.font = {fontSize:14,fontWeight:'bold'};
         row.add(label);
         return row;
     };
@@ -215,7 +234,7 @@ var setting = {
             //height:height,
             top:top,
             left:left,
-            font:{fontSize:14,fontWeight:'bold', fontFamily:'Arial'},
+            font:{fontSize:14,fontWeight:'bold'},
         });
         return label;
     };
@@ -247,7 +266,6 @@ var setting = {
             if(array.indexOf(value) == -1 ){
                 array.push(value);
             }
-            
             //Ti.API.info('on_e : ' + array);
         };
          
@@ -293,9 +311,26 @@ var setting = {
                 if(false == e.rowData.ext.checkbox.value) {
                     checkbox.title='\u2713';
                     checkbox.value = true;
+                    if(array.indexOf(value) == -1 ){
+                        array.push(value);
+                    }
+                    //Ti.API.info('on_e : ' + array);
                 } else {
                     checkbox.title='';
                     checkbox.value = false;
+                    var index = array.indexOf(value);
+                    if(index != -1 ){
+                        if(array.length > 1){
+                            for(i = 0; i < array.length; i++){
+                                if(array[i] == value){
+                                    array.splice(i,index);
+                                }
+                            }
+                        }else{
+                            array.length = 0;
+                        }
+                    }
+                    //Ti.API.info('off_e : ' + array);
                 }
             }
         });
@@ -303,6 +338,36 @@ var setting = {
         row.add(checkbox);
         
         var checkbox_title = cu.createCheckboxTitleLabel(title,5,30);
+
+        checkbox_title.addEventListener('click', function(e) {
+            if (e.source == this) {
+                if(false == e.rowData.ext.checkbox.value) {
+                    checkbox.title='\u2713';
+                    checkbox.value = true;
+                    if(array.indexOf(value) == -1 ){
+                        array.push(value);
+                    }
+                    Ti.API.info('on_e : ' + array);
+                } else {
+                    checkbox.title='';
+                    checkbox.value = false;
+                    var index = array.indexOf(value);
+                    if(index != -1 ){
+                        if(array.length > 1){
+                            for(i = 0; i < array.length; i++){
+                                if(array[i] == value){
+                                    array.splice(i,index);
+                                }
+                            }
+                        }else{
+                            array.length = 0;
+                        }
+                    }
+                    Ti.API.info('off_e : ' + array);
+                }
+            }
+        });
+        
         row.add(checkbox_title);
 
         return row;
@@ -312,11 +377,13 @@ var setting = {
     cu.makeSavePropertyRow = function(tid,property_name,type_name,size,monthly_rent) {
         var row = Ti.UI.createTableViewRow({
             height:'auto',
+            touchEnabled : false,
+            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
-        })
+        });
 
         var save_button = Ti.UI.createButton({
-          backgroundImage:'img/save_btn' + setting.lang_string + '.png',
+          backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
           color:'#ffffff',
           width:320,
           height:60,
@@ -373,4 +440,10 @@ var setting = {
         row.add(info);
         con.UI.tableView.appendRow(row);
     };
+    cu.makeTitleRow = function(title,form_title_height,form_margin_left){
+        var row = Ti.UI.createTableViewRow();
+        var title = cu.createTitleLabel(title,setting.row_title_color,'auto',form_title_height,0,form_margin_left);
+        row.add(title);
+        return row;
+    }
 })();

@@ -2,12 +2,16 @@ var win = Titanium.UI.currentWindow;
 
 // ライブラリの読み込み
 Titanium.include('include/fw/container.js');
-
-//con.UI.tableView.separatorColor = '#ffffff';
-//win.add(con.UI.tableView);
-
-
-var url = con.loadContact();
+win.add(con.UI.tableView);
+con.UI.tableView.separatorColor = '#ffffff';
+con.loadInquiry();
+/*
+win.addEventListener('focus', function(e){
+    con.loadInquiry();
+});
+*/
+/*
+var url = con.loadInquiry();
 var webview = Ti.UI.createWebView({
     url:url,
     //url:'http://tsa.hades.corp.813.co.jp/en/webview/result?tids=236%2C266',
@@ -33,3 +37,4 @@ webview.addEventListener('load',function(e) {
 });
 
 win.add(webview);
+*/

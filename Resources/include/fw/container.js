@@ -10,34 +10,18 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
     // 本体となるTableViewはここで宣言しておく。
     //con.UI.tableView = Titanium.UI.createTableView({separatorColor:'NONE'});
     con.UI.tableView = Titanium.UI.createTableView();
-    
-/*    con.loadIndex = function(isHeader) {
-        var url = tsa_url + '/json/type/condition/special/campaign';
-        con.callAPI('GET', url, null, function(status, responseText) {
-            // 受け取ったJSONデータをパース
-            var json = JSON.parse(responseText);
-            var loadIndex = require("include/ui/makeIndex");
-            loadIndex.exec(json,isHeader);
-        });
-    };*/
 
-/*    con.loadCampaign = function(isIndex,isFirst) {
-        var url = tsa_url + '/json/type/condition/special/campaign';
-        con.callAPI('GET', url, null, function(status, responseText) {
-            // 受け取ったJSONデータをパース
-            var json = JSON.parse(responseText);
-            var loadCampaign = require("include/ui/makeCampaign");
-            loadCampaign.exec(json,isIndex,isFirst);
-        });
-    };*/
+    con.isRetina4Inch = function() {
+      return Ti.Platform.displayCaps.platformHeight == 568;
+    };
 
     con.loadList = function(isIndex,isCampaign,isFirst,conditions) {
         var url = tsa_url + '/json/type/condition/special/campaign';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
-            var loadlist = require("include/ui/makelist");
-            loadlist.exec(json,isIndex,isCampaign,isFirst,conditions);
+            var loadList = require("include/ui/makeList");
+            loadList.exec(json,isIndex,isCampaign,isFirst,conditions);
         });
     };
 
@@ -47,9 +31,17 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
     };
     con.getCondition = function(conditions) {
         var encode_url = [];
-        if(conditions.regions != '') encode_url['regions'] = encodeURIComponent(conditions.regions);
-        if(conditions.dimensions != '') encode_url['dimensions'] = encodeURIComponent(conditions.dimensions);
-        if(conditions.features != '') encode_url['features'] = encodeURIComponent(conditions.features);
+
+        if(conditions.budgets.length > 0){
+            encode_url['budgets'] = encodeURIComponent(conditions.budgets);
+        }
+
+        if(conditions.maps.length > 0){
+            encode_url['maps'] = encodeURIComponent(conditions.maps);
+        }
+        
+        //if(conditions.dimensions != '') encode_url['dimensions'] = encodeURIComponent(conditions.dimensions);
+        //if(conditions.features != '') encode_url['features'] = encodeURIComponent(conditions.features);
         return setParameter(encode_url);
     }
     
@@ -59,8 +51,8 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
-            var loadlist = require("include/ui/makelist");
-            loadlist.exec(json,isIndex,isCampaign,isFirst,conditions);
+            var loadList = require("include/ui/makeList");
+            loadList.exec(json,isIndex,isCampaign,isFirst,conditions);
         });
     };
 
@@ -74,7 +66,10 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
         //Ti.API.info('row count' + rows.getRowCount());
         
         if( rows.getRowCount() == 0){
-            var save_text = L('save_list_not_message');
+            //var save_text = L('save_list_not_message');
+            con.UI.tableView.separatorColor = '#ffffff';
+            var loadHelp = require("include/ui/makeHelp");
+            loadHelp.exec();
         }else{
             //パラメータ生成
             var tids = '';
@@ -107,21 +102,37 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
     };
 
     //コンタクト
-    con.loadContact = function() {
+    con.loadInquiry = function() {
         //save
         var db = Ti.Database.open(db_setting.table_save);
         db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
         
         var rows = db.execute('select rowid,* from ' + db_setting.table_save);
-        if(Ti.Platform.locale == 'en'){
-            var url_lang_string = "en";
-        }else{
-            var url_lang_string = "ja";
-        }
-
+        
         if( rows.getRowCount() == 0){
-            return tsa_url + '/' +  url_lang_string +  '/webview/inquiry';
+            var loadHelp = require("include/ui/makeHelp");
+            loadHelp.exec();
         }else{
+            //パラメータ生成
+            var tids = '';
+            var toPutComma = false;
+            while(rows.isValidRow()){
+                if ( toPutComma ) {
+                    tids = tids + ',';
+                } else {
+                    toPutComma = true;
+                }
+                tids = tids + rows.fieldByName('tid');
+                rows.next();
+            }
+            if(tids != ''){
+                var loadInquiry = require("include/ui/makeInquiry");
+                loadInquiry.exec(tids);
+            }else{
+                var loadHelp = require("include/ui/makeHelp");
+                loadHelp.exec();
+            }
+/*
             //パラメータ生成
             var tids = '';
             var encode_url = '';
@@ -137,26 +148,41 @@ var tsa_url = 'http://tsa.hades.corp.813.co.jp';
             }
             if(tids != ''){
                 encode_url = encode_url + encodeURIComponent(tids);
-                return tsa_url + '/' +  url_lang_string +  '/webview/inquiry?tids=' + encode_url;
+                return tsa_url + '/' +  setting.lang_string +  '/webview/inquiry?tids=' + encode_url;
             }else{
-                return tsa_url + '/' +  url_lang_string +  '/webview/inquiry';
+                return tsa_url + '/' +  setting.lang_string +  '/webview/inquiry';
             }
+*/
         }
     };
-    
+
+    con.loadConfirm = function(params) {
+        var loadConfirm = require("include/ui/makeConfirm");
+        loadConfirm.exec(params);
+    };
+
     //コンタクト結果
-    con.loadResult = function() {
-        //save
-        var db = Ti.Database.open(db_setting.table_save);
-        db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
-        
-        var rows = db.execute('select rowid,* from ' + db_setting.table_save);
+    con.loadResult = function(params) {
+        var url = tsa_url + '/json/inquiry';
+/*
+        var loadResult = require("include/ui/makeResult");
+        loadResult.exec(params);
+*/
+        con.callAPI('POST', url, params, function(status, responseText) {
+            if(responseText == "success"){
+/*
+                //save delete
+                var db = Ti.Database.open(db_setting.table_save);
+                db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
+                var rows = db.execute('select rowid,* from ' + db_setting.table_save);
+*/
+                var loadResult = require("include/ui/makeResult");
+                loadResult.exec(params);
+            }else{
+                
+            }
+        });
 
-        if( rows.getRowCount() == 0){
-            //return tsa_url + '/' +  url_lang_string +  '/webview/inquiry';
-        }else{
-
-        }
     };
 
     //物件詳細

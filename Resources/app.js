@@ -41,11 +41,11 @@ var tab3 = Titanium.UI.createTab({
 // 4番目のタブの定義
 var tab4 =  Titanium.UI.createTab({
     icon: 'img/icon_mail.png',
-    title: L('tab_name_contact'),
+    title: L('tab_name_inquiry'),
     window: Titanium.UI.createWindow({
-        title: L('tab_name_contact'),
+        title: L('tab_name_inquiry'),
         backgroundColor: '#fff',
-        url:'tab_contact.js'
+        url:'tab_inquiry.js'
     })
 });
 
