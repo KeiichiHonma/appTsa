@@ -137,7 +137,8 @@ exports.exec = function(json,tid){
         campaignRow.add(campaign_summary);
         con.UI.tableView.appendRow(campaignRow);
     }
-
+    //save
+    cu.makeSavePropertyRow(tid,property_name,type_name,size,monthly_rent);
     //Monthly Rent
     cu.makePropertyRow('property_monthly_rent_title',monthly_rent);
     //Other Expenses

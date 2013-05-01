@@ -113,7 +113,10 @@
 <string name="form_span_name_4">1 year or more</string>
 <string name="form_span_name_5">undecided</string>
 <string name="form_requests_questions_title">Requests | Questions</string>
-<string name="form_result_message">The representative from the properties will comtact you later. Sincerely.</string>
+
+<string name="form_thank_message">Thank You For Inquiry</string>
+<string name="form_result_message">The representative from the properties will comtact you later.
+Sincerely.</string>
 
 <string name="help_inquiry_title">You have to select properties to inquire.</string>
 <string name="help_press_message">Press "Add to My List" and it will be automatically added to the Basket.</string>
@@ -130,6 +133,6 @@
 <string name="info_request_title">Requests | Questions</string>
 <string name="info_privacy_policy_title">Privacy policy</string>
 <string name="info_company_title">Company</string>
-<string name="info_version_title">Version </string>
+<string name="info_version_title">Version 1.0.0</string>
 
 </resources>

@@ -3,6 +3,7 @@ exports.exec = function(json,tid){
     var platform_height = Ti.Platform.displayCaps.platformHeight;
     
     var win = Titanium.UI.currentWindow;
+    win.backgroundColor = '#000000';
     //win.title = L('property_slideshow_title');
     var images = new Array();
     Ti.API.info( Ti.Platform.displayCaps.platformHeight );

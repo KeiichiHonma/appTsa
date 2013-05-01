@@ -6,7 +6,9 @@ var setting = {
     "row_margin":5,
     "row_title_width":106,
     "row_title_height":30,
-    "row_title_color":'#2f0103',
+    //"row_title_color":'#2f0103',
+    //"row_title_color":'#7D715B',
+    "row_title_color":'#330000',
     "row_title_background_color":'#DCD1BA',
     "row_summary_color":'#222222',
     "row_bg":'img/row_bg.gif',
@@ -242,7 +244,7 @@ var setting = {
     cu.makeCheckboxRow = function(title,array,value) {
         var checkbox = Ti.UI.createButton({
             title: '',
-            top: 5,
+            top: 10,
             left: 5,
             width: 20,
             height: 20,
@@ -299,7 +301,7 @@ var setting = {
         });
         
         var row = Ti.UI.createTableViewRow({
-            height:30,
+            height:40,
             ext : {
                 checkbox : checkbox
             }
@@ -337,7 +339,7 @@ var setting = {
 
         row.add(checkbox);
         
-        var checkbox_title = cu.createCheckboxTitleLabel(title,5,30);
+        var checkbox_title = cu.createCheckboxTitleLabel(title,10,30);
 
         checkbox_title.addEventListener('click', function(e) {
             if (e.source == this) {
@@ -347,7 +349,7 @@ var setting = {
                     if(array.indexOf(value) == -1 ){
                         array.push(value);
                     }
-                    Ti.API.info('on_e : ' + array);
+                    //Ti.API.info('on_e : ' + array);
                 } else {
                     checkbox.title='';
                     checkbox.value = false;
@@ -363,20 +365,18 @@ var setting = {
                             array.length = 0;
                         }
                     }
-                    Ti.API.info('off_e : ' + array);
+                    //Ti.API.info('off_e : ' + array);
                 }
             }
         });
-        
         row.add(checkbox_title);
-
         return row;
     }
 
     //save
     cu.makeSavePropertyRow = function(tid,property_name,type_name,size,monthly_rent) {
         var row = Ti.UI.createTableViewRow({
-            height:'auto',
+            height:110,
             touchEnabled : false,
             selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
@@ -436,7 +436,7 @@ var setting = {
             }); 
             multi_option_alert.show();
         });
-        var info = cu.createSummaryLabel('Press "Add to My List" and it will be automatically added to the Basket. ',setting.row_summary_color,300,'auto',70,10);
+        var info = cu.createSummaryLabel(L('help_press_message'),setting.row_summary_color,300,40,70,10);
         row.add(info);
         con.UI.tableView.appendRow(row);
     };

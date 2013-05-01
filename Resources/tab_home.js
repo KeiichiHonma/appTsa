@@ -3,8 +3,6 @@ var win = Titanium.UI.currentWindow;
 // ライブラリの読み込み
 Titanium.include('include/fw/container.js');
 
-win.add(con.UI.tableView);
-
 //ヘッダ画像////////////////////////////////////////
 var row = Ti.UI.createTableViewRow({
     height:130,
@@ -42,7 +40,7 @@ row.addEventListener('click', function(e) {
     });
     Titanium.UI.currentTab.open(newWindow);
 });
-
+win.add(con.UI.tableView);
 con.loadList(true,true,true,null);
 
 /*con.UI.tableView.addEventListener('click', function(e) {

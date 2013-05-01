@@ -12,7 +12,8 @@ var tab1 = Titanium.UI.createTab({
         title: L('tab_name_home'),
         backgroundColor: '#fff',
         url: 'tab_home.js',
-        navBarHidden: true
+        navBarHidden: true,
+        barColor: '#7D715B'
     })
 });
 
@@ -23,7 +24,8 @@ var tab2 = Titanium.UI.createTab({
     window: Titanium.UI.createWindow({
         title: L('tab_name_search'),
         backgroundColor: '#fff',
-        url: 'tab_search.js'
+        url: 'tab_search.js',
+        barColor: '#7D715B'
     })
 });
 
@@ -34,7 +36,8 @@ var tab3 = Titanium.UI.createTab({
     window: Titanium.UI.createWindow({
         title: L('tab_name_save'),
         backgroundColor: '#fff',
-        url: 'tab_save.js'
+        url: 'tab_save.js',
+        barColor: '#7D715B'
     })
 });
 
@@ -45,7 +48,8 @@ var tab4 =  Titanium.UI.createTab({
     window: Titanium.UI.createWindow({
         title: L('tab_name_inquiry'),
         backgroundColor: '#fff',
-        url:'tab_inquiry.js'
+        url:'tab_inquiry.js',
+        barColor: '#7D715B'
     })
 });
 
@@ -61,7 +65,7 @@ var tab5 =  Titanium.UI.createTab({
         title: L('tab_name_info'),
         backgroundColor: '#fff',
         url: 'tab_info.js',
-        barColor: '#000'
+        barColor: '#7D715B'
     })
 });
 

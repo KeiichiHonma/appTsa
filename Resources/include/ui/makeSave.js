@@ -70,11 +70,11 @@ exports.exec = function(json){
                 var summary_text = json[i].col_rent_cost + ' / ' + json[i].col_size + '㎡';
             }
         }
-        var property_title = cu.createTitleLabel(main_text,'#6f5b37','auto',30,0,70);
+        var property_title = cu.createTitleLabel(main_text,setting.row_title_color,'auto',30,0,70);
         row.add(property_title);
 
         //説明文
-        var property_summary = cu.createSummaryLabel(summary_text,'#222222','auto',30,30,70);
+        var property_summary = cu.createSummaryLabel(summary_text,setting.row_summary_color,'auto',30,30,70);
         row.add(property_summary);
         //tableView.appendRow(row);
         con.UI.tableView.appendRow(row);

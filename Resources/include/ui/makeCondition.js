@@ -1,21 +1,6 @@
 exports.exec = function(json){
     // データをクリア
     con.UI.tableView.data = [];
-
-/*    con.UI.tableView.addEventListener('click', function(e) {
-        if (e.source == this) {
-            if(false == e.rowData.ext.checkbox.value) {
-                e.rowData.ext.checkbox.title='\u2713';
-                e.rowData.ext.checkbox.value = true;
-                Ti.API.info(2);
-            } else {
-                e.rowData.ext.checkbox.title='';
-                e.rowData.ext.checkbox.value = false;
-                Ti.API.info(3);
-            }
-        }
-    });*/
-
     var budgets = [];
     var maps = [];
     //var dimensions = [];
@@ -28,11 +13,11 @@ exports.exec = function(json){
     con.UI.tableView.appendRow( cu.createSearchTitleRow( L('search_budget_title') ) );
 
     var row = Ti.UI.createTableViewRow({
-        height:30,
+        height:40,
         hasChild:true
     });
 
-    var picker_title = cu.createCheckboxTitleLabel(L('search_budget_action'),5,30);
+    var picker_title = cu.createCheckboxTitleLabel(L('search_budget_action'),10,30);
     row.add( picker_title );
     con.UI.tableView.appendRow(row);
     var is_budget_view = false;
