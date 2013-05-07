@@ -451,43 +451,4 @@ function setParameter(par){
     }
     return str;
 }
-
-    // ユーザタイムラインを取得する。
-/*    con.loadUserTimeline = function(screenName) {
-        //var url = 'http://api.twitter.com/1/statuses/user_timeline.json?screen_name=' + screenName;
-        var url = tsa_url + '/json/type/condition/aid/4';
-        
-        con.callAPI('GET', url, null, function(status, responseText) {
-        //Ti.API.info(responseText);
-            // データをクリア
-            con.UI.tableView.data = [];
-            // 受け取ったJSONデータをパース
-            var json = JSON.parse(responseText);
-            //Ti.API.info(json);
-            for(var i = 0; i< json.length; i++) {
-                con.UI.tableView.appendRow(con.UI.createTableViewRow(json[i]));
-            }
-        });
-    };*/
-    // 検索結果を取得する。
-/*    con.loadSearchResult = function(queryString) {
-        var url = 'http://search.twitter.com/search.json';
-        con.callAPI('GET', url, {
-            q: queryString
-        }, function(status, responseText) {
-            // データをクリア
-            con.UI.tableView.data = [];
-            // 受け取ったJSONデータをパース
-            var json = JSON.parse(responseText);
-            for(var i = 0; i< json.results.length; i++) {
-                // レイアウトの違いを吸収
-                var tweet = json.results[i];
-                tweet.user = {};
-                tweet.user.screen_name = tweet.from_user;
-                tweet.user.name = tweet.from_user;
-                tweet.user.profile_image_url = tweet.profile_image_url;
-                con.UI.tableView.appendRow(con.UI.createTableViewRow(tweet));
-            }
-        });
-    };*/
 })();

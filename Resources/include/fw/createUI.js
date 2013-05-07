@@ -4,6 +4,7 @@ var setting = {
     "section_title_background_color":'#F5F2EC',
     "terminal_width":320,
     "row_margin":5,
+    "row_height":65,
     "row_title_width":106,
     "row_title_height":30,
     //"row_title_color":'#2f0103',
@@ -11,6 +12,7 @@ var setting = {
     "row_title_color":'#330000',
     "row_title_background_color":'#DCD1BA',
     "row_summary_color":'#222222',
+    "row_summary_bold_color":'#860100',
     "row_bg":'img/row_bg.gif',
     "isEn":false,
     "isDebug":true,
@@ -92,7 +94,21 @@ var setting = {
             height:height,
             top:top,
             left:left,
-            font:{fontSize:12,fontWeight:'normal'}
+            font:{fontSize:11,fontWeight:'normal'}
+        });
+        return label;
+    };
+
+    cu.createTitleBoldLabel = function(text,color,width,height,top,left) {
+        var label = Ti.UI.createLabel({
+            text:text,
+            color:color,
+            //backgroundColor:'#DCD1BA',
+            width:width,
+            height:height,
+            top:top,
+            left:left,
+            font:{fontSize:11,fontWeight:'bold'}
         });
         return label;
     };
@@ -107,7 +123,22 @@ var setting = {
             top:top,
             left:left,
             bottom:top,
-            font:{fontSize:12,fontWeight:'normal'},
+            font:{fontSize:11,fontWeight:'normal'},
+        });
+        return label;
+    };
+
+    cu.createSummaryBoldLabel = function(text,color,width,height,top,left) {
+        var label = Ti.UI.createLabel({
+            text:text,
+            color:color,
+            backgroundColor:'#ffffff',
+            width:width,
+            height:height,
+            top:top,
+            left:left,
+            bottom:top,
+            font:{fontSize:11,fontWeight:'bold'},
         });
         return label;
     };
@@ -155,7 +186,7 @@ var setting = {
         //var row_detail = cu.createSummaryLabel(row_data,setting.row_summary_color,setting.terminal_width - col_width - 40,'auto',setting.row_margin,setting.row_margin);
         var row_detail = cu.createSummaryLabel(row_data,setting.row_summary_color,setting.terminal_width - col_width - 30,'auto',setting.row_margin,setting.row_margin);
         
-        rowWrap.add(row_detail)
+        rowWrap.add(row_detail);
         
         row.add(row_title);
         //row.add(row_summary);

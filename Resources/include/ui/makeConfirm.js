@@ -48,22 +48,12 @@ exports.exec = function(params){
     
     //tel///////////////////////////////////////
     var row = cu.makeTitleRow( L('form_tel_title'),20,10 );
-    row.add( name_l = makeLabel(win.ext.params.tel) );
-    con.UI.tableView.appendRow(row);
-
-    //郵便番号///////////////////////////////////////
-    var row = cu.makeTitleRow( L('form_post_code_title'),20,10 );
-    row.add( name_l = makeLabel(win.ext.params.post) );
-    con.UI.tableView.appendRow(row);
-
-    //住所///////////////////////////////////////
-    var row = cu.makeTitleRow( L('form_address_title'),20,10 );
-    row.add( name_l = makeLabel(win.ext.params.address) );
+    row.add( name_l = makeLabel(win.ext.params.telephone) );
     con.UI.tableView.appendRow(row);
 
     //メッセージ///////////////////////////////////////
     var row = cu.makeTitleRow( L('form_requests_questions_title'),20,10 );
-    row.add( name_l = makeLabel(win.ext.params.request) );
+    row.add( name_l = makeLabel(win.ext.params.detail) );
     con.UI.tableView.appendRow(row);
 
     // 送信ボタン押下時の処理

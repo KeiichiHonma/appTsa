@@ -6,7 +6,6 @@ exports.exec = function(tids){
     // データをクリア
     con.UI.tableView.data = [];
     
-    var gender = '';
     var stay = '';
     var span = '';
     var name = '';
@@ -14,10 +13,9 @@ exports.exec = function(tids){
     var company = '';
     var mail = '';
     var telephone = '';
-    var postcode = '';
-    var address = '';
-    var request = '';
-    var params = { tids:0,gender:gender,stay: stay,span: span,name: name,kana: kana,company: company,mail: mail,telephone: telephone,postcode: postcode,address: address,detail: request};
+    var detail = '';
+    //var params = { tids:0,gender:gender,stay: stay,span: span,name: name,kana: kana,company: company,mail: mail,telephone: telephone,postcode: postcode,address: address,detail: detail};
+    var params = { tids:0,stay: stay,span: span,name: name,kana: kana,company: company,mail: mail,telephone: telephone,detail: detail};
     
     //アニメーション
     var open_animation = Ti.UI.createAnimation();
@@ -197,98 +195,12 @@ exports.exec = function(tids){
         is_span_view = true;
     });
 
-    //gender + name////////////////////////////////////////
-    var row = Ti.UI.createTableViewRow();
-    var title = cu.createTitleLabel(L('form_gender_title'),setting.row_title_color,'auto',form_title_height,0,form_margin_left);
-    var title2 = cu.createTitleLabel(L('form_name_title'),setting.row_title_color,'auto',form_title_height,0,"40%");
-    row.add(title);
-    row.add(title2);
-
-    var gender_tf = makeTextField( L('form_gender_title'),"30%",form_margin_left,Ti.UI.KEYBOARD_DEFAULT );
-    row.add(gender_tf);
-    
-    var name_tf = makeTextField( L('form_name_title'),"55%","40%",Ti.UI.KEYBOARD_DEFAULT );
-    row.add(name_tf);
-    con.UI.tableView.appendRow(row);
-
-    var is_gender_view = false;
-
-    var childGenderWin = Ti.UI.createWindow();
-    childGenderWin.bottom = -300;
-
-    var picker_gender_name = '';
-    var picker_gender_value = '';
-
-    var gender_picker = Ti.UI.createPicker({bottom:50});
-    var gender_data = [];
-    gender_data[0]=Ti.UI.createPickerRow({title:L('form_gender_name_0'),value:0});
-    gender_data[1]=Ti.UI.createPickerRow({title:L('form_gender_name_1'),value:1});
-    gender_picker.add(gender_data);
-
-    // 選択表示を有効にします（標準は無効）
-    gender_picker.selectionIndicator = true;
-    gender_picker.addEventListener('change',function(e){
-        // e.row, e.columnとして選択項目が取得できます
-        // e.row.custom_itemとして各列のカスタムデータが帰ります
-        picker_gender_name = e.row.title;
-        picker_gender_value = e.row.value;
-    });
-
-    var cancel_gender_button = Ti.UI.createButton({
-      backgroundImage:'img/cancel_btn_' + setting.lang_string + '.png',
-      color:'#ffffff',
-      width:100,
-      height:35,
-      bottom:5,
-      left:'10%',
-      opacity:1,
-    });
-
-    var submit_gender_button = Ti.UI.createButton({
-      backgroundImage:'img/select_btn_' + setting.lang_string + '.png',
-      color:'#ffffff',
-      width:100,
-      height:35,
-      bottom:5,
-      right:'10%',
-      opacity:1,
-    });
-
-    childGenderWin.add(gender_picker);
-    childGenderWin.add(btn_view);
-    childGenderWin.add(submit_gender_button);
-    childGenderWin.add(cancel_gender_button);
-
-    submit_gender_button.addEventListener('click', function(e){
-        is_gender_view = false;
-        childGenderWin.close(hide_animation);
-        gender_tf.value = picker_gender_name;
-        //gender_data[picker_gender_value].selected = true;
-        //gender_picker.setSelectedRow(0, picker_gender_value,true);
-    });
-
-    cancel_gender_button.addEventListener('click', function(e){
-        is_gender_view = false;
-        childGenderWin.close(hide_animation);
-    });
-
-    gender_tf.addEventListener('focus', function(e) {
-        if(!is_gender_view){
-            gender_tf.blur();
-            if(picker_gender_value != ''){
-                gender_picker.setSelectedRow(0, picker_gender_value,true);
-            }
-            childGenderWin.open(open_animation);
-        }
-        is_gender_view = true;
-    });
-
     //お名前///////////////////////////////////////
-/*    var row = cu.makeTitleRow( L('form_name_title'),form_title_height,form_margin_left );
-    var name_tf = makeTextField( L('form_name_title'),"100%",Ti.UI.KEYBOARD_DEFAULT );
+    var row = cu.makeTitleRow( L('form_name_title'),form_title_height,form_margin_left );
+    var name_tf = makeTextField( L('form_name_title'),"90%",form_margin_left,Ti.UI.KEYBOARD_DEFAULT );
     row.add(name_tf);
     con.UI.tableView.appendRow(row);
-*/
+    
     //フリガナ///////////////////////////////////////
     if(!setting.isEn){
         var row = cu.makeTitleRow( L('form_kana_title'),form_title_height,form_margin_left );
@@ -313,21 +225,6 @@ exports.exec = function(tids){
     var row = cu.makeTitleRow( L('form_tel_title'),form_title_height,form_margin_left );
     var tel_tf = makeTextField( L('form_tel_title'),"90%",form_margin_left,Ti.UI.KEYBOARD_PHONE_PAD );
     row.add(tel_tf);
-    con.UI.tableView.appendRow(row);
-
-    //郵便番号 + 住所///////////////////////////////////////
-    var row = Ti.UI.createTableViewRow();
-    var title = cu.createTitleLabel(L('form_post_code_title'),setting.row_title_color,'auto',form_title_height,0,form_margin_left);
-    var title2 = cu.createTitleLabel(L('form_address_title'),setting.row_title_color,'auto',form_title_height,0,"40%");
-    row.add(title);
-    row.add(title2);
-
-    var post_tf = makeTextField( L('form_post_code_title'),"30%",form_margin_left,Ti.UI.KEYBOARD_DEFAULT );
-    row.add(post_tf);
-    
-    var address_tf = makeTextField( L('form_address_title'),"55%","40%",Ti.UI.KEYBOARD_DEFAULT );
-    row.add(address_tf);
-
     con.UI.tableView.appendRow(row);
 
     //メッセージ///////////////////////////////////////
@@ -365,7 +262,6 @@ exports.exec = function(tids){
     confirm_button.addEventListener('click', function(e){
         params.tids = tids;
         if(!setting.isDebug){
-            params.gender = picker_gender_value;
             params.stay = picker_stay_value;
             params.span = picker_span_value;
             params.name = name_tf.value;
@@ -376,11 +272,9 @@ exports.exec = function(tids){
             params.company = company_tf.value;
             params.mail = mail_tf.value;
             params.telephone = tel_tf.value;
-            params.postcode = post_tf.value;
-            params.address = address_tf.value;
             params.request = request_ta.value;
         }else{
-            params = { tids:tids,stay: 2,gender: 1,span: 3,name: 'keiichi honma',kana: 'kana',company: 'hachione',mail: 'honma@zeus.corp.813.co.jp',telephone: '03-5428-8307',postcode: '1500044',address: 'KATO BLDG. 3F., 25-4, MARUYAMACHO, SHIBUYA-KU, TOKYO',detail: 'okokokok'};
+            params = { tids:tids,stay: 2,span: 3,name: 'keiichi honma',kana: 'kana',company: 'hachione',mail: 'honma@zeus.corp.813.co.jp',telephone: '03-5428-8307',detail: "oko\nkokok"};
         }
 
 

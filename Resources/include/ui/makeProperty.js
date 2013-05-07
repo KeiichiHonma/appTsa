@@ -120,6 +120,7 @@ exports.exec = function(json,tid){
         text:catch_phrase,
         color:setting.row_title_color,
         font:{fontSize:14},
+
     });
     catchRow.add(label);
     con.UI.tableView.appendRow(catchRow);
@@ -127,13 +128,36 @@ exports.exec = function(json,tid){
     //campaign//////////////////////////////////////////////////////////////////////////////
     if(json['type'].col_campaign == 0){
         var campaignRow = Ti.UI.createTableViewRow({
-            height:setting.row_title_height + 10,
+            //height:setting.row_title_height + 10,
+            height:'auto',
             touchEnabled : false,
             selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
         });
         campaignRow.add(row_campaign_bg);
-        var campaign_summary = cu.createTitleLabel(campaign_title,setting.row_title_color,'auto',setting.row_title_height + 10,0,setting.row_title_width + 10);
+/*
+        var campaign_summary = cu.createTitleLabel(
+            campaign_title,
+            setting.row_title_color,
+            'auto',
+            //setting.row_title_height + 10,
+            Ti.UI.SIZE,
+            0,
+            setting.row_title_width + 10
+        );
+*/
+        var campaign_summary = Ti.UI.createLabel({
+            text:campaign_title,
+            color:setting.row_title_color,
+            width:'auto',
+            height:Ti.UI.SIZE,
+            top:5,
+            bottom:5,
+            left:setting.row_title_width + 10,
+            font:{fontSize:11,fontWeight:'normal'}
+        });
+
+
         campaignRow.add(campaign_summary);
         con.UI.tableView.appendRow(campaignRow);
     }

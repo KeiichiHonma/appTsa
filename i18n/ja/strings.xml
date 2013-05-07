@@ -78,7 +78,6 @@
 <string name="save_alert_not_add">この物件は保存リストに登録されています。</string>
 <string name="save_alert_add">保存リストに登録されました。</string>
 <string name="save_alert_add_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
-
 <string name="save_list_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
 
 <string name="inquiry_window_title">Inquiry</string>
@@ -113,7 +112,10 @@
 <string name="form_span_name_4">1 year or more</string>
 <string name="form_span_name_5">undecided</string>
 <string name="form_requests_questions_title">Requests | Questions</string>
-<string name="form_result_message">The representative from the properties will comtact you later. Sincerely.</string>
+
+<string name="form_thank_message">Thank You For Inquiry</string>
+<string name="form_result_message">The representative from the properties will comtact you later.
+Sincerely.</string>
 
 <string name="help_inquiry_title">You have to select properties to inquire.</string>
 <string name="help_press_message">Press "Add to My List" and it will be automatically added to the Basket.</string>

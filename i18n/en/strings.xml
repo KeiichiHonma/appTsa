@@ -75,15 +75,14 @@
 <string name="property_address_title">Address</string>
 <string name="property_slideshow_title">Images</string>
 
-<string name="save_alert_not_add">この物件は保存リストに登録されています。</string>
-<string name="save_alert_add">保存リストに登録されました。</string>
-<string name="save_alert_add_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
-
-<string name="save_list_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
+<string name="save_alert_not_add">This property is already kept in a list</string>
+<string name="save_alert_add">This property is kept in a list</string>
+<string name="save_alert_add_message">You can contact each properties directly by batch</string>
+<string name="save_list_message">You can contact each properties directly by batch</string>
 
 <string name="inquiry_window_title">Inquiry</string>
 <string name="confirm_window_title">Confirm</string>
-<string name="confirm_message_title">この内容で送信しますか？</string>
+<string name="confirm_message_title">Are you sure to send this?</string>
 
 <string name="form_name_title">Full Name</string>
 <string name="form_kana_title">Kana</string>

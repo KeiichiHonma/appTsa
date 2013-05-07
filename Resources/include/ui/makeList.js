@@ -17,7 +17,7 @@ exports.exec = function(json,isIndex,isCampaign,isFirst,conditions){
         for(var i = 0; i< json.type.length; i++) {
             var row = Ti.UI.createTableViewRow({
                 //index:index,
-                height:60,
+                height:setting.row_height,
                 hasDetail:true,
                 url: 'detail.js',
                 // Extended
@@ -29,19 +29,25 @@ exports.exec = function(json,isIndex,isCampaign,isFirst,conditions){
             //Ti.API.info(index);
             //index = index + 1;
             //画像配置
-            row.add(cu.createImageView(tsa_url + json.type[i].path,60,60));
+            row.add(cu.createImageView(tsa_url + json.type[i].path,setting.row_height,setting.row_height));
 
             //メインタイトル
             if(setting.isEn){
-                var main_text = json.type[i].col_building_e + ' / ' + json.type[i].col_type_e + ' / ' + json.type[i].col_area_e;
+                //var main_text = json.type[i].col_building_e + ' / ' + json.type[i].col_type_e + ' / ' + json.type[i].col_area_e;
+                var property_name_text = json.type[i].col_building_e + ' / ' + json.type[i].col_type_e;
+                //var property_name_text = json.type[i].col_building_e;
+                var area_name_text = json.type[i].col_area_e;
                 if(isCampaign){
-                    var summary_text = json.type[i].col_campaign_title_e;
+                    //var summary_text = json.type[i].col_campaign_title_e;
+                    var summary_text = json.type[i].col_rent_cost_e;
                 }else{
                     var summary_text = json.type[i].col_rent_cost_e + ' / ' + json.type[i].col_size + '㎡';
                 }
                 
             }else{
-                var main_text = json.type[i].col_building + ' / ' + json.type[i].col_type + ' / ' + json.type[i].col_area;
+                //var main_text = json.type[i].col_building + ' / ' + json.type[i].col_type + ' / ' + json.type[i].col_area;
+                var property_name_text = json.type[i].col_building + ' / ' + json.type[i].col_type + ' / ' + json.type[i].col_area;
+                var area_name_text = json.type[i].col_building + ' / ' + json.type[i].col_type + ' / ' + json.type[i].col_area;
                 if(isCampaign){
                     var summary_text = json.type[i].col_campaign_title;
                 }else{
@@ -50,11 +56,18 @@ exports.exec = function(json,isIndex,isCampaign,isFirst,conditions){
 
             }
             
-            var property_title = cu.createTitleLabel(main_text,setting.row_title_color,'auto',30,0,70);
-            row.add(property_title);
+            //var property_name = cu.createTitleLabel(property_name_text,setting.row_title_color,'auto',15,0,70);
+            var property_name = cu.createTitleBoldLabel(property_name_text,setting.row_summary_color,'auto',15,0,70);
+            row.add(property_name);
+
+            //var area_name = cu.createTitleLabel(area_name_text,setting.row_title_color,'auto',15,15,70);
+            var area_name = cu.createTitleBoldLabel(area_name_text,setting.row_summary_color,'auto',15,15,70);
+            row.add(area_name);
 
             //説明文
-            var property_summary = cu.createSummaryLabel(summary_text,setting.row_summary_color,'auto',30,30,70);
+            //var property_summary = cu.createSummaryLabel(summary_text,setting.row_summary_color,'auto',30,30,70);
+            var property_summary = cu.createSummaryBoldLabel(summary_text,setting.row_summary_bold_color,'auto',30,30,70);
+            
             row.add(property_summary);
             con.UI.tableView.appendRow(row);
             row.addEventListener('click', function(e) {
