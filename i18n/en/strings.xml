@@ -3,15 +3,20 @@
 <string name="site_name">Tokyo Serviced Apartments</string>
 
 <string name="tab_name_home">Home</string>
+<string name="tab_name_campaign">Campaign</string>
 <string name="tab_name_search">Search</string>
 <string name="tab_name_save">Save</string>
 <string name="tab_name_inquiry">Inquiry</string>
 <string name="tab_name_info">Info</string>
+<string name="tsa_about_title">About this app</string>
 
 <string name="loading_title">Loading...</string>
 <string name="btn_edit_title">Edit</string>
 <string name="btn_done_title">Done</string>
+<string name="btn_delete_title">Delete</string>
+<string name="back_title">Back</string>
 
+<string name="search_title">Find a serviced apartment</string>
 <string name="campaign_spring">Spring Campaign</string>
 <string name="campaign_summer">Summer Campaign</string>
 <string name="campaign_autumn">Autumn Campaign</string>
@@ -19,17 +24,18 @@
 <string name="campaign_end_string"> Now</string>
 <string name="campaign_more_title">more...</string>
 
-<string name="property_search_window_title">Search results of your request</string>
+<string name="property_search_window_title">Search results</string>
 
 <string name="search_budget_title">Budget</string>
-<string name="search_budget_action">Select a Budget</string>
+<string name="search_budget_action">Budget</string>
 <string name="search_budget_0"><250,000JPY</string>
 <string name="search_budget_1">250,000JPY~350,000JPY</string>
 <string name="search_budget_2">350,000JPY~450,000JPY</string>
 <string name="search_budget_3">450,000JPY~550,000JPY</string>
 <string name="search_budget_4">>550,000JPY</string>
 
-<string name="search_map_title">Region</string>
+<string name="search_map_title">Location</string>
+<string name="search_map_action">Location</string>
 <string name="search_map_shinjuku">Shinjuku/Ikebukuro</string>
 <string name="search_map_akihabara">Akihabara/Ueno</string>
 <string name="search_map_shibuya">Shibuya/Aoyama</string>
@@ -74,11 +80,13 @@
 <string name="property_station_title">Access</string>
 <string name="property_address_title">Address</string>
 <string name="property_slideshow_title">Images</string>
+<string name="property_similar_title">Close rate rooms</string>
 
 <string name="save_alert_not_add">This property is already kept in a list</string>
 <string name="save_alert_add">This property is kept in a list</string>
 <string name="save_alert_add_message">You can contact each properties directly by batch</string>
 <string name="save_list_message">You can contact each properties directly by batch</string>
+<string name="property_near_property_title">Nearby Property</string>
 
 <string name="inquiry_window_title">Inquiry</string>
 <string name="confirm_window_title">Confirm</string>
@@ -91,6 +99,15 @@
 <string name="form_tel_title">Telephone Number</string>
 <string name="form_post_code_title">Post Code</string>
 <string name="form_address_title">Address</string>
+
+<string name="alert_stay_message">The Approximate move-in date is indispensable.</string>
+<string name="alert_span_message">The Approximate period of stay is indispensable.</string>
+<string name="alert_name_message">The Full Name is indispensable.</string>
+<string name="alert_kana_message">The Kana is indispensable.</string>
+<string name="alert_mail_message">The Email Address is indispensable.</string>
+<string name="alert_tel_message">The Telephone Number is indispensable.</string>
+
+
 
 <string name="form_gender_title">Gender</string>
 <string name="form_gender_name_0">Mr.</string>
@@ -128,6 +145,7 @@ Sincerely.</string>
 
 <string name="yes">Yes</string>
 <string name="no">No</string>
+<string name="telephone_confirm_message">03-5428-8307</string>
 
 <string name="info_request_title">Requests | Questions</string>
 <string name="info_privacy_policy_title">Privacy policy</string>
