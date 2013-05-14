@@ -16,146 +16,103 @@ exports.exec = function(json,page,isFirst,conditions){
     }
 
     function add_property(type_list) {
-        if(page == 'detail'){
-            //title////////////////////////////////////////////////////////////////////////////
-            var titleRow = Ti.UI.createTableViewRow({
-                height:30,
-                touchEnabled : false,
-                backgroundColor:setting.row_title_background_color,
-                selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
-                hasChild:false
-            });
-
-            var label = Ti.UI.createLabel({
-                text:L('property_similar_title'),
-                color:setting.row_title_color,
-                font:{fontSize:14,fontWeight:'bold'},
-                top:5,
-                bottom:5
-            });
-            titleRow.add(label);
-            con.UI.tableView.appendRow(titleRow);
-        }
-        
         for(var i = 0; i< type_list.length; i++) {
-            var num = i;
-            if(page != 'detail') {
-                var row_height = setting.row_height;
-                var row = Ti.UI.createTableViewRow({
-                    height:row_height,
-                    hasDetail:true,
-                    url: 'detail.js',
-                    // Extended
-                    ext : {
-                        tid : type_list[i].col_tid
-                    }
-                });
-            }else{
-                var row_height = setting.similar_face_height;
-                var row = Ti.UI.createTableViewRow({
-                    height:row_height,
-                    hasDetail:false
-                });
-            }
-
+            var row = Ti.UI.createTableViewRow({
+                hasDetail:false,
+                url: 'detail.js',
+                // Extended
+                ext : {
+                    tid : type_list[i].col_tid
+                }
+            });
             //画像配置
-            row.add(cu.createImageView(tsa_url + type_list[i].path,row_height,row_height));
+            var create_image = Ti.UI.createImageView({
+                image: tsa_url + type_list[i].path,
+                width: 320,
+                top:0,
+                left:0,
+                hires: false
+            });
+            row.add(create_image);
+            var campaign_view = Titanium.UI.createView({
+                bottom:0,
+                height:80,
+                width:'auto',
+                opacity:0.6,
+                backgroundColor:'#666666',
+            });
 
             //メインタイトル
             if(setting.isEn){
-                var property_name_text = type_list[i].col_building_e + ' / ' + type_list[i].col_type_e;
-                if(page != 'detail') var area_name_text = type_list[i].col_area_e;
-                if(page == 'campaign'){
-                    var summary_text = type_list[i].col_rent_cost_e;
-                }else{
-                    var summary_text = type_list[i].col_rent_cost_e + ' / ' + type_list[i].col_size + '㎡';
-                }
-                
+                var property_name_text = type_list[i].col_building_e;
+                var property_info_text = type_list[i].col_type_e + ' / ' + type_list[i].col_size + '㎡' + ' / ' +  type_list[i].col_area_e;
+                var summary_text = type_list[i].col_rent_cost_e;
             }else{
-                var property_name_text = type_list[i].col_building + ' / ' + type_list[i].col_type;
-                if(page != 'detail') var area_name_text = type_list[i].col_area;
-                if(page == 'campaign'){
-                    var summary_text = type_list[i].col_rent_cost;
-                }else{
-                    var summary_text = type_list[i].col_rent_cost + ' / ' + type_list[i].col_size + '㎡';
-                }
+                var property_name_text = type_list[i].col_building;
+                var property_info_text = type_list[i].col_type + ' / ' + type_list[i].col_size + '㎡' + ' / ' +  type_list[i].col_area;
+                var summary_text = type_list[i].col_rent_cost;
             }
-            var property_name = cu.createTitleBoldLabel(property_name_text,setting.row_summary_color,'auto',15,0,row_height + 5);
-            row.add(property_name);
-
-            if(page != 'detail') {
-                var area_name = cu.createTitleBoldLabel(area_name_text,setting.row_summary_color,'auto',15,15,row_height + 5);
-                row.add(area_name);
-            }
-
-            //説明文
-            if(page != 'detail') {
-                var property_summary_position = 30;
-            }else{
-                var property_summary_position = 15;
-            }
-            var property_summary = cu.createSummaryBoldLabel(summary_text,setting.row_summary_bold_color,'auto',30,property_summary_position,row_height + 5);
-            
-            row.add(property_summary);
-            if(page == 'detail'){
-                row.add(cu.makeSaveProperty(type_list[i].col_tid,'similar'));
-                
-                var detail_button = Ti.UI.createButton({
-                  backgroundImage:'img/detail_btn_' + setting.lang_string + '.png',
-                  color:'#ffffff',
-                  width:100,
-                  height:35,
-                  top:45,
-                  right:5
-                  });
-
-                detail_button.addEventListener('click', function(e){
-                    Ti.UI.currentTab.open(
-                        Ti.UI.createWindow({
-                            title: L('tab_name_info'),
-                            url: "detail.js",
-                            navBarHidden: false,
-                            barColor: setting.bar_color,
-                            // Extended
-                            ext : {
-                                tid : type_list[num].col_tid
-                            }
-                        })
-                    );
-                });
-                row.add(detail_button);
-            }
-            
-            
-            con.UI.tableView.appendRow(row);
-            if(page != 'detail') {
-                row.addEventListener('click', function(e) {
-                    var newWindow = Titanium.UI.createWindow({
-                        title: e.rowData.ext.rowTitle,
-                        backgroundColor: '#fff',
-                        url: e.rowData.url,
-                        navBarHidden: false,
-                        barColor: setting.bar_color,
-                        // Extended
-                        ext : {
-                            tid : e.rowData.ext.tid,
-                            //"rule-name" : ["hoge", "piyo"]
-                        }
-                    });
-                    Titanium.UI.currentTab.open(newWindow);
-                });
-            }
-        }
-        
-        //ボタンビューの高さ分を上に上げる
-        if(page == 'detail') {
-            var row = Ti.UI.createTableViewRow({
-                height:setting.btn_view_height,
-                hasDetail:false
+            var property_name = Ti.UI.createLabel({
+                text:property_name_text,
+                color:'#ffffff',
+                height:20,
+                bottom:55,
+                left:10,
+                //font:{fontSize:17,fontWeight:'normal',fontFamily:'Helvetica Neue Bold'}
+                //font:{fontSize:17,fontWeight:'normal',fontFamily:'Helvetica Neue Condensed Black'}
+                font:{fontSize:16,fontWeight:'normal'}
             });
+
+            var property_info = Ti.UI.createLabel({
+                text:property_info_text,
+                color:'#ffffff',
+                height:20,
+                bottom:35,
+                left:10,
+                //font:{fontSize:17,fontWeight:'normal',fontFamily:'Arial'}
+                font:{fontSize:16,fontWeight:'normal'}
+            });
+
+            var property_summary = Ti.UI.createLabel({
+                text:summary_text,
+                //color:'#CC9900',
+                color:'#ffffff',
+                height:40,
+                //bottom:5,
+                bottom:0,
+                left:10,
+                //opacity:1,
+                //font:{fontSize:14,fontWeight:'bold',fontFamily:'Helvetica Neue'},
+                font:{fontSize:15,fontWeight:'bold'}
+            });
+            
+            row.add(campaign_view);
+            row.add(property_name);
+            row.add(property_info);
+            
+            //row.add(campaign_view_second);
+            //campaign_view_second.add(property_summary);
+            row.add(property_summary);
+            
+            
+            
             con.UI.tableView.appendRow(row);
+            row.addEventListener('click', function(e) {
+                var newWindow = Titanium.UI.createWindow({
+                    title: e.rowData.ext.rowTitle,
+                    backgroundColor: '#fff',
+                    url: e.rowData.url,
+                    navBarHidden: false,
+                    barColor: setting.bar_color,
+                    // Extended
+                    ext : {
+                        tid : e.rowData.ext.tid,
+                        //"rule-name" : ["hoge", "piyo"]
+                    }
+                });
+                Titanium.UI.currentTab.open(newWindow);
+            });
         }
-        
         if(page == 'index'){
             //もっと見る////////////////////////////////////////
             var row = Ti.UI.createTableViewRow({
@@ -163,6 +120,7 @@ exports.exec = function(json,page,isFirst,conditions){
                 url: 'campaign.js',
                 height:30,
                 hasChild:true,
+                backgroundColor:setting.row_title_background_color,
                 // Extended
                 ext : {
                     rowTitle : L('campaign_spring')
@@ -181,6 +139,7 @@ exports.exec = function(json,page,isFirst,conditions){
             });
 
             var row = Ti.UI.createTableViewRow({
+                backgroundColor:setting.row_title_background_color,
                 hasChild:false
             });
 

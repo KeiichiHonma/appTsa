@@ -1,4 +1,4 @@
-exports.exec = function(tids){
+exports.exec = function(tids,json){
     var form_title_height = 20;
     var form_tf_height = 20;
     var form_margin_left = "5%";
@@ -14,8 +14,7 @@ exports.exec = function(tids){
     var mail = '';
     var telephone = '';
     var detail = '';
-    //var params = { tids:0,gender:gender,stay: stay,span: span,name: name,kana: kana,company: company,mail: mail,telephone: telephone,postcode: postcode,address: address,detail: detail};
-    var params = { tids:0,stay: stay,span: span,name: name,kana: kana,company: company,mail: mail,telephone: telephone,detail: detail};
+    var params = { tids:'',similar_tid_mid:'',similar_property_name:'',stay: stay,span: span,name: name,kana: kana,company: company,mail: mail,telephone: telephone,detail: detail};
     
     //アニメーション
     var open_animation = Ti.UI.createAnimation();
@@ -57,7 +56,12 @@ exports.exec = function(tids){
     stay_data[4]=Ti.UI.createPickerRow({title:L('form_stay_name_4'),value:4});
     stay_data[5]=Ti.UI.createPickerRow({title:L('form_stay_name_5'),value:5});
     stay_picker.add(stay_data);
-
+    stay_picker.setSelectedRow(0, 0);
+    if(setting.isDebug){
+        picker_stay_value = '0';
+        stay_tf.value = L('form_stay_name_0');
+    }
+    
     // 選択表示を有効にします（標準は無効）
     stay_picker.selectionIndicator = true;
     stay_picker.addEventListener('change',function(e){
@@ -138,7 +142,12 @@ exports.exec = function(tids){
     data[4]=Ti.UI.createPickerRow({title:L('form_span_name_4'),value:4});
     data[4]=Ti.UI.createPickerRow({title:L('form_span_name_5'),value:4});
     span_picker.add(data);
-
+    span_picker.setSelectedRow(0, 0);
+    if(setting.isDebug){
+        picker_span_value = '0';
+        span_tf.value = L('form_span_name_0');
+    }
+    
     // 選択表示を有効にします（標準は無効）
     span_picker.selectionIndicator = true;
     span_picker.addEventListener('change',function(e){
@@ -198,6 +207,7 @@ exports.exec = function(tids){
     //お名前///////////////////////////////////////
     var row = cu.makeTitleRow( L('form_name_title'),form_title_height,form_margin_left );
     var name_tf = makeTextField( L('form_name_title'),"90%",form_margin_left,Ti.UI.KEYBOARD_DEFAULT );
+    if(setting.isDebug) name_tf.value = '本間　圭一';
     row.add(name_tf);
     con.UI.tableView.appendRow(row);
     
@@ -205,6 +215,7 @@ exports.exec = function(tids){
     if(!setting.isEn){
         var row = cu.makeTitleRow( L('form_kana_title'),form_title_height,form_margin_left );
         var kana_tf = makeTextField( L('form_kana_title'),"90%",form_margin_left,Ti.UI.KEYBOARD_DEFAULT );
+        if(setting.isDebug) kana_tf.value = 'ホンマ　ケイイチ';
         row.add(kana_tf);
         con.UI.tableView.appendRow(row);
     }
@@ -212,18 +223,21 @@ exports.exec = function(tids){
     //会社名///////////////////////////////////////
     var row = cu.makeTitleRow( L('form_company_name_title'),form_title_height,form_margin_left );
     var company_tf = makeTextField( L('form_company_name_title'),"90%",form_margin_left,Ti.UI.KEYBOARD_DEFAULT );
+    if(setting.isDebug) company_tf.value = '株式会社81';
     row.add(company_tf);
     con.UI.tableView.appendRow(row);
 
     //メールアドレス///////////////////////////////////////
     var row = cu.makeTitleRow( L('form_mail_title'),form_title_height,form_margin_left );
     var mail_tf = makeTextField( L('form_mail_title'),"90%",form_margin_left,Ti.UI.KEYBOARD_DEFAULT );
+    if(setting.isDebug) mail_tf.value = 'honma@zeus.corp.813.co.jp';
     row.add(mail_tf);
     con.UI.tableView.appendRow(row);
 
     //tel///////////////////////////////////////
     var row = cu.makeTitleRow( L('form_tel_title'),form_title_height,form_margin_left );
     var tel_tf = makeTextField( L('form_tel_title'),"90%",form_margin_left,Ti.UI.KEYBOARD_PHONE_PAD );
+    if(setting.isDebug) tel_tf.value = '03-5428-8307';
     row.add(tel_tf);
     con.UI.tableView.appendRow(row);
 
@@ -244,8 +258,52 @@ exports.exec = function(tids){
         borderColor:'#bbb',
         borderRadius:5
     });
+    if(setting.isDebug) request_ta.value = '要望は特にありません\n宜しくお願いいたします。';
     row.add(request_ta);
     con.UI.tableView.appendRow(row);
+
+    //similar property///////////////////////////////////////
+    var isSimilar = true;
+    var similar_tid_mid = '';
+    if(json.inquiry_similar.length > 0){
+        var row = cu.makeTitleRow( L('property_near_property_title'),form_title_height,form_margin_left );
+        row.selectionStyle = Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE;
+        var top_margin = 20;
+        
+        var btnDelete = Ti.UI.createButton({
+            title : L('btn_delete_title'),
+            color:'#000000',
+            width:50,
+            height:30,
+            top:top_margin,
+            left:15,
+            font:{fontSize:11,fontWeight:'normal'},
+        });
+        //tids更新
+        similar_tid_mid = json.inquiry_similar[0].col_tid + ',' + json.inquiry_similar[0].col_mid;
+        
+        //物件タイトル
+        if(setting.isEn){
+            var property_name_text = json.inquiry_similar[0].col_building_e + ' / ' + json.inquiry_similar[0].col_type_e + ' / ' + json.inquiry_similar[0].col_size + '㎡' + ' / ' + json.inquiry_similar[0].col_area_e + ' / ' +  json.inquiry_similar[0].col_rent_cost_e;
+        }else{
+            var property_name_text = json.inquiry_similar[0].col_building + ' / ' + json.inquiry_similar[0].col_type + ' / ' + json.inquiry_similar[0].col_size + '㎡' + ' / ' + json.inquiry_similar[0].col_area + ' / ' +  json.inquiry_similar[0].col_rent_cost;
+        }
+        var similar_property_name = cu.createTitleLabel(property_name_text,setting.row_title_color,'auto',form_title_height,0,form_margin_left);
+        similar_property_name.color = '#000000';
+        similar_property_name.height = Ti.UI.SIZE;
+        similar_property_name.left = 70;
+        similar_property_name.top = top_margin;
+        row.add(btnDelete);
+        row.add(similar_property_name);
+
+        // Event
+        btnDelete.addEventListener('click', function(e){
+            isSimilar = false;
+            btnDelete.enabled = false;
+            similar_property_name.color = '#FFFFFF';
+        });
+        con.UI.tableView.appendRow(row);
+    }
 
     // 確認ボタン
     var row = Ti.UI.createTableViewRow();
@@ -260,34 +318,63 @@ exports.exec = function(tids){
 
     // 送信ボタン押下時の処理
     confirm_button.addEventListener('click', function(e){
-        params.tids = tids;
-        if(!setting.isDebug){
+        //validateチェック
+        var validate = true;
+        if(validate && picker_stay_value === ''){
+            alert(L('alert_stay_message'));
+            validate = false;
+        }
+        if(validate && picker_span_value === ''){
+            alert(L('alert_span_message'));
+            validate = false;
+        }
+        if(validate && name_tf.value == ''){
+            alert(L('alert_name_message'));
+            validate = false;
+        }
+        if(validate && !setting.isEn && kana_tf.value == ''){
+            alert(L('alert_kana_message'));
+            validate = false;
+        }
+        if(validate && mail_tf.value == ''){
+            alert(L('alert_mail_message'));
+            validate = false;
+        }
+        if(validate && tel_tf.value == ''){
+            alert(L('alert_tel_message'));
+            validate = false;
+        }
+        
+        
+        if(validate){
+            
+            params.tids = tids;
+            if(isSimilar && similar_tid_mid !== '' ){
+                params.similar_tid_mid = similar_tid_mid;
+                params.similar_property_name = property_name_text;
+            }
             params.stay = picker_stay_value;
             params.span = picker_span_value;
             params.name = name_tf.value;
-            if(!setting.isEn){
-                params.kana = kana_tf.value;
-            }
+            if(!setting.isEn) params.kana = kana_tf.value;
             
             params.company = company_tf.value;
             params.mail = mail_tf.value;
             params.telephone = tel_tf.value;
-            params.request = request_ta.value;
-        }else{
-            params = { tids:tids,stay: 2,span: 3,name: 'keiichi honma',kana: 'kana',company: 'hachione',mail: 'honma@zeus.corp.813.co.jp',telephone: '03-5428-8307',detail: "oko\nkokok"};
+            params.detail = request_ta.value;
+
+            Ti.UI.currentTab.open(
+                Ti.UI.createWindow({
+                    url: "confirm.js",
+                    navBarHidden: false,
+                    barColor: setting.bar_color,
+                    // Extended
+                    ext : {
+                        params : params
+                    }
+                })
+            );
         }
-
-
-        Ti.UI.currentTab.open(
-            Ti.UI.createWindow({
-                url: "confirm.js",
-                navBarHidden: false,
-                // Extended
-                ext : {
-                    params : params
-                }
-            })
-        );
     });
 
     function makeTextField(hint,width,margin_left,keyboard_type){
@@ -300,12 +387,9 @@ exports.exec = function(tids){
             height: form_tf_height,
             top: form_title_height,
             left: margin_left,
-            //right: form_margin_left,
             borderStyle:Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
             keyboardType:keyboard_type
         });
-        //row.add(tf);
-        //return row;
         return tf;
     }
 

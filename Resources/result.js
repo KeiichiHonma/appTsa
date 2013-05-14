@@ -4,9 +4,6 @@ win.hideNavBar();
 
 // ライブラリの読み込み
 Titanium.include('include/fw/container.js');
-
-// TableViewの追加
+con.loadResult(win.ext.params);
 win.add(con.UI.tableView);
 con.UI.tableView.separatorColor = '#ffffff';
-
-con.loadResult(win.ext.params);

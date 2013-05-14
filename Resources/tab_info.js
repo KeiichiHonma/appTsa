@@ -6,7 +6,7 @@ privacy_url = 'http://www.serviced-apartments-tokyo.com/' + setting.lang_string 
 company_url = 'http://www.serviced-apartments-tokyo.com/' + setting.lang_string + '/corp';
 
 var inputData = [
-    {title:L('info_request_title'),hasChild:true},
+    //{title:L('info_request_title'),hasChild:true},
     //{title:'row 1', header:'Header 1'},
     {title:L('info_privacy_policy_title'),url:privacy_url,hasChild:true, header:' '},
     {title:L('info_company_title'),url:company_url,hasChild:true},
@@ -27,12 +27,11 @@ con.UI.tableView.addEventListener('click', function(e) {
         var confirm = Titanium.UI.createAlertDialog({
             title: e.rowData.url,
             message: L('open_browser_title'),
-            buttonNames: [L('yes'), L('no')]
+            buttonNames: [L('no'),L('yes')]
         });
 
         confirm.addEventListener('click', function(conEvt) {
-            Ti.API.info(conEvt.index);
-            if(conEvt.index === 0){
+            if(conEvt.index === 1){
                 //open our uploaded image in safari
                 Ti.Platform.openURL(e.rowData.url);
             }

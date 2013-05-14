@@ -2,136 +2,157 @@
 <resources>
 <string name="site_name">Tokyo Serviced Apartments</string>
 
-<string name="tab_name_home">Home</string>
-<string name="tab_name_search">Search</string>
-<string name="tab_name_save">Save</string>
-<string name="tab_name_inquiry">Inquiry</string>
+<string name="tab_name_home">ホーム</string>
+<string name="tab_name_campaign">キャンペーン</string>
+<string name="tab_name_search">検索</string>
+<string name="tab_name_save">保存リスト</string>
+<string name="tab_name_inquiry">お問い合わせ</string>
 <string name="tab_name_info">Info</string>
+<string name="tsa_about_title">このアプリについて</string>
 
 <string name="loading_title">Loading...</string>
-<string name="btn_edit_title">Edit</string>
-<string name="btn_done_title">Done</string>
+<string name="btn_edit_title">編集</string>
+<string name="btn_done_title">完了</string>
+<string name="btn_delete_title">削除</string>
+<string name="back_title">戻る</string>
 
-<string name="campaign_spring">Spring Campaign</string>
-<string name="campaign_summer">Summer Campaign</string>
-<string name="campaign_autumn">Autumn Campaign</string>
-<string name="campaign_winter">Winter Campaign</string>
-<string name="campaign_end_string"> Now</string>
-<string name="campaign_more_title">more...</string>
+<string name="search_title">サービスアパートメントを検索</string>
+<string name="campaign_spring">春のキャンペーン</string>
+<string name="campaign_summer">夏のキャンペーン</string>
+<string name="campaign_autumn">秋のキャンペーン</string>
+<string name="campaign_winter">冬のキャンペーン</string>
+<string name="campaign_end_string">実施中</string>
+<string name="campaign_more_title">キャンペーンをもっと見る...</string>
 
-<string name="property_search_window_title">Search results of your request</string>
+<string name="property_search_window_title">検索結果</string>
 
-<string name="search_budget_title">Budget</string>
-<string name="search_budget_action">Select a Budget</string>
-<string name="search_budget_0"><250,000JPY</string>
-<string name="search_budget_1">250,000JPY~350,000JPY</string>
-<string name="search_budget_2">350,000JPY~450,000JPY</string>
-<string name="search_budget_3">450,000JPY~550,000JPY</string>
-<string name="search_budget_4">>550,000JPY</string>
+<string name="search_budget_title">予算</string>
+<string name="search_budget_action">予算</string>
+<string name="search_budget_0">～250,000円</string>
+<string name="search_budget_1">250,000円～350,000円</string>
+<string name="search_budget_2">350,000円～450,000円</string>
+<string name="search_budget_3">450,000円～550,000円</string>
+<string name="search_budget_4">～550,000円</string>
 
-<string name="search_map_title">Region</string>
-<string name="search_map_shinjuku">Shinjuku/Ikebukuro</string>
-<string name="search_map_akihabara">Akihabara/Ueno</string>
-<string name="search_map_shibuya">Shibuya/Aoyama</string>
-<string name="search_map_roppongi">Roppongi/Akasaka</string>
-<string name="search_map_ginza">Ginza/Nihonbashi</string>
-<string name="search_map_shinagawa">Shinagawa/Shirokane Takanawa</string>
-<string name="search_map_yokohama">Yokohama</string>
-<string name="search_map_odaiba">Odaiba/Bay</string>
+<string name="search_map_title">場所</string>
+<string name="search_map_action">場所</string>
+<string name="search_map_shinjuku">新宿/池袋</string>
+<string name="search_map_akihabara">秋葉原/上野</string>
+<string name="search_map_shibuya">渋谷/青山</string>
+<string name="search_map_roppongi">六本木/赤坂</string>
+<string name="search_map_ginza">銀座/日本橋</string>
+<string name="search_map_shinagawa">品川/白金高輪</string>
+<string name="search_map_yokohama">横浜</string>
+<string name="search_map_odaiba">お台場/ベイ</string>
 
-<string name="search_dimension_title">Room Type</string>
-<string name="search_dimension_studio">Studio</string>
-<string name="search_dimension_1br">1BR</string>
-<string name="search_dimension_2br">2BR</string>
-<string name="search_dimension_3br">3BR</string>
-<string name="search_dimension_4br">4BR</string>
+<string name="search_dimension_title">部屋タイプ</string>
+<string name="search_dimension_studio">スタジオ</string>
+<string name="search_dimension_1br">1LDK</string>
+<string name="search_dimension_2br">2LDK</string>
+<string name="search_dimension_3br">3LDK</string>
+<string name="search_dimension_4br">4LDK</string>
 
-<string name="search_feature_title">Feature</string>
-<string name="search_feature_24">24h Front Desk</string>
-<string name="search_feature_swimming">Swimming Pool</string>
-<string name="search_feature_pets">Pets</string>
-<string name="search_feature_market">Near super market/grocery store</string>
-<string name="search_feature_parking">Parking Space</string>
-<string name="search_feature_haneda">Within 30min to Haneda by Train</string>
-<string name="search_feature_smoking">Non Smoking Rooms</string>
-<string name="search_feature_breakfast">Free Breakfast</string>
-<string name="search_feature_gym">Sports Gym</string>
+<string name="search_feature_title">特徴</string>
+<string name="search_feature_24">24時間フロントサービス</string>
+<string name="search_feature_swimming">プール有</string>
+<string name="search_feature_pets">ペット可</string>
+<string name="search_feature_market">スーパーマーケットが徒歩圏内</string>
+<string name="search_feature_parking">駐車場</string>
+<string name="search_feature_haneda">羽田空港まで30分以内</string>
+<string name="search_feature_smoking">禁煙</string>
+<string name="search_feature_breakfast">朝食無料</string>
+<string name="search_feature_gym">スポーツジム併設</string>
+<string name="property_list_window_title">物件</string>
 
-<string name="property_list_window_title">Properties</string>
+<string name="property_window_title">物件詳細</string>
+<string name="property_monthly_rent_title">月額賃料</string>
+<string name="property_other_expenses_title">その他費用</string>
+<string name="property_size_title">広さ</string>
+<string name="property_remarks_title">補足</string>
+<string name="property_service_title">サービス</string>
+<string name="property_furniture_title">家具</string>
+<string name="property_kitchen_title">キッチン</string>
+<string name="property_facility_title">その他施設</string>
 
-<string name="property_window_title">Property Details</string>
-<string name="property_monthly_rent_title">Monthly Rent</string>
-<string name="property_other_expenses_title">Other Expenses</string>
-<string name="property_size_title">Size</string>
-<string name="property_remarks_title">Remarks</string>
-<string name="property_service_title">Service</string>
-<string name="property_furniture_title">Furniture</string>
-<string name="property_kitchen_title">Kitchen</string>
-<string name="property_facility_title">Other Facilities</string>
-
-<string name="property_detail_title">Detail</string>
-<string name="property_feature_title">Specific</string>
-<string name="property_station_title">Access</string>
-<string name="property_address_title">Address</string>
-<string name="property_slideshow_title">Images</string>
+<string name="property_detail_title">詳細</string>
+<string name="property_feature_title">こだわり</string>
+<string name="property_station_title">最寄り駅</string>
+<string name="property_address_title">住所</string>
+<string name="property_slideshow_title">写真</string>
+<string name="property_similar_title">賃料の近いお部屋</string>
 
 <string name="save_alert_not_add">この物件は保存リストに登録されています。</string>
 <string name="save_alert_add">保存リストに登録されました。</string>
 <string name="save_alert_add_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
 <string name="save_list_message">お問い合わせタブから物件の各担当者へ一括でコンタクトすることができます。</string>
+<string name="property_near_property_title">希望に近い物件も併せて問い合わせ</string>
 
-<string name="inquiry_window_title">Inquiry</string>
-<string name="confirm_window_title">Confirm</string>
-<string name="confirm_message_title">この内容で送信しますか？</string>
+<string name="inquiry_window_title">お問い合わせ</string>
+<string name="confirm_window_title">確認</string>
+<string name="confirm_message_title">この内容でお問い合わせしますか？</string>
 
-<string name="form_name_title">Full Name</string>
-<string name="form_kana_title">Kana</string>
-<string name="form_company_name_title">Company Name</string>
-<string name="form_mail_title">Email Address</string>
-<string name="form_tel_title">Telephone Number</string>
-<string name="form_post_code_title">Post Code</string>
-<string name="form_address_title">Address</string>
+<string name="form_stay_title">入居希望日</string>
+<string name="form_span_title">滞在期間</string>
+<string name="form_name_title">お名前</string>
+<string name="form_kana_title">かな</string>
+<string name="form_company_name_title">会社名</string>
+<string name="form_mail_title">メールアドレス</string>
+<string name="form_tel_title">電話番号</string>
+<string name="form_post_code_title">郵便番号</string>
+<string name="form_address_title">住所</string>
 
-<string name="form_gender_title">Gender</string>
-<string name="form_gender_name_0">Mr.</string>
-<string name="form_gender_name_1">Ms.</string>
+<string name="alert_stay_message">入居希望日は必須です。</string>
+<string name="alert_span_message">滞在期間は必須です。</string>
+<string name="alert_name_message">お名前は必須です。</string>
+<string name="alert_kana_message">かなは必須です。</string>
+<string name="alert_mail_message">メールアドレスは必須です。</string>
+<string name="alert_tel_message">電話番号は必須です。</string>
 
-<string name="form_stay_title">Approximate move-in date</string>
-<string name="form_stay_name_0">whithin 2 weeks</string>
-<string name="form_stay_name_1">whithin 1 month</string>
-<string name="form_stay_name_2">whithin 2 months</string>
-<string name="form_stay_name_3">whithin 3 months</string>
-<string name="form_stay_name_4">3months or more from today</string>
-<string name="form_stay_name_5">undecided</string>
 
-<string name="form_span_title">Approximate period of stay</string>
-<string name="form_span_name_0">1 month</string>
-<string name="form_span_name_1">1-3 months</string>
-<string name="form_span_name_2">3-6 months</string>
-<string name="form_span_name_3">6-12 months</string>
-<string name="form_span_name_4">1 year or more</string>
-<string name="form_span_name_5">undecided</string>
-<string name="form_requests_questions_title">Requests | Questions</string>
 
-<string name="form_thank_message">Thank You For Inquiry</string>
-<string name="form_result_message">The representative from the properties will comtact you later.
-Sincerely.</string>
+<string name="form_gender_title">性別</string>
+<string name="form_gender_name_0">男性</string>
+<string name="form_gender_name_1">女性</string>
 
-<string name="help_inquiry_title">You have to select properties to inquire.</string>
-<string name="help_press_message">Press "Add to My List" and it will be automatically added to the Basket.</string>
 
-<string name="help_about_title">About serviced apartments</string>
-<string name="help_about_message">serviced apartment is a type of furnished, self-contained apartment designed for short-term stays, which provides amenities for daily use.
- Serviced apartments can be less expensive than equivalent hotel rooms. Since the beginning of the boom in cheap international travel and the corresponding increase in the level of sophistication of international travelers, interest in serviced apartments has risen at the expense of the use of hotels for short stays.</string>
+<string name="form_stay_name_0">2週間以内</string>
+<string name="form_stay_name_1">1ヶ月以内</string>
+<string name="form_stay_name_2">2ヶ月以内</string>
+<string name="form_stay_name_3">3ヶ月以内</string>
+<string name="form_stay_name_4">3ヶ月以後</string>
+<string name="form_stay_name_5">未定</string>
 
-<string name="open_browser_title">Open in the browser?</string>
+<string name="form_span_name_0">1ヶ月</string>
+<string name="form_span_name_1">1ヶ月～3ヶ月</string>
+<string name="form_span_name_2">3ヶ月～6ヶ月</string>
+<string name="form_span_name_3">6ヶ月～1年間後</string>
+<string name="form_span_name_4">1年間以上</string>
+<string name="form_span_name_5">未定</string>
+<string name="form_requests_questions_title">ご要望</string>
 
-<string name="yes">Yes</string>
-<string name="no">No</string>
+<string name="form_thank_message">お問い合わせありがとうございました。</string>
+<string name="form_result_message">お問い合わせ対象企業担当者より、ご連絡させていただきます。
+ 今後ともTokyo Serviced Apartmentsを宜しくお願いいたします。</string>
 
-<string name="info_request_title">Requests | Questions</string>
-<string name="info_privacy_policy_title">Privacy policy</string>
-<string name="info_company_title">Company</string>
-<string name="info_version_title">Version 1.0.0</string>
+<string name="help_inquiry_title">お問い合わせするためにはまず物件詳細ページからご希望の部屋を選ぶ必要があります。</string>
+<string name="help_press_message">各物件が紹介されているページにある上記のお問い合わせボタンを押すことによって、お問い合わせ物件を選択することができます。</string>
+
+<string name="help_about_title">サービスアパートメントとは？</string>
+<string name="help_about_message">サービスアパートメントとはホテルのようなフロントサービスが付いた（一部の物件はフロントサービスが無い場合もあります）家具つき高級賃貸マンションのことです。
+中長期の出張で日本を訪れる外国人ビジネスマンを中心に、弁護士や東京に出張で訪れる経営者などのエグゼクティブにも利用されています。
+最近では家族で滞在する方も多くなっています。
+物件は主に都心部で供給されており、通常は最低1か月単位の定期借家契約を結び、敷金・礼金はない場合が多く、宿泊料はトータルで見るとホテルより安いのが特徴となっています。
+提供されるサービスは、リネン交換、クリーニング、水道光熱費、ハウスキーピング、スポーツジム、朝食サービスなどです。</string>
+
+<string name="open_browser_title">ブラウザで開いてもよろしいですか？</string>
+
+<string name="yes">はい</string>
+<string name="no">いいえ</string>
+<string name="telephone_confirm_message">03-5428-8307に発信します。</string>
+
+<string name="info_request_title">ご要望</string>
+<string name="info_privacy_policy_title">プライバシーポリシー</string>
+<string name="info_company_title">運営会社</string>
+<string name="info_version_title">バージョン 1.0.0</string>
 
 </resources>

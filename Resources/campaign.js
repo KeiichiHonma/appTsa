@@ -8,8 +8,19 @@ Titanium.include('include/fw/container.js');
 con.UI.setRefreshButton(function(){
     // データをクリア
     con.UI.tableView.data = [];
-    con.loadList(false,true,true,null);
+    con.loadCampaign('campaign',true,null);
 });
+
+//キャンペーン画像////////////////////////////////////////
+var row = Ti.UI.createTableViewRow({
+    height:40,
+    hasChild:false,
+    touchEnabled : false,
+    selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE
+});
+row.add(cu.createWrapImageView('img/campaign_spring.jpg',320,40));
+con.UI.tableView.appendRow(row);
+
 // TableViewの追加
 win.add(con.UI.tableView);
-con.loadList(false,true,true,null);
+con.loadCampaign('campaign',true,null);

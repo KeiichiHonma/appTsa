@@ -18,7 +18,20 @@ var tab1 = Titanium.UI.createTab({
 });
 
 // 2番目のタブの定義
-var tab2 = Titanium.UI.createTab({
+var tab2 =  Titanium.UI.createTab({
+    icon: 'img/icon_campaign.png',
+    title: L('tab_name_campaign'),
+    window: Titanium.UI.createWindow({
+        title: L('tab_name_campaign'),
+        backgroundColor: '#fff',
+        url: 'campaign.js',
+        barColor: '#7D715B'
+    })
+});
+
+
+// 3番目のタブの定義
+var tab3 = Titanium.UI.createTab({
     icon: 'img/icon_search.png',
     title: L('tab_name_search'),
     window: Titanium.UI.createWindow({
@@ -29,8 +42,8 @@ var tab2 = Titanium.UI.createTab({
     })
 });
 
-// 3番目のタブの定義
-var tab3 = Titanium.UI.createTab({
+// 4番目のタブの定義
+var tab4 = Titanium.UI.createTab({
     icon: 'img/icon_star.png',
     title: L('tab_name_save'),
     window: Titanium.UI.createWindow({
@@ -41,8 +54,8 @@ var tab3 = Titanium.UI.createTab({
     })
 });
 
-// 4番目のタブの定義
-var tab4 =  Titanium.UI.createTab({
+// 5番目のタブの定義
+var tab5 =  Titanium.UI.createTab({
     icon: 'img/icon_mail.png',
     title: L('tab_name_inquiry'),
     window: Titanium.UI.createWindow({
@@ -58,7 +71,7 @@ Ti.App.addEventListener('button_click', function(e){
 });
 
 // 5目のタブの定義
-var tab5 =  Titanium.UI.createTab({
+/*var tab5 =  Titanium.UI.createTab({
     icon: 'img/icon_information.png',
     title: L('tab_name_info'),
     window: Titanium.UI.createWindow({
@@ -68,7 +81,7 @@ var tab5 =  Titanium.UI.createTab({
         barColor: '#7D715B'
     })
 });
-
+*/
 // タブを追加しTabGroupを表示する
 tabGroup.addTab(tab1);
 tabGroup.addTab(tab2);

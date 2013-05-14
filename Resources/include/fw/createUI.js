@@ -1,23 +1,30 @@
 // imageManager.js
 var cu = {};
 var setting = {
+    "isEn":false,
+    "isDebug":true,
+    "isResult":false,
+    "lang_string":"",
+    "bar_color":"#7D715B",
     "section_title_background_color":'#F5F2EC',
     "terminal_width":320,
     "row_margin":5,
     "row_height":65,
     "row_title_width":106,
     "row_title_height":30,
-    //"row_title_color":'#2f0103',
-    //"row_title_color":'#7D715B',
     "row_title_color":'#330000',
     "row_title_background_color":'#DCD1BA',
     "row_summary_color":'#222222',
     "row_summary_bold_color":'#860100',
     "row_bg":'img/row_bg.gif',
-    "isEn":false,
-    "isDebug":true,
-    "isResult":false,
-    "lang_string":"",
+    "similar_face_height":80,
+    "btn_view_height":45,
+    "save_btn_width":150,
+    "save_btn_height":35,
+    "save_btn_s_width":100,
+    "save_btn_s_height":35,
+    
+    
     };
     
     if(Ti.Platform.locale == 'en'){
@@ -26,10 +33,10 @@ var setting = {
         //setting.lang_string = "ja";
     }else{
         ///debug//////////////////////////////////////////////////
-        setting.isEn = true;
-        setting.lang_string = "en";
+        //setting.isEn = true;
+        //setting.lang_string = "en";
         //////////////////////////////////////////////////////////
-        //setting.lang_string = "ja";
+        setting.lang_string = "ja";
     }
 
 (function() {
@@ -80,7 +87,9 @@ var setting = {
             height: height,
             top:0,
             left:0,
-            hires: true
+            //borderColor : '#000000',
+            //borderWidth : 0,
+            hires: true,
         });
         return create_image;
     };
@@ -232,6 +241,7 @@ var setting = {
                 Ti.UI.createWindow({
                     url: "include/ui/makeMap.js",
                     navBarHidden: false,
+                    barColor: setting.bar_color,
                     // Extended
                     ext : {
                         address : address,
@@ -251,7 +261,9 @@ var setting = {
         var row = Ti.UI.createTableViewRow({
             height:20,
             backgroundColor:setting.row_title_background_color,
-            hasChild:false
+            hasChild:false,
+            touchEnabled : false,
+            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
         });
         var label = cu.createTitleLabel(text,setting.row_title_color,'auto','auto',0,5);
         label.font = {fontSize:14,fontWeight:'bold'};
@@ -263,8 +275,6 @@ var setting = {
         var label = Ti.UI.createLabel({
             text:text,
             color:'#000000',
-            //width:width,
-            //height:height,
             top:top,
             left:left,
             font:{fontSize:14,fontWeight:'bold'},
@@ -405,36 +415,44 @@ var setting = {
     }
 
     //save
-    cu.makeSavePropertyRow = function(tid,property_name,type_name,size,monthly_rent) {
-        var row = Ti.UI.createTableViewRow({
-            height:110,
-            touchEnabled : false,
-            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
-            hasChild:false
-        });
 
-        var save_button = Ti.UI.createButton({
-          backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
-          color:'#ffffff',
-          width:320,
-          height:60,
-          top:10,
-          left:0
-        });
-        row.add(save_button);
+    cu.makeSaveProperty = function(tid,use) {
+        
+        if(use == 'similar'){
+            var save_button = Ti.UI.createButton({
+              backgroundImage:'img/save_btn_s_' + setting.lang_string + '.png',
+              width:setting.save_btn_s_width,
+              height:setting.save_btn_s_height,
+              top:45,
+              left:setting.similar_face_height + 5
+            });
+        }else if(use == 'ja_detail'){
+            var save_button = Ti.UI.createButton({
+              backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
+              color:'#ffffff',
+              width:setting.save_btn_width,
+              height:setting.save_btn_height,
+              bottom:5,
+              left:5
+            });
+        }else{
+            var save_button = Ti.UI.createButton({
+              backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
+              color:'#ffffff',
+              width:setting.save_btn_width,
+              height:setting.save_btn_height,
+              bottom:5,
+            });
+        }
+
 
         save_button.addEventListener('click', function(e){
-            
-            //Ti.API.info(db_setting.table_save);
             //db:sqlite
             var db = Ti.Database.open(db_setting.table_save);
             db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
             
             var rows = db.execute('select rowid,* from ' + db_setting.table_save + ' where tid = ' + tid);
-            
-            //Ti.API.info(rows.fieldByName('tid'));
-            //Ti.API.info(tid);
-            
+
             if( rows.fieldByName('tid') == tid){
                 //存在してた
                 var alert_title = L('save_alert_not_add');
@@ -445,15 +463,6 @@ var setting = {
                 var alert_title = L('save_alert_add');
                 var alert_title = L('save_alert_add_message');
             }
-/*
-            Ti.API.info('lastInsertRowId = ' + db.lastInsertRowId);
-            var rows = db.execute('select rowid,* from save');
-            Ti.API.info('row count' + rows.getRowCount());
-            while(rows.isValidRow()){
-                Ti.API.info('id:' + rows.fieldByName('rowid')+'tid:'+rows.fieldByName('tid'));
-                rows.next();
-            }
-*/
             rows.close();
             db.close();
 
@@ -467,13 +476,16 @@ var setting = {
             }); 
             multi_option_alert.show();
         });
-        var info = cu.createSummaryLabel(L('help_press_message'),setting.row_summary_color,300,40,70,10);
-        row.add(info);
-        con.UI.tableView.appendRow(row);
+        return save_button;
     };
     cu.makeTitleRow = function(title,form_title_height,form_margin_left){
-        var row = Ti.UI.createTableViewRow();
+        var row = Ti.UI.createTableViewRow({
+            touchEnabled : false,
+            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
+            hasChild:false
+        });
         var title = cu.createTitleLabel(title,setting.row_title_color,'auto',form_title_height,0,form_margin_left);
+        title.font = {fontSize:12};
         row.add(title);
         return row;
     }

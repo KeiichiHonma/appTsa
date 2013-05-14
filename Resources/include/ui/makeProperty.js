@@ -59,8 +59,9 @@ exports.exec = function(json,tid){
 
     //title////////////////////////////////////////////////////////////////////////////
     var titleRow = Ti.UI.createTableViewRow({
-        height:20,
+        height:30,
         touchEnabled : false,
+        backgroundColor:setting.row_title_background_color,
         selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
         hasChild:false
     });
@@ -88,6 +89,7 @@ exports.exec = function(json,tid){
             backgroundColor:'#ffffff',
             url: 'slideshow.js',
             navBarHidden: false,
+            barColor: setting.bar_color,
             // Extended
             ext : {
                 tid : tid
@@ -135,17 +137,6 @@ exports.exec = function(json,tid){
             hasChild:false
         });
         campaignRow.add(row_campaign_bg);
-/*
-        var campaign_summary = cu.createTitleLabel(
-            campaign_title,
-            setting.row_title_color,
-            'auto',
-            //setting.row_title_height + 10,
-            Ti.UI.SIZE,
-            0,
-            setting.row_title_width + 10
-        );
-*/
         var campaign_summary = Ti.UI.createLabel({
             text:campaign_title,
             color:setting.row_title_color,
@@ -154,7 +145,7 @@ exports.exec = function(json,tid){
             top:5,
             bottom:5,
             left:setting.row_title_width + 10,
-            font:{fontSize:11,fontWeight:'normal'}
+            font:{fontSize:12,fontWeight:'bold'}
         });
 
 
@@ -162,7 +153,7 @@ exports.exec = function(json,tid){
         con.UI.tableView.appendRow(campaignRow);
     }
     //save
-    cu.makeSavePropertyRow(tid,property_name,type_name,size,monthly_rent);
+    //cu.makeSaveProperty(tid,false);
     //Monthly Rent
     cu.makePropertyRow('property_monthly_rent_title',monthly_rent);
     //Other Expenses
@@ -192,5 +183,49 @@ exports.exec = function(json,tid){
     //station
     cu.makePropertyRow('property_station_title',station);
     //save
-    cu.makeSavePropertyRow(tid,property_name,type_name,size,monthly_rent);
+    //cu.makeSaveProperty(tid,false);
+
+    var btn_view = Titanium.UI.createView({
+        bottom:0,
+        height:setting.btn_view_height,
+        width:'auto',
+        opacity:0.6,
+        backgroundColor:'#666666'
+    });
+    win.add(btn_view);
+    if(setting.isEn){
+        var save_button = cu.makeSaveProperty(tid,'en_detail');
+        win.add(save_button);
+    }else{
+        var save_button = cu.makeSaveProperty(tid,'ja_detail');
+
+        var tel_button = Ti.UI.createButton({
+          backgroundImage:'img/telephone_btn_' + setting.lang_string + '.png',
+          color:'#ffffff',
+          width:150,
+          height:35,
+          bottom:5,
+          right:5,
+          opacity:1,
+        });
+
+        tel_button.addEventListener('click', function(e) {
+            var confirm = Titanium.UI.createAlertDialog({
+                title: L('telephone_confirm_message'),
+                //message: L('open_browser_title'),
+                buttonNames: [L('no'),L('yes')]
+            });
+
+            confirm.addEventListener('click', function(conEvt) {
+                if(conEvt.index === 1){
+                    Titanium.Platform.openURL('tel:0354288307');
+                }
+            });
+            confirm.show();
+        });
+
+
+        win.add(save_button);
+        win.add(tel_button);
+    }
 };

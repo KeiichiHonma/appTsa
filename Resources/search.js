@@ -6,4 +6,4 @@ Titanium.include('include/fw/container.js');
 
 // TableViewの追加
 win.add(con.UI.tableView);
-con.loadSearch(false,false,true,win.ext.conditions);
+con.loadSearch('search',true,win.ext.conditions);

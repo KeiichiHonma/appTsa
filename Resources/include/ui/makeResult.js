@@ -1,5 +1,6 @@
 exports.exec = function(){
-    //con.UI.tableView.data = [];
+    con.UI.tableView.separatorStyle = Titanium.UI.iPhone.TableViewSeparatorStyle.NONE;
+    con.UI.tableView.backgroundColor = setting.row_title_background_color;
     //ヘッダ画像////////////////////////////////////////
     var row = Ti.UI.createTableViewRow({
         height:130,
@@ -15,7 +16,7 @@ exports.exec = function(){
 
     //title////////////////////////////////////////////////////////////////////////////
     var titleRow = Ti.UI.createTableViewRow({
-        height:60,
+        height:Ti.UI.SIZE,
         touchEnabled : false,
         selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
         hasChild:false
@@ -26,14 +27,15 @@ exports.exec = function(){
         color:setting.row_title_color,
         font:{fontSize:20,fontWeight:'bold'},
         top:10,
-        bottom:10
+        left:10,
+        right:10,
     });
     titleRow.add(label);
     con.UI.tableView.appendRow(titleRow);
 
     //message////////////////////////////////////////////////////////////////////////////
     var messageRow = Ti.UI.createTableViewRow({
-        height:80,
+        height:Ti.UI.SIZE,
         touchEnabled : false,
         selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
         hasChild:false
@@ -44,7 +46,8 @@ exports.exec = function(){
         color:setting.row_title_color,
         font:{fontSize:14,fontWeight:'bold'},
         top:10,
-        bottom:10
+        left:10,
+        right:10,
     });
     messageRow.add(label);
     con.UI.tableView.appendRow(messageRow);

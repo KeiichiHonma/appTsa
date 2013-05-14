@@ -4,7 +4,8 @@ win.title = L('property_window_title');
 
 // ライブラリの読み込み
 Titanium.include('include/fw/container.js');
-
+Titanium.UI.currentWindow.backButtonTitle = L('back_title');
+//con.UI.tableView.bottom = 50;
 win.add(con.UI.tableView);
 
 // 再読込の設定
