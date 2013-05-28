@@ -94,6 +94,8 @@ var tsa_url = 'http://tsa.813.co.jp';
 
     //保存リストの物件一覧
     con.loadSave = function() {
+        // データをクリア
+        con.UI.tableView.data = [];
         //save
         var db = Ti.Database.open(db_setting.table_save);
         db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
@@ -146,12 +148,14 @@ var tsa_url = 'http://tsa.813.co.jp';
 
     //コンタクト
     con.loadInquiry = function() {
-
+        // データをクリア
+        con.UI.tableView.data = [];
         //save
         var db = Ti.Database.open(db_setting.table_save);
         db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
         
         var rows = db.execute('select rowid,* from ' + db_setting.table_save);
+
         if( rows.getRowCount() == 0){
             var loadHelp = require("include/ui/makeHelp");
             loadHelp.exec();
@@ -207,6 +211,7 @@ var tsa_url = 'http://tsa.813.co.jp';
 
     //コンタクト結果
     con.loadResult = function(params) {
+        win.leftNavButton  = Ti.UI.createLabel({text:' '});//戻るボタンを表示しない
         var url = tsa_url + '/json/inquiry';
         con.callAPI('POST', url, params, function(status, responseText) {
             if(responseText == "success"){

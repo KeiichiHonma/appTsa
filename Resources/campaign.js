@@ -13,12 +13,12 @@ con.UI.setRefreshButton(function(){
 
 //キャンペーン画像////////////////////////////////////////
 var row = Ti.UI.createTableViewRow({
-    height:40,
+    height:setting.campaign_img_height,
     hasChild:false,
     touchEnabled : false,
     selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE
 });
-row.add(cu.createWrapImageView('img/campaign_spring.jpg',320,40));
+row.add(cu.createWrapImageView('img/campaign_' + setting.season + setting.os_width +  '.jpg',setting.os_width,setting.campaign_img_height));
 con.UI.tableView.appendRow(row);
 
 // TableViewの追加

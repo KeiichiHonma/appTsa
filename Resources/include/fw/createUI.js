@@ -5,12 +5,20 @@ var setting = {
     "isDebug":true,
     "isResult":false,
     "lang_string":"",
+    "os":"",
+    "os_width":"",
+    "season":"",
     "bar_color":"#7D715B",
+    //campaign
+    "header_img_height":130,
+    "campaign_img_height":40,
     "section_title_background_color":'#F5F2EC',
-    "terminal_width":320,
     "row_margin":5,
-    "row_height":65,
-    "row_title_width":106,
+    "list_row_height":70,
+    "list_property_height":15,
+    "list_area_height":15,
+    "list_summety_height":35,
+    "detail_title_width":106,
     "row_title_height":30,
     "row_title_color":'#330000',
     "row_title_background_color":'#DCD1BA',
@@ -18,15 +26,15 @@ var setting = {
     "row_summary_bold_color":'#860100',
     "row_bg":'img/row_bg.gif',
     "similar_face_height":80,
-    "btn_view_height":45,
+    "btn_view_height":39,
     "save_btn_width":150,
     "save_btn_height":35,
     "save_btn_s_width":100,
     "save_btn_s_height":35,
-    
+    "telephone_number":'0354288307'
     
     };
-    
+
     if(Ti.Platform.locale == 'en'){
         setting.isEn = true;
         setting.lang_string = "en";
@@ -38,6 +46,42 @@ var setting = {
         //////////////////////////////////////////////////////////
         setting.lang_string = "ja";
     }
+
+    //季節判定
+    myD = new Date();
+    var month = myD.getMonth()+1;// 月
+    if(month == 12 || month == 1 || month == 2 ){
+        setting.season = 'winter';
+    }else if(month >= 3 && month <= 5){
+        setting.season = 'spring';
+    }else if(month >= 6 && month <= 8){
+        setting.season = 'summer';
+    }else{
+        setting.season = 'autumn';
+    }
+
+switch(Ti.Platform.osname){
+    case 'iphone':
+        setting.os = 'iphone';
+        setting.header_img_height = 130;
+        setting.os_width = 320;
+        setting.campaign_img_height = 40;
+        break;
+    case 'ipad':
+        setting.os = 'ipad';
+        setting.header_img_height = 260;
+        setting.os_width = 768;
+        setting.campaign_img_height = 48;
+        //detail
+        setting.detail_title_width = 150;
+        break;
+    case 'android':
+        setting.os = 'android';
+        setting.header_img_height = 130;
+        setting.os_width = 320;
+        setting.campaign_img_height = 40;
+        break;
+} 
 
 (function() {
     cu.createWrapImageView = function(image,width,height,top,left) {
@@ -103,7 +147,7 @@ var setting = {
             height:height,
             top:top,
             left:left,
-            font:{fontSize:11,fontWeight:'normal'}
+            font:{fontSize:12,fontWeight:'normal'}
         });
         return label;
     };
@@ -132,7 +176,7 @@ var setting = {
             top:top,
             left:left,
             bottom:top,
-            font:{fontSize:11,fontWeight:'normal'},
+            font:{fontSize:12,fontWeight:'normal'},
         });
         return label;
     };
@@ -181,19 +225,18 @@ var setting = {
             selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
         });
-        var col_width = setting.row_title_width - setting.row_margin;
+        var col_width = setting.detail_title_width - setting.row_margin;
         var row_title = cu.createTitleLabel(L(row_title_define),setting.row_title_color,col_width,'auto',setting.row_margin,setting.row_margin);
 
         var rowWrap = Ti.UI.createView({
-            width: setting.terminal_width - col_width - setting.row_margin,
+            width: setting.os_width - col_width - setting.row_margin,
             backgroundColor:'#ffffff',
             height: Ti.UI.SIZE,
             top:0,
-            left:setting.row_title_width + setting.row_margin,
+            left:setting.detail_title_width + setting.row_margin,
             //bottom:10,
         });
-        //var row_detail = cu.createSummaryLabel(row_data,setting.row_summary_color,setting.terminal_width - col_width - 40,'auto',setting.row_margin,setting.row_margin);
-        var row_detail = cu.createSummaryLabel(row_data,setting.row_summary_color,setting.terminal_width - col_width - 30,'auto',setting.row_margin,setting.row_margin);
+        var row_detail = cu.createSummaryLabel(row_data,setting.row_summary_color,setting.os_width - col_width - 30,'auto',setting.row_margin,setting.row_margin);
         
         rowWrap.add(row_detail);
         
@@ -212,17 +255,17 @@ var setting = {
             selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
         });
-        var col_width = setting.row_title_width - setting.row_margin;
+        var col_width = setting.detail_title_width - setting.row_margin;
         var row_title = cu.createTitleLabel(L(row_title_define),setting.row_title_color,col_width,'auto',setting.row_margin,setting.row_margin);
 
         var rowWrap = Ti.UI.createView({
-            width: 320 - col_width - setting.row_margin,
+            width: setting.os_width - col_width - setting.row_margin,
             backgroundColor:'#ffffff',
             height: Ti.UI.SIZE,
             top:0,
-            left:setting.row_title_width + setting.row_margin
+            left:setting.detail_title_width + setting.row_margin
         });
-        var row_detail = cu.createSummaryLabel(address,setting.row_summary_color,320 - col_width - 30 - 50,'auto',setting.row_margin,setting.row_margin);
+        var row_detail = cu.createSummaryLabel(address,setting.row_summary_color,setting.os_width - col_width - 30 - 50,'auto',setting.row_margin,setting.row_margin);
 
         rowWrap.add(row_detail);
 
@@ -419,20 +462,31 @@ var setting = {
     cu.makeSaveProperty = function(tid,use) {
         
         if(use == 'similar'){
-            var save_button = Ti.UI.createButton({
-              backgroundImage:'img/save_btn_s_' + setting.lang_string + '.png',
-              width:setting.save_btn_s_width,
-              height:setting.save_btn_s_height,
-              top:45,
-              left:setting.similar_face_height + 5
-            });
+            if(setting.os == 'ipad'){
+                var save_button = Ti.UI.createButton({
+                  backgroundImage:'img/save_btn_s_' + setting.lang_string + '.png',
+                  width:setting.save_btn_s_width,
+                  height:setting.save_btn_s_height,
+                  top:5,
+                  right:10
+                });
+            }else{
+                var save_button = Ti.UI.createButton({
+                  backgroundImage:'img/save_btn_s_' + setting.lang_string + '.png',
+                  width:setting.save_btn_s_width,
+                  height:setting.save_btn_s_height,
+                  top:45,
+                  left:setting.similar_face_height + 5
+                });
+            }
+
         }else if(use == 'ja_detail'){
             var save_button = Ti.UI.createButton({
               backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
               color:'#ffffff',
               width:setting.save_btn_width,
               height:setting.save_btn_height,
-              bottom:5,
+              bottom:2,
               left:5
             });
         }else{
@@ -441,7 +495,7 @@ var setting = {
               color:'#ffffff',
               width:setting.save_btn_width,
               height:setting.save_btn_height,
-              bottom:5,
+              bottom:2,
             });
         }
 

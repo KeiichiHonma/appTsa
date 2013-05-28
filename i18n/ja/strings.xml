@@ -32,7 +32,7 @@
 <string name="search_budget_1">250,000円～350,000円</string>
 <string name="search_budget_2">350,000円～450,000円</string>
 <string name="search_budget_3">450,000円～550,000円</string>
-<string name="search_budget_4">～550,000円</string>
+<string name="search_budget_4">550,000円～</string>
 
 <string name="search_map_title">場所</string>
 <string name="search_map_action">場所</string>

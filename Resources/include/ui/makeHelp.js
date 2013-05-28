@@ -1,11 +1,10 @@
 exports.exec = function(){
+    con.UI.tableView.backgroundColor = '#ffffff';
     //win.backgroundColor = setting.row_title_background_color;
     var form_title_height = 20;
     var form_tf_height = 20;
     var form_margin_left = 5;
     
-    // データをクリア
-    con.UI.tableView.data = [];
     var help_title_row = cu.createSearchTitleRow( L('help_inquiry_title') );
     help_title_row.height = Ti.UI.SIZE;
     con.UI.tableView.appendRow( help_title_row );

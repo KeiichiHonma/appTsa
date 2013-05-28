@@ -63,11 +63,14 @@ exports.exec = function(params){
 
     // 送信ボタン押下時の処理
     submit_button.addEventListener('click', function(e){
+        var win = Ti.UI.currentWindow;
         Ti.UI.currentTab.open(
             Ti.UI.createWindow({
+                title: L('tab_name_inquiry'),
                 url: "result.js",
                 navBarHidden: false,
                 barColor: setting.bar_color,
+                _caller:win,
                 // Extended
                 ext : {
                     params : params

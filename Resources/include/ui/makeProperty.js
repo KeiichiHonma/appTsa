@@ -16,7 +16,7 @@ exports.exec = function(json,tid){
         
         //type
         if(json['type'].col_campaign == 0){
-            var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg_en.gif',setting.row_title_width,setting.row_title_height + 10);
+            var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg_en.gif',setting.detail_title_width,setting.row_title_height + 10);
             var campaign_title = json['type'].col_campaign_title_e;
         }
         var type_name = json['type'].col_type_e;
@@ -42,7 +42,7 @@ exports.exec = function(json,tid){
         
         //type
         if(json['type'].col_campaign == 0){
-            var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg_ja.gif',setting.row_title_width,setting.row_title_height);
+            var row_campaign_bg = cu.createWrapImageView('img/row_campaign_bg_ja.gif',setting.detail_title_width,setting.row_title_height);
             var campaign_title = json['type'].col_campaign_title;
         }
         var type_name = json['type'].col_type;
@@ -59,7 +59,8 @@ exports.exec = function(json,tid){
 
     //title////////////////////////////////////////////////////////////////////////////
     var titleRow = Ti.UI.createTableViewRow({
-        height:30,
+        //height:30,
+        height:Ti.UI.FILL,
         touchEnabled : false,
         backgroundColor:setting.row_title_background_color,
         selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
@@ -144,7 +145,7 @@ exports.exec = function(json,tid){
             height:Ti.UI.SIZE,
             top:5,
             bottom:5,
-            left:setting.row_title_width + 10,
+            left:setting.detail_title_width + 10,
             font:{fontSize:12,fontWeight:'bold'}
         });
 
@@ -204,7 +205,7 @@ exports.exec = function(json,tid){
           color:'#ffffff',
           width:150,
           height:35,
-          bottom:5,
+          bottom:2,
           right:5,
           opacity:1,
         });
@@ -218,7 +219,7 @@ exports.exec = function(json,tid){
 
             confirm.addEventListener('click', function(conEvt) {
                 if(conEvt.index === 1){
-                    Titanium.Platform.openURL('tel:0354288307');
+                    Titanium.Platform.openURL('tel:'+setting.telephone_number);
                 }
             });
             confirm.show();

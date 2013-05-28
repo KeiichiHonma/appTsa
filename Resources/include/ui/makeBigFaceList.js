@@ -58,8 +58,6 @@ exports.exec = function(json,page,isFirst,conditions){
                 height:20,
                 bottom:55,
                 left:10,
-                //font:{fontSize:17,fontWeight:'normal',fontFamily:'Helvetica Neue Bold'}
-                //font:{fontSize:17,fontWeight:'normal',fontFamily:'Helvetica Neue Condensed Black'}
                 font:{fontSize:16,fontWeight:'normal'}
             });
 
@@ -118,7 +116,7 @@ exports.exec = function(json,page,isFirst,conditions){
             var row = Ti.UI.createTableViewRow({
                 title:L('campaign_more_title'),
                 url: 'campaign.js',
-                height:30,
+                height:40,
                 hasChild:true,
                 backgroundColor:setting.row_title_background_color,
                 // Extended

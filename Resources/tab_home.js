@@ -8,7 +8,7 @@ con.UI.tableView.separatorStyle = Titanium.UI.iPhone.TableViewSeparatorStyle.NON
     
 //ヘッダ画像////////////////////////////////////////
 var row = Ti.UI.createTableViewRow({
-    height:130,
+    height:setting.header_img_height,
     touchEnabled : false,
     selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
     hasChild:false,
@@ -16,7 +16,7 @@ var row = Ti.UI.createTableViewRow({
         rowTitle : 'home'
     }
     });
-row.add(cu.createWrapImageView('img/header_' + setting.lang_string + '.jpg',320,130));
+row.add(cu.createWrapImageView('img/header_' + setting.lang_string + setting.os_width + '.jpg',setting.os_width,setting.header_img_height));
 con.UI.tableView.appendRow(row);
 
 //検索////////////////////////////////////////
@@ -26,7 +26,7 @@ var maps = [];
 var conditions = { maps: maps, budgets: budgets};
 
 var row = Ti.UI.createTableViewRow({
-    height:150,
+    height:115,
     touchEnabled : false,
     selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
     hasChild:false
@@ -39,7 +39,7 @@ if (Ti.Platform.osname !== 'mobileweb') {
     search_table.style = Titanium.UI.iPhone.TableViewStyle.GROUPED;
 }
 
-//budget
+//budget////////////////////////////////////////////
 var row_budget = Ti.UI.createTableViewRow({
     backgroundColor:'#FFFFFF',
     hasChild:true,
@@ -56,12 +56,46 @@ var picker_budget_title = Ti.UI.createLabel({
     font:{fontSize:16,fontWeight:'bold'},
 });
 row_budget.add( picker_budget_title );
+if(setting.os == 'ipad'){
+
+    var childWin = Ti.UI.createWindow();
+    childWin.bottom = -300; //最初は右にずらして画面からはみ出した状態にしておく
+    var open_animation = Ti.UI.createAnimation();
+    open_animation.bottom = 0;
+    open_animation.duration = 300; //0.5秒間のアニメーションにする
+    
+    var pickerView = Ti.UI.createView({
+        title:"",height:1,width:1,top:0,right:50
+    });
+    row_budget.add(pickerView);
+
+    row_budget.addEventListener('click', function(e){
+        var budget_picker = Ti.UI.createPicker();
+        var data = [];
+        data[0]=Ti.UI.createPickerRow({title:L('search_budget_0'),value:0});
+        data[1]=Ti.UI.createPickerRow({title:L('search_budget_1'),value:1});
+        data[2]=Ti.UI.createPickerRow({title:L('search_budget_2'),value:2});
+        data[3]=Ti.UI.createPickerRow({title:L('search_budget_3'),value:3});
+        data[4]=Ti.UI.createPickerRow({title:L('search_budget_4'),value:4});
+        budget_picker.add(data);
+        childWin.add(budget_picker);
+        
+        childWin.open(open_animation);
+        //Create DatePicker just returns a popover
+        //var pickerPopover = createDatePicker('Set Actual Start',audit.ActualStart);
+     
+        budget_picker.show({view:pickerView, animation:true});  
+    });
+
+
+    //var budget_picker = require("include/ui/parts/popover_budget_picker");
+}else{
+    var budget_picker = require("include/ui/parts/budget_picker");
+    budget_picker.exec(conditions,picker_budget_title,row_budget);
+}
 search_table.appendRow(row_budget);
 
-var budget_picker = require("include/ui/parts/budget_picker");
-budget_picker.exec(conditions,picker_budget_title,row_budget);
-
-//region
+//region//////////////////////////////////////////
 var row_region = Ti.UI.createTableViewRow({
     backgroundColor:'#FFFFFF',
     hasChild:true,
@@ -85,7 +119,9 @@ var search_button = Ti.UI.createButton({
   color:'#ffffff',
   width:300,
   height:35,
-  top:110,
+  //top:110,
+  top:5,
+  bottom:5,
   opacity:1,
 });
 search_button.addEventListener('click', function(e){
@@ -108,19 +144,29 @@ row.add(search_table);
 var label = cu.createTitleLabel(L('search_title'),setting.row_title_color,'auto','auto',0,20);
 label.font = {fontSize:15,fontWeight:'bold'};
 row.add(label);
+con.UI.tableView.appendRow(row);
+
+var row = Ti.UI.createTableViewRow({
+    //height:35,
+    backgroundColor:setting.row_title_background_color,
+    touchEnabled : false,
+    selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
+    hasChild:false
+    });
 row.add(search_button);
 con.UI.tableView.appendRow(row);
 
 //キャンペーン画像////////////////////////////////////////
 var row = Ti.UI.createTableViewRow({
     url: 'campaign.js',
-    height:40,
+    height:setting.campaign_img_height,
     hasChild:true,
     ext : {
-        rowTitle : L('campaign_spring')
+        rowTitle : L('campaign_' + setting.season)
     }
 });
-row.add(cu.createWrapImageView('img/campaign_spring.jpg',320,40));
+row.add(cu.createWrapImageView('img/campaign_' + setting.season + setting.os_width +  '.jpg',setting.os_width,setting.campaign_img_height));
+
 con.UI.tableView.appendRow(row);
 
 row.addEventListener('click', function(e) {
@@ -134,5 +180,8 @@ row.addEventListener('click', function(e) {
     Titanium.UI.currentTab.open(newWindow);
 });
 win.add(con.UI.tableView);
-//con.loadCampaign('index',true,null);
-con.loadBigFaceCampaign('index',true,null);
+if(setting.os == 'ipad'){
+    con.loadCampaign('index',true,null);
+}else{
+    con.loadBigFaceCampaign('index',true,null);
+}

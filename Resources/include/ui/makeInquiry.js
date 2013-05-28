@@ -1,10 +1,13 @@
 exports.exec = function(tids,json){
     var form_title_height = 20;
     var form_tf_height = 20;
+    var similar_property_name_margin_left = 70;
+    if(setting.os =='ipad'){
+        form_title_height = 30;
+        form_tf_height = 30;
+        similar_property_name_margin_left = 95;
+    }
     var form_margin_left = "5%";
-    
-    // データをクリア
-    con.UI.tableView.data = [];
     
     var stay = '';
     var span = '';
@@ -268,7 +271,7 @@ exports.exec = function(tids,json){
     if(json.inquiry_similar.length > 0){
         var row = cu.makeTitleRow( L('property_near_property_title'),form_title_height,form_margin_left );
         row.selectionStyle = Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE;
-        var top_margin = 20;
+        var top_margin = form_title_height;
         
         var btnDelete = Ti.UI.createButton({
             title : L('btn_delete_title'),
@@ -276,7 +279,7 @@ exports.exec = function(tids,json){
             width:50,
             height:30,
             top:top_margin,
-            left:15,
+            left:form_margin_left,
             font:{fontSize:11,fontWeight:'normal'},
         });
         //tids更新
@@ -291,8 +294,8 @@ exports.exec = function(tids,json){
         var similar_property_name = cu.createTitleLabel(property_name_text,setting.row_title_color,'auto',form_title_height,0,form_margin_left);
         similar_property_name.color = '#000000';
         similar_property_name.height = Ti.UI.SIZE;
-        similar_property_name.left = 70;
-        similar_property_name.top = top_margin;
+        similar_property_name.left = similar_property_name_margin_left;
+        similar_property_name.top = top_margin + 5;
         row.add(btnDelete);
         row.add(similar_property_name);
 
@@ -365,6 +368,7 @@ exports.exec = function(tids,json){
 
             Ti.UI.currentTab.open(
                 Ti.UI.createWindow({
+                    title: L('tab_name_inquiry'),
                     url: "confirm.js",
                     navBarHidden: false,
                     barColor: setting.bar_color,

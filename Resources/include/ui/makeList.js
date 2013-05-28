@@ -3,6 +3,12 @@ exports.exec = function(json,page,isFirst,conditions){
         var type_list = json.similar;
     }else{
         var type_list = json.type;
+        if(setting.os == 'ipad'){
+            setting.list_row_height = 150;
+            setting.list_property_height = 30;
+            setting.list_area_height = 30;
+            setting.list_summety_height = 90;
+        }
     }
     if(isFirst){
         var sp = 0;
@@ -40,7 +46,7 @@ exports.exec = function(json,page,isFirst,conditions){
         for(var i = 0; i< type_list.length; i++) {
             var num = i;
             if(page != 'detail') {
-                var row_height = setting.row_height;
+                var row_height = setting.list_row_height;
                 var row = Ti.UI.createTableViewRow({
                     height:row_height,
                     hasDetail:true,
@@ -63,7 +69,7 @@ exports.exec = function(json,page,isFirst,conditions){
 
             //メインタイトル
             if(setting.isEn){
-                var property_name_text = type_list[i].col_building_e + ' / ' + type_list[i].col_type_e;
+                var property_name_text = type_list[i].col_type_e + ' - ' + type_list[i].col_building_e;
                 if(page != 'detail') var area_name_text = type_list[i].col_area_e;
                 if(page == 'campaign'){
                     var summary_text = type_list[i].col_rent_cost_e;
@@ -72,29 +78,42 @@ exports.exec = function(json,page,isFirst,conditions){
                 }
                 
             }else{
-                var property_name_text = type_list[i].col_building + ' / ' + type_list[i].col_type;
-                if(page != 'detail') var area_name_text = type_list[i].col_area;
+                var property_name_text =  type_list[i].col_type + ' - ' + type_list[i].col_building;
+                if(page != 'detail') var area_name_text =type_list[i].col_area;
                 if(page == 'campaign'){
                     var summary_text = type_list[i].col_rent_cost;
                 }else{
                     var summary_text = type_list[i].col_rent_cost + ' / ' + type_list[i].col_size + '㎡';
                 }
             }
-            var property_name = cu.createTitleBoldLabel(property_name_text,setting.row_summary_color,'auto',15,0,row_height + 5);
+            var property_name = cu.createTitleBoldLabel(property_name_text,setting.row_summary_color,'auto',setting.list_property_height,0,row_height + 5);
             row.add(property_name);
 
             if(page != 'detail') {
-                var area_name = cu.createTitleBoldLabel(area_name_text,setting.row_summary_color,'auto',15,15,row_height + 5);
+                var area_name = cu.createTitleBoldLabel(area_name_text,setting.row_summary_color,'auto',setting.list_area_height,setting.list_property_height,row_height + 5);
                 row.add(area_name);
             }
 
             //説明文
             if(page != 'detail') {
-                var property_summary_position = 30;
+                var property_summary_position = setting.list_property_height + setting.list_area_height;
             }else{
-                var property_summary_position = 15;
+                var property_summary_position = setting.list_property_height;
             }
-            var property_summary = cu.createSummaryBoldLabel(summary_text,setting.row_summary_bold_color,'auto',30,property_summary_position,row_height + 5);
+            var property_summary = cu.createSummaryBoldLabel(summary_text,setting.row_summary_bold_color,'auto',setting.list_summety_height,property_summary_position,row_height + 5);
+            
+            //osでフォント変更
+            if(page != 'detail' && setting.os == 'ipad'){
+                property_name.font = {fontSize:22};
+                property_summary.font = {fontSize:18,fontWeight:'bold'};
+                if(page != 'detail') {
+                    area_name.font = {fontSize:18};
+                }
+                
+            }else{
+                property_summary.font = {fontSize:12,fontWeight:'bold'};
+            }
+            
             
             row.add(property_summary);
             if(page == 'detail'){
@@ -106,7 +125,7 @@ exports.exec = function(json,page,isFirst,conditions){
                   width:100,
                   height:35,
                   top:45,
-                  right:5
+                  right:10
                   });
 
                 detail_button.addEventListener('click', function(e){
@@ -160,8 +179,9 @@ exports.exec = function(json,page,isFirst,conditions){
             //もっと見る////////////////////////////////////////
             var row = Ti.UI.createTableViewRow({
                 title:L('campaign_more_title'),
+                backgroundColor:setting.row_title_background_color,
                 url: 'campaign.js',
-                height:30,
+                height:40,
                 hasChild:true,
                 // Extended
                 ext : {
@@ -181,7 +201,8 @@ exports.exec = function(json,page,isFirst,conditions){
             });
 
             var row = Ti.UI.createTableViewRow({
-                hasChild:false
+                hasChild:false,
+                backgroundColor:setting.row_title_background_color,
             });
 
             var about_button = Ti.UI.createButton({

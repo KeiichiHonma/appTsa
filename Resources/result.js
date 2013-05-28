@@ -1,6 +1,6 @@
 // win1.jsのwindowを変数にセット
 var win = Titanium.UI.currentWindow;
-win.hideNavBar();
+//win.hideNavBar();
 
 // ライブラリの読み込み
 Titanium.include('include/fw/container.js');

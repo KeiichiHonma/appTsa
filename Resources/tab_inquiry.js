@@ -8,6 +8,8 @@ con.UI.tableView.separatorStyle = Titanium.UI.iPhone.TableViewSeparatorStyle.NON
 con.loadInquiry();
 
 tab.addEventListener('focus', function(e){
+//win.addEventListener('focus', function(e){
+//winにフォーカスすると、ピッカーで選択するたびに画面の再描画していまうため
     con.loadInquiry();
 });
 

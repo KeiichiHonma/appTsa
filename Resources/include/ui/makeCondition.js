@@ -57,17 +57,19 @@ exports.exec = function(json){
     win.add(search_button);
 
     search_button.addEventListener('click', function(e){
-        Ti.UI.currentTab.open(
-            Ti.UI.createWindow({
-                title: L('property_search_window_title'),
-                url: "search.js",
-                navBarHidden: false,
-                barColor: setting.bar_color,
-                // Extended
-                ext : {
-                    conditions : conditions
-                }
-            })
-        );
+        if(conditions.budgets.length > 0 || conditions.maps.length > 0){
+            Ti.UI.currentTab.open(
+                Ti.UI.createWindow({
+                    title: L('property_search_window_title'),
+                    url: "search.js",
+                    navBarHidden: false,
+                    barColor: setting.bar_color,
+                    // Extended
+                    ext : {
+                        conditions : conditions
+                    }
+                })
+            );
+        }
     });
 };

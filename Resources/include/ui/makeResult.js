@@ -1,9 +1,8 @@
 exports.exec = function(){
     con.UI.tableView.separatorStyle = Titanium.UI.iPhone.TableViewSeparatorStyle.NONE;
     con.UI.tableView.backgroundColor = setting.row_title_background_color;
-    //ヘッダ画像////////////////////////////////////////
     var row = Ti.UI.createTableViewRow({
-        height:130,
+        height:setting.header_img_height,
         touchEnabled : false,
         selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
         hasChild:false,
@@ -11,7 +10,7 @@ exports.exec = function(){
             rowTitle : 'home'
         }
         });
-    row.add(cu.createWrapImageView('img/header_' + setting.lang_string + '.jpg',320,130));
+    row.add(cu.createWrapImageView('img/header_' + setting.lang_string + setting.os_width + '.jpg',setting.os_width,setting.header_img_height));
     con.UI.tableView.appendRow(row);
 
     //title////////////////////////////////////////////////////////////////////////////
@@ -25,7 +24,7 @@ exports.exec = function(){
     var label = Ti.UI.createLabel({
         text:L('form_thank_message'),
         color:setting.row_title_color,
-        font:{fontSize:20,fontWeight:'bold'},
+        font:{fontSize:16,fontWeight:'bold'},
         top:10,
         left:10,
         right:10,
@@ -51,11 +50,8 @@ exports.exec = function(){
     });
     messageRow.add(label);
     con.UI.tableView.appendRow(messageRow);
-
-    //resultだけフォーカスしたら戻る
-    win.addEventListener('focus', function(e){
-        win.showNavBar();
-        win.title = L('tab_name_inquiry');
-        con.loadInquiry();
+    win.addEventListener('blur', function(e){
+        win._caller.close();
+        win.close();
     });
 };
