@@ -69,19 +69,6 @@ var tab5 =  Titanium.UI.createTab({
 Ti.App.addEventListener('button_click', function(e){
     alert('click detected: value = ' + e.arg1)
 });
-
-// 5目のタブの定義
-/*var tab5 =  Titanium.UI.createTab({
-    icon: 'img/icon_information.png',
-    title: L('tab_name_info'),
-    window: Titanium.UI.createWindow({
-        title: L('tab_name_info'),
-        backgroundColor: '#fff',
-        url: 'tab_info.js',
-        barColor: '#7D715B'
-    })
-});
-*/
 // タブを追加しTabGroupを表示する
 tabGroup.addTab(tab1);
 tabGroup.addTab(tab2);

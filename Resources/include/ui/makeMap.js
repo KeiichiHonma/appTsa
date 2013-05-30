@@ -1,4 +1,5 @@
 var win = Titanium.UI.currentWindow;
+win.orientationModes = [Ti.UI.PORTRAIT];
 win.title = "Map";
 //win.backgroundColor = "#000000";
 

@@ -9,18 +9,23 @@ exports.exec = function(json){
     //予算
     con.UI.tableView.appendRow( cu.createSearchTitleRow( L('search_budget_title') ) );
 
-    var row = Ti.UI.createTableViewRow({
+    var row_budget = Ti.UI.createTableViewRow({
         height:40,
         hasChild:true
     });
 
-    var picker_title = cu.createCheckboxTitleLabel(L('search_budget_action'),10,30);
-    row.add( picker_title );
-    con.UI.tableView.appendRow(row);
+    var picker_budget_title = cu.createCheckboxTitleLabel(L('search_budget_action'),10,30);
+    row_budget.add( picker_budget_title );
+    con.UI.tableView.appendRow(row_budget);
     
     //budget
-    var budget_picker = require("include/ui/parts/budget_picker");
-    budget_picker.exec(conditions,picker_title,row);
+    if(setting.os == 'ipad'){
+        var budget_popover = require("include/ui/parts/budget_popover");
+        budget_popover.exec(conditions,picker_budget_title,row_budget);
+    }else{
+        var budget_picker = require("include/ui/parts/budget_picker");
+        budget_picker.exec(conditions,picker_budget_title,row_budget);
+    }
 
     //場所
     con.UI.tableView.appendRow( cu.createSearchTitleRow( L('search_map_title') ) );

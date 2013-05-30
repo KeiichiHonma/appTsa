@@ -150,6 +150,6 @@ Sincerely.</string>
 <string name="info_request_title">Requests | Questions</string>
 <string name="info_privacy_policy_title">Privacy policy</string>
 <string name="info_company_title">Company</string>
-<string name="info_version_title">Version 1.0.0</string>
-
+<string name="info_version_title">Version 1.0</string>
+<string name="info_offline">off-line</string>
 </resources>

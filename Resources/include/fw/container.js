@@ -3,8 +3,6 @@ Titanium.include('createUI.js');
 Titanium.include('define.js');
 
 var con = {};
-//var tsa_url = 'http://tsa.hades.corp.813.co.jp';
-var tsa_url = 'http://tsa.813.co.jp';
 (function() {
     // UI関連
     con.UI = {};
@@ -17,17 +15,19 @@ var tsa_url = 'http://tsa.813.co.jp';
     };
 
     con.loadBigFaceCampaign = function(page,isFirst,conditions) {
-        var url = tsa_url + '/json/type/condition/special/campaign';
+        var url = setting.tsa_url + '/json/type/condition/special/campaign';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
             var makeList = require("include/ui/makeBigFaceList");
             makeList.exec(json,page,isFirst,conditions);
+
+
         });
     };
 
     con.loadCampaign = function(page,isFirst,conditions) {
-        var url = tsa_url + '/json/type/condition/special/campaign';
+        var url = setting.tsa_url + '/json/type/condition/special/campaign';
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
@@ -56,7 +56,7 @@ var tsa_url = 'http://tsa.813.co.jp';
     
     con.loadSearch = function(page,isFirst,conditions) {
         var query_string = con.getCondition(conditions);
-        var url = tsa_url + '/json/search?' + query_string;
+        var url = setting.tsa_url + '/json/search?' + query_string;
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
@@ -67,7 +67,7 @@ var tsa_url = 'http://tsa.813.co.jp';
 
     //物件詳細
     con.loadProperty = function(tid) {
-        var url = tsa_url + '/json/detail/tid/' + tid;
+        var url = setting.tsa_url + '/json/detail/tid/' + tid;
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
@@ -82,7 +82,7 @@ var tsa_url = 'http://tsa.813.co.jp';
 
     //slideshow
     con.loadSlideshow = function(tid) {
-        var url = tsa_url + '/json/images/tid/' + tid;
+        var url = setting.tsa_url + '/json/images/tid/' + tid;
         con.callAPI('GET', url, null, function(status, responseText) {
             // 受け取ったJSONデータをパース
             var json = JSON.parse(responseText);
@@ -122,7 +122,7 @@ var tsa_url = 'http://tsa.813.co.jp';
             if(tids != '') encode_url = encode_url + encodeURIComponent(tids);
             
             var save_text = L('save_list_message');
-            var url = tsa_url + '/json/save?tids=' + encode_url;
+            var url = setting.tsa_url + '/json/save?tids=' + encode_url;
             con.callAPI('GET', url, null, function(status, responseText) {
                 // 受け取ったJSONデータをパース
                 var json = JSON.parse(responseText);
@@ -155,7 +155,6 @@ var tsa_url = 'http://tsa.813.co.jp';
         db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
         
         var rows = db.execute('select rowid,* from ' + db_setting.table_save);
-
         if( rows.getRowCount() == 0){
             var loadHelp = require("include/ui/makeHelp");
             loadHelp.exec();
@@ -176,12 +175,11 @@ var tsa_url = 'http://tsa.813.co.jp';
             if(tids != ''){
                 //昔のセーブデータの可能性があるため、念のため確認。後nearlyの物件取得
                 encode_url = encode_url + encodeURIComponent(tids);
-                var url = tsa_url + '/json/save?tids=' + encode_url;
+                var url = setting.tsa_url + '/json/save?tids=' + encode_url;
                 con.callAPI('GET', url, null, function(status, responseText) {
                     // 受け取ったJSONデータをパース
                     var json = JSON.parse(responseText);
                     if(json.save_list.length > 0){
-                        
                         var loadInquiry = require("include/ui/makeInquiry");
                         loadInquiry.exec(tids,json);
                     }else{
@@ -211,11 +209,11 @@ var tsa_url = 'http://tsa.813.co.jp';
 
     //コンタクト結果
     con.loadResult = function(params) {
+        var isResult = true;
         win.leftNavButton  = Ti.UI.createLabel({text:' '});//戻るボタンを表示しない
-        var url = tsa_url + '/json/inquiry';
+        var url = setting.tsa_url_ssl + '/json/inquiry';
         con.callAPI('POST', url, params, function(status, responseText) {
             if(responseText == "success"){
-                
                 //if(!setting.isDebug){
                     //save delete
                     var db = Ti.Database.open(db_setting.table_save);
@@ -224,10 +222,21 @@ var tsa_url = 'http://tsa.813.co.jp';
                     db.execute("delete from " + db_setting.table_save + " where tid > '0' ");
                     db.execute('commit');
                     db.close();
-                    var rows = db.execute('select rowid,* from ' + db_setting.table_save);
                 //}
                 var loadResult = require("include/ui/makeResult");
                 loadResult.exec();
+/*
+                win.addEventListener('blur', function(e){
+                    Titanium.UI.currentTab.addEventListener('focus', function(e){
+                        if(isResult){
+                            Ti.API.info(33);
+                            con.loadInquiry();
+                            isResult = false;
+                        }
+                    });
+                });
+*/
+
             }else{
                 
             }
@@ -264,12 +273,12 @@ var tsa_url = 'http://tsa.813.co.jp';
             });
         }
     };
-    // TwitterAPIを非同期で呼び出す
+    
     con.callAPI = function(method, url, params, callbackOnLoad) {
         // ネットワークが使用できないときはエラーメッセージを表示する
         if(Titanium.Network.online == false) {
             // エラー表示
-            alert('オフラインなのでデータを取得できません。');
+            alert(L('info_offline'));
             return;
         }
         // HTTPClientオブジェクトを生成します。
@@ -278,11 +287,16 @@ var tsa_url = 'http://tsa.813.co.jp';
         // レスポンスを受け取るイベント(非同期に実行される)
         xhr.onload = function() {
             callbackOnLoad(xhr.status, xhr.responseText);
+        xhr.onload = null;
+        xhr.onreadystatechange = null;
+        xhr.ondatastream = null;
+        xhr.onerror = null;
+        xhr = null;
         };
         // エラー発生時のイベント
         xhr.onerror = function(error) {
             // errorにはエラー事由の文字列オブジェクトが入ってくる。
-            alert(error);
+            //alert(error);
         };
         // リクエスト送信します。
         if(params) {

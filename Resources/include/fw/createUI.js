@@ -1,6 +1,8 @@
 // imageManager.js
 var cu = {};
 var setting = {
+    "tsa_url":"",
+    "tsa_url_ssl":"",
     "isEn":false,
     "isDebug":true,
     "isResult":false,
@@ -31,9 +33,21 @@ var setting = {
     "save_btn_height":35,
     "save_btn_s_width":100,
     "save_btn_s_height":35,
-    "telephone_number":'0354288307'
+    "telephone_number":'0354288307',
+    "form_tf_height":20,
+    "form_title_height":20
     
     };
+    if(setting.isDebug){
+        //setting.tsa_url = 'http://tsa.hades.corp.813.co.jp';
+        setting.tsa_url = 'http://tsa.813.co.jp';
+        //setting.tsa_url_ssl = 'http://tsa.hades.corp.813.co.jp';
+        setting.tsa_url_ssl = 'http://tsa.813.co.jp';
+    }else{
+        setting.tsa_url = 'http://www.serviced-apartments-tokyo.com';
+        setting.tsa_url_ssl = 'https://ps128.xbit.jp/~w123177';
+    }
+
 
     if(Ti.Platform.locale == 'en'){
         setting.isEn = true;
@@ -43,6 +57,7 @@ var setting = {
         ///debug//////////////////////////////////////////////////
         //setting.isEn = true;
         //setting.lang_string = "en";
+        
         //////////////////////////////////////////////////////////
         setting.lang_string = "ja";
     }
@@ -59,7 +74,6 @@ var setting = {
     }else{
         setting.season = 'autumn';
     }
-
 switch(Ti.Platform.osname){
     case 'iphone':
         setting.os = 'iphone';
@@ -479,16 +493,25 @@ switch(Ti.Platform.osname){
                   left:setting.similar_face_height + 5
                 });
             }
-
         }else if(use == 'ja_detail'){
-            var save_button = Ti.UI.createButton({
-              backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
-              color:'#ffffff',
-              width:setting.save_btn_width,
-              height:setting.save_btn_height,
-              bottom:2,
-              left:5
-            });
+            if(setting.os == 'ipad'){
+                var save_button = Ti.UI.createButton({
+                  backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
+                  color:'#ffffff',
+                  width:setting.save_btn_width,
+                  height:setting.save_btn_height,
+                  bottom:2
+                });
+            }else{
+                var save_button = Ti.UI.createButton({
+                  backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
+                  color:'#ffffff',
+                  width:setting.save_btn_width,
+                  height:setting.save_btn_height,
+                  bottom:2,
+                  left:5
+                });
+            }
         }else{
             var save_button = Ti.UI.createButton({
               backgroundImage:'img/save_btn_' + setting.lang_string + '.png',
@@ -532,14 +555,18 @@ switch(Ti.Platform.osname){
         });
         return save_button;
     };
-    cu.makeTitleRow = function(title,form_title_height,form_margin_left){
+    cu.makeInquiryTitleRow = function(title,form_title_height,form_margin_left){
         var row = Ti.UI.createTableViewRow({
             touchEnabled : false,
             selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
             hasChild:false
         });
         var title = cu.createTitleLabel(title,setting.row_title_color,'auto',form_title_height,0,form_margin_left);
-        title.font = {fontSize:12};
+        if(setting.os == 'ipad'){
+            title.font = {fontSize:16};
+        }else{
+            title.font = {fontSize:12};
+        }
         row.add(title);
         return row;
     }

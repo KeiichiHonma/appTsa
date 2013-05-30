@@ -1,4 +1,16 @@
 exports.exec = function(json){
+    con.UI.tableView.scrollable = true;
+    // データをクリア
+    con.UI.tableView.data = [];
+    
+    if(setting.os == 'ipad'){
+        setting.list_row_height = 150;
+        setting.list_property_height = 30;
+        setting.list_area_height = 30;
+        setting.list_summety_height = 90;
+        var property_name_fontsize = 22;
+        var property_summary_fontsize = 18;
+    }
 
     //編集//////////////////////////////////////////////////////////////
     var btnEdit = Ti.UI.createButton({
@@ -32,16 +44,6 @@ exports.exec = function(json){
         db.execute('begin transaction');
         db.execute("delete from " + db_setting.table_save + " where tid = '" + e.rowData.ext.tid + "' ");
         db.execute('commit');
-
-        //save
-        var rows = db.execute('select rowid,* from ' + db_setting.table_save);
-        if( rows.getRowCount() == 0){
-            //画面からsaveが存在した場合のUIを削除
-            if(is_similar_table){
-                win.remove(similar_table);
-                is_similar_table = false;
-            }
-        }
         db.close();
     });
 
@@ -58,8 +60,22 @@ exports.exec = function(json){
             }
         });
 
+        row.addEventListener('click', function(e) {
+            var newWindow = Titanium.UI.createWindow({
+                title: e.rowData.ext.rowTitle,
+                backgroundColor: '#fff',
+                url: e.rowData.url,
+                navBarHidden: false,
+                barColor: setting.bar_color,
+                ext : {
+                    tid : e.rowData.ext.tid
+                }
+            });
+            Titanium.UI.currentTab.open(newWindow);
+        });
+
         //画像配置
-        row.add(cu.createImageView(tsa_url + json.save_list[i].path,setting.list_row_height,setting.list_row_height));
+        row.add(cu.createImageView(setting.tsa_url + json.save_list[i].path,setting.list_row_height,setting.list_row_height));
 
         //メインタイトル
         if(setting.isEn){
@@ -79,23 +95,25 @@ exports.exec = function(json){
         //説明文
         var property_summary = cu.createSummaryBoldLabel(summary_text,setting.row_summary_bold_color,'auto',setting.list_summety_height,setting.list_property_height + setting.list_area_height,setting.list_row_height + 5);
         property_summary.font = {fontSize:12,fontWeight:'bold'};
-        
+        //osでフォント変更
+        if(setting.os == 'ipad'){
+            property_name.font = {fontSize:property_name_fontsize};
+            property_summary.font = {fontSize:property_summary_fontsize,fontWeight:'bold'};
+            area_name.font = {fontSize:property_summary_fontsize};
+        }
         row.add(property_summary);
         con.UI.tableView.appendRow(row);
     }
+    
+    //similar
     if(json.inquiry_similar.length > 0){
-        var position = json.save_list.length * setting.list_row_height;
-        
-        //nearby title////////////////////////////////////////////////////////////////////////////\
-        var titleRow = Ti.UI.createTableViewRow({
-            top:position,
-            height:30,
-            touchEnabled : false,
-            backgroundColor:setting.row_title_background_color,
-            selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
-            hasChild:false
-        });
 
+        var similar_view = Titanium.UI.createView({
+            top:0,
+            height:30,
+            width:'auto',
+            backgroundColor:setting.row_title_background_color,
+        });
         var label = Ti.UI.createLabel({
             text:L('property_near_property_title'),
             color:setting.row_title_color,
@@ -103,48 +121,19 @@ exports.exec = function(json){
             top:5,
             bottom:5
         });
-        var is_similar_table = true;
-        var similar_table = Titanium.UI.createTableView({
-            top:position
-        });
+        similar_view.add(label);
         var row = Ti.UI.createTableViewRow({
             className:L('property_detail_title'),
-            height:setting.list_row_height,
-            hasDetail:true,
+            height:setting.list_row_height + 30,
+            //hasChild:true,
             url: 'detail.js',
             // Extended
             ext : {
                 tid : json.inquiry_similar[0].col_tid
             }
         });
-        titleRow.add(label);
-        //画像配置
-        row.add(cu.createImageView(tsa_url + json.inquiry_similar[0].path,setting.list_row_height,setting.list_row_height));
-
-        //メインタイトル
-        if(setting.isEn){
-            var property_name_text = json.inquiry_similar[0].col_building_e;
-            var area_name_text = json.inquiry_similar[0].col_type_e + ' / ' + json.inquiry_similar[0].col_size + '㎡' + ' / ' + json.inquiry_similar[0].col_area_e;
-            var summary_text = json.inquiry_similar[0].col_rent_cost_e;
-        }else{
-            var property_name_text = json.inquiry_similar[0].col_building;
-            var area_name_text = json.inquiry_similar[0].col_type + ' / ' + json.inquiry_similar[0].col_size + '㎡' + ' / ' + json.inquiry_similar[0].col_area;
-            var summary_text = json.inquiry_similar[0].col_rent_cost;
-        }
-        var property_name = cu.createTitleBoldLabel(property_name_text,setting.row_summary_color,'auto',15,0,setting.list_row_height + 5);
-        row.add(property_name);
-        var area_name = cu.createTitleBoldLabel(area_name_text,setting.row_summary_color,'auto',15,15,setting.list_row_height + 5);
-        row.add(area_name);
-
-        //説明文
-        var property_summary = cu.createSummaryBoldLabel(summary_text,setting.row_summary_bold_color,'auto',30,30,setting.list_row_height + 5);
-        
-        row.add(property_summary);
-        similar_table.appendRow(titleRow);
-        similar_table.appendRow(row);
-        Ti.UI.currentWindow.add(similar_table);
         // TableView選択時のイベント
-        similar_table.addEventListener('click', function(e) {
+        row.addEventListener('click', function(e) {
             var newWindow = Titanium.UI.createWindow({
                 title: e.rowData.ext.rowTitle,
                 backgroundColor: '#fff',
@@ -157,14 +146,46 @@ exports.exec = function(json){
             });
             Titanium.UI.currentTab.open(newWindow);
         });
+        row.add(similar_view);
+        //画像配置
+        var similar_img = cu.createImageView(setting.tsa_url + json.inquiry_similar[0].path,setting.list_row_height,setting.list_row_height);
+        similar_img.top = 30;
+        row.add(similar_img);
+
+        //メインタイトル
+        if(setting.isEn){
+            var property_name_text = 'simi' + json.inquiry_similar[0].col_building_e;
+            var area_name_text = json.inquiry_similar[0].col_type_e + ' / ' + json.inquiry_similar[0].col_size + '㎡' + ' / ' + json.inquiry_similar[0].col_area_e;
+            var summary_text = json.inquiry_similar[0].col_rent_cost_e;
+        }else{
+            var property_name_text = json.inquiry_similar[0].col_building;
+            var area_name_text = json.inquiry_similar[0].col_type + ' / ' + json.inquiry_similar[0].col_size + '㎡' + ' / ' + json.inquiry_similar[0].col_area;
+            var summary_text = json.inquiry_similar[0].col_rent_cost;
+        }
+        var property_name = cu.createTitleBoldLabel(property_name_text,setting.row_summary_color,'auto',setting.list_property_height,30,setting.list_row_height + 5);
+        row.add(property_name);
+        var area_name = cu.createTitleBoldLabel(area_name_text,setting.row_summary_color,'auto',setting.list_area_height,setting.list_property_height + 30,setting.list_row_height + 5);
+        row.add(area_name);
+
+        //説明文
+        var property_summary = cu.createSummaryBoldLabel(summary_text,setting.row_summary_bold_color,'auto',setting.list_summety_height,setting.list_property_height + setting.list_area_height + 30,setting.list_row_height + 5);
+        property_summary.font = {fontSize:12,fontWeight:'bold'};
+        //osでフォント変更
+        if(setting.os == 'ipad'){
+            property_name.font = {fontSize:property_name_fontsize};
+            property_summary.font = {fontSize:property_summary_fontsize,fontWeight:'bold'};
+            area_name.font = {fontSize:property_summary_fontsize};
+        }
+        row.add(property_summary);
+        con.UI.tableView.appendRow(row);
 
         win.addEventListener('blur', function(e){
             //editボタン
             con.UI.tableView.editing = false;
-            if(is_similar_table){
-                win.remove(similar_table);
-                is_similar_table = false;
-            }
+            //if(is_similar_table){
+                //win.remove(similar_table);
+                //is_similar_table = false;
+            //}
             win.rightNavButton = null;
         });
     }

@@ -78,11 +78,20 @@ exports.exec = function(json,tid){
     con.UI.tableView.appendRow(titleRow);
 
     //photo////////////////////////////////////////////////////////////////////////////
+    if(setting.os == 'ipad'){
+        var photo_max_width = 239;
+        var photo_max_height = 239;
+        var photo_margin_left = 5;
+    }else{
+        var photo_max_width = 140;
+        var photo_max_height = 140;
+        var photo_margin_left = 15;
+    }
     var photoRow = Ti.UI.createTableViewRow({
         height:'auto',
         hasChild:true,
         color:setting.row_title_color,
-        height:150
+        height:photo_max_height + 10
     });
 
     photoRow.addEventListener('click', function(e) {
@@ -100,17 +109,21 @@ exports.exec = function(json,tid){
     });
 
 
-
     //物件外観
-    var face = cu.createWrapImageView(tsa_url + json['building'].face.path,140,140,5,15);
+    var face = cu.createWrapImageView(setting.tsa_url + json['building'].face.path,photo_max_width,photo_max_height,5,photo_margin_left);
     
     //部屋画像
-    var roombig = cu.createWrapImageView(tsa_url + json['type'].roombig.path,140,140,5,155);
-    //var roombig = cu.createWrapImageView(tsa_url + json['type'].layout.path,140,140,21,155);
+    var roombig = cu.createWrapImageView(setting.tsa_url + json['type'].roombig.path,photo_max_width,photo_max_height,5,photo_max_width + photo_margin_left * 2);
+
     photoRow.add(face);
     photoRow.add(roombig);
+    if(setting.os == 'ipad'){
+        //間取り画像
+        var layout = cu.createWrapImageView(setting.tsa_url + json['type'].layout.path,photo_max_width,photo_max_height,5,photo_max_width * 2 + photo_margin_left * 3);
+        photoRow.add(layout);
+    }
     con.UI.tableView.appendRow(photoRow);
-
+    
     //catch////////////////////////////////////////////////////////////////////////////
     var catchRow = Ti.UI.createTableViewRow({
         backgroundColor:'#F5F2EC',
@@ -199,34 +212,31 @@ exports.exec = function(json,tid){
         win.add(save_button);
     }else{
         var save_button = cu.makeSaveProperty(tid,'ja_detail');
-
-        var tel_button = Ti.UI.createButton({
-          backgroundImage:'img/telephone_btn_' + setting.lang_string + '.png',
-          color:'#ffffff',
-          width:150,
-          height:35,
-          bottom:2,
-          right:5,
-          opacity:1,
-        });
-
-        tel_button.addEventListener('click', function(e) {
-            var confirm = Titanium.UI.createAlertDialog({
-                title: L('telephone_confirm_message'),
-                //message: L('open_browser_title'),
-                buttonNames: [L('no'),L('yes')]
-            });
-
-            confirm.addEventListener('click', function(conEvt) {
-                if(conEvt.index === 1){
-                    Titanium.Platform.openURL('tel:'+setting.telephone_number);
-                }
-            });
-            confirm.show();
-        });
-
-
         win.add(save_button);
-        win.add(tel_button);
+        if(setting.os == 'iphone'){
+            var tel_button = Ti.UI.createButton({
+              backgroundImage:'img/telephone_btn_' + setting.lang_string + '.png',
+              color:'#ffffff',
+              width:150,
+              height:35,
+              bottom:2,
+              right:5,
+              opacity:1,
+            });
+            tel_button.addEventListener('click', function(e) {
+                var confirm = Titanium.UI.createAlertDialog({
+                    title: L('telephone_confirm_message'),
+                    buttonNames: [L('no'),L('yes')]
+                });
+
+                confirm.addEventListener('click', function(conEvt) {
+                    if(conEvt.index === 1){
+                        Titanium.Platform.openURL('tel:'+setting.telephone_number);
+                    }
+                });
+                confirm.show();
+            });
+            win.add(tel_button);
+        }
     }
 };

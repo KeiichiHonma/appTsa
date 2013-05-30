@@ -1,10 +1,8 @@
 var win = Titanium.UI.currentWindow;
+win.orientationModes = [Ti.UI.PORTRAIT];
 // ライブラリの読み込み
 Titanium.include('include/fw/container.js');
-//win.backgroundColor = setting.row_title_background_color;
 con.UI.tableView.separatorStyle = Titanium.UI.iPhone.TableViewSeparatorStyle.NONE;
-//con.UI.tableView.separatorColor = '#333333';
-//con.UI.tableView.separatorColor = '#333333';
     
 //ヘッダ画像////////////////////////////////////////
 var row = Ti.UI.createTableViewRow({
@@ -33,7 +31,8 @@ var row = Ti.UI.createTableViewRow({
     });
 
 var search_table = Titanium.UI.createTableView({
-    backgroundColor:setting.row_title_background_color
+    backgroundColor:setting.row_title_background_color,
+    scrollable:false
 });
 if (Ti.Platform.osname !== 'mobileweb') {
     search_table.style = Titanium.UI.iPhone.TableViewStyle.GROUPED;
@@ -57,38 +56,8 @@ var picker_budget_title = Ti.UI.createLabel({
 });
 row_budget.add( picker_budget_title );
 if(setting.os == 'ipad'){
-
-    var childWin = Ti.UI.createWindow();
-    childWin.bottom = -300; //最初は右にずらして画面からはみ出した状態にしておく
-    var open_animation = Ti.UI.createAnimation();
-    open_animation.bottom = 0;
-    open_animation.duration = 300; //0.5秒間のアニメーションにする
-    
-    var pickerView = Ti.UI.createView({
-        title:"",height:1,width:1,top:0,right:50
-    });
-    row_budget.add(pickerView);
-
-    row_budget.addEventListener('click', function(e){
-        var budget_picker = Ti.UI.createPicker();
-        var data = [];
-        data[0]=Ti.UI.createPickerRow({title:L('search_budget_0'),value:0});
-        data[1]=Ti.UI.createPickerRow({title:L('search_budget_1'),value:1});
-        data[2]=Ti.UI.createPickerRow({title:L('search_budget_2'),value:2});
-        data[3]=Ti.UI.createPickerRow({title:L('search_budget_3'),value:3});
-        data[4]=Ti.UI.createPickerRow({title:L('search_budget_4'),value:4});
-        budget_picker.add(data);
-        childWin.add(budget_picker);
-        
-        childWin.open(open_animation);
-        //Create DatePicker just returns a popover
-        //var pickerPopover = createDatePicker('Set Actual Start',audit.ActualStart);
-     
-        budget_picker.show({view:pickerView, animation:true});  
-    });
-
-
-    //var budget_picker = require("include/ui/parts/popover_budget_picker");
+    var budget_popover = require("include/ui/parts/budget_popover");
+    budget_popover.exec(conditions,picker_budget_title,row_budget);
 }else{
     var budget_picker = require("include/ui/parts/budget_picker");
     budget_picker.exec(conditions,picker_budget_title,row_budget);
@@ -111,8 +80,14 @@ var picker_region_title = Ti.UI.createLabel({
 });
 row_region.add( picker_region_title );
 search_table.appendRow(row_region);
-var region_picker = require("include/ui/parts/region_picker");
-region_picker.exec(conditions,picker_region_title,row_region);
+if(setting.os == 'ipad'){
+    var region_popover = require("include/ui/parts/region_popover");
+    region_popover.exec(conditions,picker_region_title,row_region);
+}else{
+    var region_picker = require("include/ui/parts/region_picker");
+    region_picker.exec(conditions,picker_region_title,row_region);
+}
+
 
 var search_button = Ti.UI.createButton({
   backgroundImage:'img/search_btn_' + setting.lang_string + '.png',
@@ -185,3 +160,8 @@ if(setting.os == 'ipad'){
 }else{
     con.loadBigFaceCampaign('index',true,null);
 }
+/*
+win.addEventListener('focus', function(e){
+    Ti.API.info(Ti.Platform.availableMemory);
+});
+*/

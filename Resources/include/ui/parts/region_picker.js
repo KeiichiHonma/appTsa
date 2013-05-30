@@ -30,9 +30,9 @@ exports.exec = function(conditions,picker_title,event_obj){
     data[2]=Ti.UI.createPickerRow({title:L('search_map_shibuya'),value:3});
     data[3]=Ti.UI.createPickerRow({title:L('search_map_roppongi'),value:4});
     data[4]=Ti.UI.createPickerRow({title:L('search_map_ginza'),value:5});
-    data[4]=Ti.UI.createPickerRow({title:L('search_map_shinagawa'),value:6});
-    data[4]=Ti.UI.createPickerRow({title:L('search_map_yokohama'),value:7});
-    data[4]=Ti.UI.createPickerRow({title:L('search_map_odaiba'),value:8});
+    data[5]=Ti.UI.createPickerRow({title:L('search_map_shinagawa'),value:6});
+    data[6]=Ti.UI.createPickerRow({title:L('search_map_yokohama'),value:7});
+    data[7]=Ti.UI.createPickerRow({title:L('search_map_odaiba'),value:8});
     region_picker.add(data);
     region_picker.setSelectedRow(0, 0);
     // 選択表示を有効にします（標準は無効）
@@ -70,6 +70,7 @@ exports.exec = function(conditions,picker_title,event_obj){
     childWin.add(cancel_button);
 
     submit_button.addEventListener('click', function(e){
+        conditions.maps = [];//初期化
         picker_title.text = picker_region_name;
         conditions.maps.push(picker_region_value);
         is_region_view = false;
@@ -82,6 +83,8 @@ exports.exec = function(conditions,picker_title,event_obj){
     });
     event_obj.addEventListener('click', function(e) {
         if(!is_region_view){
+            var index = conditions.maps[0] - 1;//ずれるので
+            if(conditions.maps.length > 0)region_picker.setSelectedRow(0,index);
             childWin.open(open_animation);
         }
         is_region_view = true;

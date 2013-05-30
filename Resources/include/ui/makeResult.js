@@ -1,4 +1,7 @@
 exports.exec = function(){
+    // データをクリア
+    con.UI.tableView.data = [];
+    
     con.UI.tableView.separatorStyle = Titanium.UI.iPhone.TableViewSeparatorStyle.NONE;
     con.UI.tableView.backgroundColor = setting.row_title_background_color;
     var row = Ti.UI.createTableViewRow({
@@ -50,8 +53,20 @@ exports.exec = function(){
     });
     messageRow.add(label);
     con.UI.tableView.appendRow(messageRow);
-    win.addEventListener('blur', function(e){
-        win._caller.close();
-        win.close();
+
+    //resultだけフォーカスしたら戻る
+/*    var listener = function(e) {
+        win.showNavBar();
+        win.title = L('tab_name_inquiry');
+        con.loadInquiry();
+    }*/
+    win.addEventListener('focus', listener);
+/*
+    win.addEventListener('focus', function(e){
+        win.showNavBar();
+        //win.title = L('tab_name_inquiry');
+        win.title = "TEST";
+        con.loadInquiry();
     });
+*/
 };

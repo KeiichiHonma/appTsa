@@ -1,11 +1,10 @@
 // win1.jsのwindowを変数にセット
 var win = Titanium.UI.currentWindow;
 win.title = L('property_window_title');
-
+win.orientationModes = [Ti.UI.PORTRAIT];
 // ライブラリの読み込み
 Titanium.include('include/fw/container.js');
-Titanium.UI.currentWindow.backButtonTitle = L('back_title');
-//con.UI.tableView.bottom = 50;
+win.backButtonTitle = L('back_title');
 win.add(con.UI.tableView);
 
 // 再読込の設定

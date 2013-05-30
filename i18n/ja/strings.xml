@@ -153,6 +153,6 @@
 <string name="info_request_title">ご要望</string>
 <string name="info_privacy_policy_title">プライバシーポリシー</string>
 <string name="info_company_title">運営会社</string>
-<string name="info_version_title">バージョン 1.0.0</string>
-
+<string name="info_version_title">バージョン 1.0</string>
+<string name="info_offline">オフラインなのでデータを取得できません。</string>
 </resources>

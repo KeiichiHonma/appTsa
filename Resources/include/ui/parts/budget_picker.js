@@ -68,6 +68,7 @@ exports.exec = function(conditions,picker_title,event_obj){
     childWin.add(cancel_button);
 
     submit_button.addEventListener('click', function(e){
+        conditions.budgets = [];//初期化
         picker_title.text = picker_budget_name;
         conditions.budgets.push(picker_budget_value);
         is_budget_view = false;
@@ -80,6 +81,7 @@ exports.exec = function(conditions,picker_title,event_obj){
     });
     event_obj.addEventListener('click', function(e) {
         if(!is_budget_view){
+            if(conditions.budgets.length > 0)budget_picker.setSelectedRow(0,conditions.budgets[0]);
             childWin.open(open_animation);
         }
         is_budget_view = true;

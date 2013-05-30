@@ -30,7 +30,7 @@ exports.exec = function(json,isIndex,isFirst){
             //Ti.API.info(index);
             //index = index + 1;
             //画像配置
-            row.add(cu.createImageView(tsa_url + json.type[i].path,60,60));
+            row.add(cu.createImageView(setting.tsa_url + json.type[i].path,60,60));
 
             //メインタイトル
             if(setting.isEn){
@@ -101,7 +101,7 @@ exports.exec = function(json,isIndex,isFirst){
                 //Ti.API.info(sp);
                 //Ti.API.info(json.count);
 
-                var url = tsa_url + '/json/type/condition/special/campaign/sp/' + sp;
+                var url = setting.tsa_url + '/json/type/condition/special/campaign/sp/' + sp;
                 con.callAPI('GET', url, null, function(status, responseText) {
                     stop = true;
                     

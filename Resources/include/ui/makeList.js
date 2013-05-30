@@ -8,6 +8,8 @@ exports.exec = function(json,page,isFirst,conditions){
             setting.list_property_height = 30;
             setting.list_area_height = 30;
             setting.list_summety_height = 90;
+            var property_name_fontsize = 22;
+            var property_summary_fontsize = 18;
         }
     }
     if(isFirst){
@@ -17,12 +19,12 @@ exports.exec = function(json,page,isFirst,conditions){
         add_property(type_list);
     }
 
-    if(page != 'index' && page != 'detail'){
+    if(page != 'index' && page != 'detail' && type_list.length >= 10 ){
         tv_dynamic(con.UI.tableView);
     }
 
     function add_property(type_list) {
-        if(page == 'detail'){
+        if(page == 'detail' && type_list.length > 0){
             //title////////////////////////////////////////////////////////////////////////////
             var titleRow = Ti.UI.createTableViewRow({
                 height:30,
@@ -60,12 +62,13 @@ exports.exec = function(json,page,isFirst,conditions){
                 var row_height = setting.similar_face_height;
                 var row = Ti.UI.createTableViewRow({
                     height:row_height,
-                    hasDetail:false
-                });
+                    hasDetail:false,
+                    selectionStyle : Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
+                    });
             }
 
             //画像配置
-            row.add(cu.createImageView(tsa_url + type_list[i].path,row_height,row_height));
+            row.add(cu.createImageView(setting.tsa_url + type_list[i].path,row_height,row_height));
 
             //メインタイトル
             if(setting.isEn){
@@ -104,10 +107,10 @@ exports.exec = function(json,page,isFirst,conditions){
             
             //osでフォント変更
             if(page != 'detail' && setting.os == 'ipad'){
-                property_name.font = {fontSize:22};
-                property_summary.font = {fontSize:18,fontWeight:'bold'};
+                property_name.font = {fontSize:property_name_fontsize};
+                property_summary.font = {fontSize:property_summary_fontsize,fontWeight:'bold'};
                 if(page != 'detail') {
-                    area_name.font = {fontSize:18};
+                    area_name.font = {fontSize:property_summary_fontsize};
                 }
                 
             }else{
@@ -276,10 +279,10 @@ exports.exec = function(json,page,isFirst,conditions){
             sp = sp + sp_plus;
             if(json.count >= sp){
                 if(page == 'campaign'){
-                    var url = tsa_url + '/json/type/condition/special/campaign/sp/' + sp;
+                    var url = setting.tsa_url + '/json/type/condition/special/campaign/sp/' + sp;
                 }else{
                     var query_string = con.getCondition(conditions);
-                    var url = tsa_url + '/json/search/sp/' + sp + '?' + query_string;
+                    var url = setting.tsa_url + '/json/search/sp/' + sp + '?' + query_string;
                 }
                 
                 con.callAPI('GET', url, null, function(status, responseText) {

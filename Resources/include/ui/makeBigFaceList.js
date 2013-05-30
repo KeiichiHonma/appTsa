@@ -27,7 +27,7 @@ exports.exec = function(json,page,isFirst,conditions){
             });
             //画像配置
             var create_image = Ti.UI.createImageView({
-                image: tsa_url + type_list[i].path,
+                image: setting.tsa_url + type_list[i].path,
                 width: 320,
                 top:0,
                 left:0,
@@ -212,10 +212,10 @@ exports.exec = function(json,page,isFirst,conditions){
             sp = sp + sp_plus;
             if(json.count >= sp){
                 if(page == 'campaign'){
-                    var url = tsa_url + '/json/type/condition/special/campaign/sp/' + sp;
+                    var url = setting.tsa_url + '/json/type/condition/special/campaign/sp/' + sp;
                 }else{
                     var query_string = con.getCondition(conditions);
-                    var url = tsa_url + '/json/search/sp/' + sp + '?' + query_string;
+                    var url = setting.tsa_url + '/json/search/sp/' + sp + '?' + query_string;
                 }
                 
                 con.callAPI('GET', url, null, function(status, responseText) {
