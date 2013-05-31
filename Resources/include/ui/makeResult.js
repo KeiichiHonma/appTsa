@@ -53,7 +53,17 @@ exports.exec = function(){
     });
     messageRow.add(label);
     con.UI.tableView.appendRow(messageRow);
-
+    
+    //similarを次回表示可能にするため更新
+    //database
+    var db = Ti.Database.open(db_setting.database);
+    db.execute('create table if not exists ' + db_setting.table_inquiry + ' (approximate_move INTEGER, approximate_period INTEGER, name TEXT, kana TEXT, company TEXT, mail TEXT, telephone TEXT, detail TEXT, similar INTEGER)');
+    var rows = db.execute('select rowid,* from ' + db_setting.table_inquiry);
+    if( rows.getRowCount() > 0){
+        db.execute('update ' + db_setting.table_inquiry + ' set similar = ? where rowid = ?', 0, rows.fieldByName('rowid'));
+    }
+    rows.close();
+    db.close();
     //resultだけフォーカスしたら戻る
 /*    var listener = function(e) {
         win.showNavBar();

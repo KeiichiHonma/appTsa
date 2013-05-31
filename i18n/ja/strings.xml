@@ -129,6 +129,7 @@
 <string name="form_span_name_4">1年間以上</string>
 <string name="form_span_name_5">未定</string>
 <string name="form_requests_questions_title">ご要望</string>
+<string name="form_hide_title">閉じる</string>
 
 <string name="form_thank_message">お問い合わせありがとうございました。</string>
 <string name="form_result_message">お問い合わせ対象企業担当者より、ご連絡させていただきます。
@@ -154,5 +155,5 @@
 <string name="info_privacy_policy_title">プライバシーポリシー</string>
 <string name="info_company_title">運営会社</string>
 <string name="info_version_title">バージョン 1.0</string>
-<string name="info_offline">オフラインなのでデータを取得できません。</string>
+<string name="info_offline">オフラインのためデータを取得できません。</string>
 </resources>

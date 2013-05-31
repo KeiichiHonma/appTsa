@@ -219,7 +219,7 @@ exports.exec = function(json,tid){
               color:'#ffffff',
               width:150,
               height:35,
-              bottom:2,
+              bottom:4,
               right:5,
               opacity:1,
             });

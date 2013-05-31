@@ -1,4 +1,11 @@
-exports.exec = function(approximate,span_tf){
+exports.exec = function(approximate,span_tf,row_count,default_span){
+    if(row_count > 0){
+        span_tf.value = L('form_span_name_' + default_span);
+    }else{
+        if(setting.isDebug){
+            span_tf.value = L('form_span_name_0');
+        }
+    }
     span_tf.addEventListener('focus', function(e){
         // PopOverの作成
         var popTableView = Ti.UI.createTableView({

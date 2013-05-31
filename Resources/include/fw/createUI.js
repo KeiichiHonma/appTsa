@@ -4,7 +4,7 @@ var setting = {
     "tsa_url":"",
     "tsa_url_ssl":"",
     "isEn":false,
-    "isDebug":true,
+    "isDebug":false,
     "isResult":false,
     "lang_string":"",
     "os":"",
@@ -28,13 +28,13 @@ var setting = {
     "row_summary_bold_color":'#860100',
     "row_bg":'img/row_bg.gif',
     "similar_face_height":80,
-    "btn_view_height":39,
+    "btn_view_height":43,
     "save_btn_width":150,
     "save_btn_height":35,
     "save_btn_s_width":100,
     "save_btn_s_height":35,
     "telephone_number":'0354288307',
-    "form_tf_height":20,
+    "form_tf_height":25,
     "form_title_height":20
     
     };
@@ -500,7 +500,7 @@ switch(Ti.Platform.osname){
                   color:'#ffffff',
                   width:setting.save_btn_width,
                   height:setting.save_btn_height,
-                  bottom:2
+                  bottom:4
                 });
             }else{
                 var save_button = Ti.UI.createButton({
@@ -508,7 +508,7 @@ switch(Ti.Platform.osname){
                   color:'#ffffff',
                   width:setting.save_btn_width,
                   height:setting.save_btn_height,
-                  bottom:2,
+                  bottom:4,
                   left:5
                 });
             }
@@ -525,7 +525,7 @@ switch(Ti.Platform.osname){
 
         save_button.addEventListener('click', function(e){
             //db:sqlite
-            var db = Ti.Database.open(db_setting.table_save);
+            var db = Ti.Database.open(db_setting.database);
             db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
             
             var rows = db.execute('select rowid,* from ' + db_setting.table_save + ' where tid = ' + tid);

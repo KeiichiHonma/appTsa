@@ -1,4 +1,11 @@
-exports.exec = function(approximate,stay_tf){
+exports.exec = function(approximate,stay_tf,row_count,default_stay){
+    if(row_count > 0){
+        stay_tf.value = L('form_stay_name_' + default_stay);
+    }else{
+        if(setting.isDebug){
+            stay_tf.value = L('form_stay_name_0');
+        }
+    }
     stay_tf.addEventListener('focus', function(e){
         // PopOverの作成
         var popTableView = Ti.UI.createTableView({

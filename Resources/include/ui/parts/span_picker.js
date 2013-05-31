@@ -1,4 +1,4 @@
-exports.exec = function(approximate,span_tf){
+exports.exec = function(approximate,span_tf,row_count,default_span){
     var is_span_view = false;
 
     var childSpanWin = Ti.UI.createWindow();
@@ -32,11 +32,17 @@ exports.exec = function(approximate,span_tf){
     data[4]=Ti.UI.createPickerRow({title:L('form_span_name_4'),value:4});
     data[5]=Ti.UI.createPickerRow({title:L('form_span_name_5'),value:5});
     span_picker.add(data);
-    span_picker.setSelectedRow(0, 0);
-    if(setting.isDebug){
-        picker_span_value = '0';
-        span_tf.value = L('form_span_name_0');
+    span_picker.setSelectedRow(0, default_span);
+    if(row_count > 0){
+        picker_span_value = default_span;
+        span_tf.value = L('form_span_name_' + default_span);
+    }else{
+        if(setting.isDebug){
+            picker_span_value = '0';
+            span_tf.value = L('form_span_name_0');
+        }
     }
+
     
     // 選択表示を有効にします（標準は無効）
     span_picker.selectionIndicator = true;
@@ -82,8 +88,10 @@ exports.exec = function(approximate,span_tf){
     });
 
     cancel_span_button.addEventListener('click', function(e){
+        win.removeEventListener('focus', listener);
         is_span_view = false;
         childSpanWin.close(hide_animation);
+        win.addEventListener('focus', listener);
     });
 
     span_tf.addEventListener('focus', function(e) {

@@ -1,4 +1,4 @@
-exports.exec = function(approximate,stay_tf){
+exports.exec = function(approximate,stay_tf,row_count,default_stay){
     var is_stay_view = false;
 
     var childStayWin = Ti.UI.createWindow();
@@ -34,11 +34,17 @@ exports.exec = function(approximate,stay_tf){
     stay_data[4]=Ti.UI.createPickerRow({title:L('form_stay_name_4'),value:4});
     stay_data[5]=Ti.UI.createPickerRow({title:L('form_stay_name_5'),value:5});
     stay_picker.add(stay_data);
-    stay_picker.setSelectedRow(0, 0);
-    if(setting.isDebug){
-        picker_stay_value = '0';
-        stay_tf.value = L('form_stay_name_0');
+    stay_picker.setSelectedRow(0, default_stay);
+    if(row_count > 0){
+        picker_stay_value = default_stay;
+        stay_tf.value = L('form_stay_name_' + default_stay);
+    }else{
+        if(setting.isDebug){
+            picker_stay_value = '0';
+            stay_tf.value = L('form_stay_name_0');
+        }
     }
+
 
     stay_picker.selectionIndicator = true;
     stay_picker.addEventListener('change',function(e){
@@ -83,8 +89,10 @@ exports.exec = function(approximate,stay_tf){
     });
 
     cancel_stay_button.addEventListener('click', function(e){
+        win.removeEventListener('focus', listener);
         is_stay_view = false;
         childStayWin.close(hide_animation);
+        win.addEventListener('focus', listener);
     });
 
     stay_tf.addEventListener('focus', function(e) {

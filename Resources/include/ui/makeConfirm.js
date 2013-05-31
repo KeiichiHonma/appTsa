@@ -59,9 +59,12 @@ exports.exec = function(params){
     con.UI.tableView.appendRow(row);
 
     //similar///////////////////////////////////////
-    var row = cu.makeInquiryTitleRow( L('property_near_property_title'),20,10 );
-    row.add(makeLabel(win.ext.params.similar_property_name) );
-    con.UI.tableView.appendRow(row);
+    if(win.ext.params.similar_property_name != ''){
+        var row = cu.makeInquiryTitleRow( L('property_near_property_title'),20,10 );
+        row.add(makeLabel(win.ext.params.similar_property_name) );
+        con.UI.tableView.appendRow(row);
+    }
+
     
 
     // 送信ボタン押下時の処理

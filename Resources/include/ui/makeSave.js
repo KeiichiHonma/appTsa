@@ -39,11 +39,25 @@ exports.exec = function(json){
     // 行削除処理
     con.UI.tableView.addEventListener('delete', function(e){
         // データの削除処理
-        var db = Ti.Database.open(db_setting.table_save);
-        db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
-        db.execute('begin transaction');
-        db.execute("delete from " + db_setting.table_save + " where tid = '" + e.rowData.ext.tid + "' ");
-        db.execute('commit');
+        var db = Ti.Database.open(db_setting.database);
+        if(!e.rowData.ext.similar){
+            db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
+            db.execute('begin transaction');
+            db.execute("delete from " + db_setting.table_save + " where tid = '" + e.rowData.ext.tid + "' ");
+            db.execute('commit');
+        }else{
+            //similarの場合は問い合わせで表示させないように記録
+            db.execute('create table if not exists ' + db_setting.table_inquiry + ' (approximate_move INTEGER, approximate_period INTEGER, name TEXT, kana TEXT, company TEXT, mail TEXT, telephone TEXT, detail TEXT, similar INTEGER)');
+            var rows = db.execute('select rowid,* from ' + db_setting.table_inquiry);
+            if( rows.getRowCount() > 0){
+                db.execute('update ' + db_setting.table_inquiry + ' set similar = ? where rowid = ?', 1, rows.fieldByName('rowid'));
+            }else{
+                //空のデータ挿入
+                db.execute('insert into ' + db_setting.table_inquiry + ' (approximate_move, approximate_period,name,kana,company,mail,telephone,detail,similar ) VALUES(?,?,?,?,?,?,?,?,?)',0,0,'','','','','','',1);
+            }
+            rows.close();
+        }
+
         db.close();
     });
 
@@ -56,7 +70,8 @@ exports.exec = function(json){
             url: 'detail.js',
             // Extended
             ext : {
-                tid : json.save_list[i].col_tid
+                tid : json.save_list[i].col_tid,
+                similar:false
             }
         });
 
@@ -106,7 +121,20 @@ exports.exec = function(json){
     }
     
     //similar
-    if(json.inquiry_similar.length > 0){
+
+    //similarを表示して良いかの確認
+    //database
+    var db = Ti.Database.open(db_setting.database);
+    db.execute('create table if not exists ' + db_setting.table_inquiry + ' (approximate_move INTEGER, approximate_period INTEGER, name TEXT, kana TEXT, company TEXT, mail TEXT, telephone TEXT, detail TEXT, similar INTEGER)');
+    var rows = db.execute('select rowid,* from ' + db_setting.table_inquiry);
+    var is_similar = 0;
+    if( rows.getRowCount() > 0){
+        is_similar = rows.fieldByName('similar');
+    }
+    rows.close();
+    db.close();
+
+    if(is_similar == 0 && json.inquiry_similar.length > 0){
 
         var similar_view = Titanium.UI.createView({
             top:0,
@@ -129,7 +157,8 @@ exports.exec = function(json){
             url: 'detail.js',
             // Extended
             ext : {
-                tid : json.inquiry_similar[0].col_tid
+                tid : json.inquiry_similar[0].col_tid,
+                similar:true
             }
         });
         // TableView選択時のイベント

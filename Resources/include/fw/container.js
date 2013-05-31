@@ -97,7 +97,7 @@ var con = {};
         // データをクリア
         con.UI.tableView.data = [];
         //save
-        var db = Ti.Database.open(db_setting.table_save);
+        var db = Ti.Database.open(db_setting.database);
         db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
         
         var rows = db.execute('select rowid,* from ' + db_setting.table_save);
@@ -131,7 +131,7 @@ var con = {};
                     makeSave.exec(json);
                 }else{
                     //古いセーブデータのため、物件の停止で有効な物件を取得できなかった。そのため、記録してあったセーブデータを削除
-                    var db = Ti.Database.open(db_setting.table_save);
+                    var db = Ti.Database.open(db_setting.database);
                     db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
                     db.execute('begin transaction');
                     db.execute("delete from " + db_setting.table_save + " where tid > '0' ");
@@ -151,7 +151,7 @@ var con = {};
         // データをクリア
         con.UI.tableView.data = [];
         //save
-        var db = Ti.Database.open(db_setting.table_save);
+        var db = Ti.Database.open(db_setting.database);
         db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
         
         var rows = db.execute('select rowid,* from ' + db_setting.table_save);
@@ -184,7 +184,7 @@ var con = {};
                         loadInquiry.exec(tids,json);
                     }else{
                         //古いセーブデータのため、物件の停止で有効な物件を取得できなかった。そのため、記録してあったセーブデータを削除
-                        var db = Ti.Database.open(db_setting.table_save);
+                        var db = Ti.Database.open(db_setting.database);
                         db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
                         db.execute('begin transaction');
                         db.execute("delete from " + db_setting.table_save + " where tid > '0' ");
@@ -216,7 +216,7 @@ var con = {};
             if(responseText == "success"){
                 //if(!setting.isDebug){
                     //save delete
-                    var db = Ti.Database.open(db_setting.table_save);
+                    var db = Ti.Database.open(db_setting.database);
                     db.execute('create table if not exists ' + db_setting.table_save + ' (tid integer)');
                     db.execute('begin transaction');
                     db.execute("delete from " + db_setting.table_save + " where tid > '0' ");
